@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Version 1.0.1</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>IBC Mobile Entwicklerliste</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Idee:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Stephan König (Thaddel)</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Administration / Kommunikation:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Stephan König (Thaddel)</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Programmierung:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Stephan König (Thaddel), Manuel Burghard</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Integration Forum:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Manuel Burghard</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Grafik:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Stephan König (Thaddel)</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Copyrightbestimmungen:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Das IBC Logo unterliegen dem Copyright von Thomas Paatz – In der Neuwies 10 – 55595 Mandel. Dies gilt auch für die angepassten Grafiken in der gesamten App sowie einzelnen Beiträgen, welche die IBC repräsentieren.</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Für den Zugriff auf die sozialen Netzwerke verwenden wir ShareKit, welches ein Produkt von Nate Weiner ist. Der Lizenz entsprechend werden sie auf folgendes aufmerksam gemacht (Gilt auch für RegexKit und EGOTableViewPullRefresh):</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Für RegexKit gilt zusätzlich folgende Bestimmung:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Weiterverbreitung und Verwendung in Quell-und binärer Form mit oder ohne Änderungen, sind zulässig, sofern folgende Voraussetzungen erfüllt sind:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>1. Weitergabe des Quellcodes muss den obigen Copyrighthinweis, diese Liste der Bedingungen und den folgenden Haftungsausschluss beinhalten.</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>2. Weitergabe in binärer Form muss den obigen Copyright-Hinweis, diese Liste der Bedingungen und den folgenden Haftungsausschluss in der Dokumentation und / oder anderen Materialien mit dem Vertrieb beinhalten.</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>3. Der Name des Autors darf nicht zur Verkaufsförderung oder Werbung für Produkte aus dieser Software ohne vorherige schriftliche Erlaubnis abgeleitet werden.</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>BSD-Lizenz zu ShareKit, RegexKit, und EGOTableViewPullRefresh:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Hiermit wird unentgeltlich, jeder Person, die eine Kopie der Software und der zugehörigen Dokumentationen (die &quot;Software&quot;) erhält, die Erlaubnis erteilt, uneingeschränkt zu benutzen, inklusive und ohne Ausnahme, dem Recht, sie zu verwenden, kopieren, ändern, fusionieren, verlegen, verbreiten, unterlizenzieren und/oder zu verkaufen, und Personen, die diese Software erhalten, diese Rechte zu geben, unter den folgenden Bedingungen: Der obige Urheberrechtsvermerk und dieser Erlaubnisvermerk sind in allen Kopien oder Teilkopien der Software beizulegen. Die Software wird ohne jede ausdrückliche oder implizierte Garantie bereitgestellt, einschliesslich der Garantie zur Benutzung für jeden vorgesehenen oder einem bestimmten Zweck sowie jeglicher Rechtsverletzung, jedoch nicht darauf beschränkt. In keinem Fall sind die Autoren oder Copyrightinhaber für jeglichen Schaden oder sonstige Ansprüche haftbar zu machen, ob infolge der Erfüllung eines Vertrages, eines Deliktes oder anders im Zusammenhang mit der Software oder sonstiger Verwendung der Software entstanden.</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Die Tapatalk-API welche für den Forenzugriff eingesetzt wird ist ein Produkt der:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string> Quoord Systems Limited, Main Office:
+15B, Haven Commercial Building
+6-8 Tsing Fung St.
+Tin Hau, Hong Kong S.A.R.</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Lizenz:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>Yes</string>
+			<key>FooterText</key>
+			<string>libThree20:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Diese Bibliothek steht unter Apache 2.0 Lizenz. Die gesamte Lizenz ist hier ersichtlich:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>http://www.apache.org/licenses/LICENSE-2.0</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Die IBC Mobile App steht unter der GPL v3 (oder neuer) Lizenz, und ist somit opensource. Der Code kann unter der Voraussetzung, dass die GPL v3 (oder neuer) Lizenz weitergegeben wird uneingeschränkt genutzt werden. Allfällige andere Lizenzen müssen bei der Weiterverbreitung beachtet werden.</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>Für die Richtigkeit der Inhalte wird nicht gehaftet.</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
+			<string>© 2011 IBC Bike Community</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Team</string>
+</dict>
+</plist>
