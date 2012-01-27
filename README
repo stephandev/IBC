@@ -1,4 +1,4 @@
-WARNING: LibThree20 is just linked to this project. To get it to your local hardrive, navigate in terminal to your Development Folder, where the Apfeltalk-App project is located and type the following command in terminal:
+WARNING: LibThree20 is just linked to this project. To get it to your local hardrive, navigate in terminal to your Development Folder, where the IBC project is located and type the following command in terminal:
 
 git clone git://github.com/facebook/three20
 
