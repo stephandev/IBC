@@ -105,7 +105,7 @@
         tabBarController.viewControllers = viewControllers;
     }
     
-    [window addSubview:tabBarController.view];
+    window.rootViewController = tabBarController;
     return YES;
 }
 
