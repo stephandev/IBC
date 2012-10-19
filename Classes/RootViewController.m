@@ -543,12 +543,22 @@
 #pragma mark -
 #pragma mark Interfacerotation
 
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         return YES;
     }
-    
+
     return (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 

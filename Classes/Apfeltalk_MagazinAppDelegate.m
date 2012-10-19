@@ -103,6 +103,7 @@
 
         
         tabBarController.viewControllers = viewControllers;
+        
     }
     
     [window addSubview:tabBarController.view];
