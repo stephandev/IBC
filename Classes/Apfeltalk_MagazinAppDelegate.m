@@ -82,6 +82,7 @@
  }*/
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window.frame = [[UIScreen mainScreen] bounds];
     [self setApplicationDefaults];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
