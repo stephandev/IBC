@@ -49,6 +49,7 @@
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
     NSLog(@"Error bei der Registrierung");
 }
+//This is the end of the methods for push notifications
 
 - (id)init {
     self = [super init];
