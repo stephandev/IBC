@@ -36,6 +36,20 @@
 @synthesize window;
 @synthesize tabBarController;
 
+//These are the methods for push notifications and it's registration
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    NSLog(@"Device Token=%@", deviceToken);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"Error bei der Registrierung");
+}
+
 - (id)init {
     self = [super init];
     if (self) {
@@ -45,7 +59,7 @@
 
 + (Apfeltalk_MagazinAppDelegate*)sharedAppDelegate {
     return (Apfeltalk_MagazinAppDelegate *)[[UIApplication sharedApplication] delegate];
-}
+} 
 
 - (void)setApplicationDefaults {
 	// !!!:below:20091018 This is not the Apple recommended way of doing this!
