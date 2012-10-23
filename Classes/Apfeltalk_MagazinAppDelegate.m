@@ -85,6 +85,12 @@
     self.window.frame = [[UIScreen mainScreen] bounds];
     [self setApplicationDefaults];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    //This is the start of the push notification settings
+	[self.window makeKeyAndVisible];
+    
+	// Let the device know we want to receive push notifications
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
     // Add the tab bar controller's current view as a subview of the window
     
