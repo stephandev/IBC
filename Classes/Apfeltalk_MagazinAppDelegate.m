@@ -39,7 +39,19 @@
 //These are the methods for push notifications and it's registration
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
+    //NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
+    
+    NSString* alert = [[userInfo objectForKey:@"aps"] objectForKey:@"id"];
+
+    NSLog(@"Nachricht: %@", alert);
+    
+    //This is to inform about new messages when the app is active
+    
+    UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+    if (state == UIApplicationStateActive) {
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Neuer Artikel" message:@"Nachricht" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alertView show];
+        }
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
@@ -103,9 +115,18 @@
     //This is the start of the push notification settings
 	[self.window makeKeyAndVisible];
     
+    //This is to show an UIAlertView when the app receives push notifications in inactive state (Only for testing purposes)
+    
+    //if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]) {
+    //    NSString* alert = [[[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] objectForKey:@"aps"] objectforkey:@"alert"];
+    //    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Neuer Artikel" message:alert delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+    //    [alertView show];
+    //    }
+    
 	// Let the device know we want to receive push notifications
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
     
     // Add the tab bar controller's current view as a subview of the window
     
