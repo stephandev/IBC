@@ -54,8 +54,24 @@
         }
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"Device Token=%@", deviceToken);
+    
+    NSString* string = [NSString stringWithFormat:@"%@", deviceToken];
+    
+    string = [string substringWithRange:NSMakeRange(1, string.length - 2)];
+    
+    string = [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString* url = [NSString stringWithFormat:@"http://rezeptix-app.de/testpushapp/addDeviceToken.php?deviceToken=%@", string];
+    
+    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *urlResponse, NSData *data, NSError *error) {
+        if (error) {
+            NSLog(@"Error");
+        }
+    }];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
