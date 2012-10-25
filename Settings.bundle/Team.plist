@@ -64,7 +64,7 @@
 			<key>DoNotLocalize</key>
 			<true/>
 			<key>FooterText</key>
-			<string>Stephan König (Thaddel), Manuel Burghard, EagleEye (Push Notifications)</string>
+			<string>Stephan König (Thaddel), Manuel Burghard</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -81,6 +81,22 @@
 			<true/>
 			<key>FooterText</key>
 			<string>Manuel Burghard</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Push Notification Server:</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>EagleEye</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
