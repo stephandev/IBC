@@ -64,7 +64,7 @@
 			<key>DoNotLocalize</key>
 			<true/>
 			<key>FooterText</key>
-			<string>Stephan König (Thaddel), Manuel Burghard</string>
+			<string>Stephan König (Thaddel), Manuel Burghard, EagleEye (Push Notifications Server)</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
