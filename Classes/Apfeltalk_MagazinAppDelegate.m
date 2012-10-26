@@ -63,13 +63,13 @@
     
     string = [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/register"];
+    NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/register?devicetype=4&appkey=23e409isaeroakse23saeß0&devkey=testKey1&deviceid=123"];
     
     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *urlResponse, NSData *data, NSError *error) {
         if (error) {
-            NSLog(@"Error");
+            NSLog(@"Error Device Token");
         }
     }];
 }
