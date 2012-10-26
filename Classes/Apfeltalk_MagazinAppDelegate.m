@@ -143,6 +143,8 @@
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
+    // Clear application badge when app launches
+        application.applicationIconBadgeNumber = 0;
     
     // Add the tab bar controller's current view as a subview of the window
     
