@@ -63,7 +63,7 @@
     
     string = [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer.php?deviceToken=%@", string];
+    NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/register?deviceToken=%@", string];
     
     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
