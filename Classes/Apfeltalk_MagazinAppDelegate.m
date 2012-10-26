@@ -57,11 +57,13 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"Device Token=%@", deviceToken);
     
-    NSString* string = [NSString stringWithFormat:@"%@", deviceToken];
+    NSUInteger theCount = [deviceToken length];
+    NSMutableString *theString = [NSMutableString stringWithCapacity:2 * theCount];
+    unsigned char const *theBytes = [deviceToken bytes];
     
-    string = [string substringWithRange:NSMakeRange(1, string.length - 2)];
-    
-    string = [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    for(NSUInteger i = 0; i < theCount; ++i) {
+        [theString appendFormat:@"%2.2x", theBytes[i]];
+    }
     
     NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/register?devicetype=4&appkey=23e409isaeroakse23saeß0&devkey=testKey1&deviceid=123"];
     
