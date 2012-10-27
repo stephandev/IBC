@@ -65,10 +65,11 @@
         [theString appendFormat:@"%2.2x", theBytes[i]];
     }
     
-    NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/register?devicetype=4&appkey=23e409isaeroakse23saeß0&deviceid=123&&devicekey=%@",theString];
+    NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/register?devicetype=4&appkey=23e409isaeroakse23saeß0&deviceid=123&d=einGeschaltet&devicekey=%@",theString];
     NSLog(@"APNS URL : %@",url);
     
     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *urlResponse, NSData *data, NSError *error) {
         if (error) {
