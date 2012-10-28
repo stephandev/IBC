@@ -70,13 +70,6 @@
     
     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     
-    //Some Testing Code for encoding push notifications in UTF-8
-    
-    //NSString *encoded_string = @"Ã¼";
-    //const char *ch = [encoded_string cStringUsingEncoding:NSUTF8StringEncoding];
-    //NSString *decode_string = [[NSString alloc]initWithCString:ch encoding:NSISOLatin1StringEncoding];
-    //NSLog(@"%@",decode_string);
-    
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *urlResponse, NSData *data, NSError *error) {
         if (error) {
             NSLog(@"Error: %@", error);
