@@ -36,10 +36,12 @@
 @synthesize window;
 @synthesize tabBarController;
 
+#pragma mark - Push Notifications
+
 //These are the methods for push notifications and it's registration
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    //NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
+    NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
     
     NSString* alert = [[userInfo objectForKey:@"aps"] objectForKey:@"id"];
 
