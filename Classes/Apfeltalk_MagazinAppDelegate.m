@@ -135,7 +135,6 @@
     self.window.frame = [[UIScreen mainScreen] bounds];
     [self setApplicationDefaults];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 	[self.window makeKeyAndVisible];
     
     //This is the start of the general push notification settings
@@ -143,8 +142,9 @@
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
-    // Clear application badge when app launches
-    //application.applicationIconBadgeNumber = 0;
+    //Clear the notification center when the app has been launched
+    
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
     
     // Add the tab bar controller's current view as a subview of the window
