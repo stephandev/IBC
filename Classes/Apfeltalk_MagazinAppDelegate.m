@@ -47,12 +47,6 @@
 
     NSLog(@"Nachricht: %@", alert);
     
-    //This is for testing if notifications disappear after the app has been launched 07-11-2012
-    
-    //[[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
-    //[[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    
     //This is to inform about new messages when the app is active
     
     //UIApplicationState state = [[UIApplication sharedApplication] applicationState];
@@ -82,6 +76,8 @@
         if (error) {
             NSLog(@"Error: %@", error);
         }
+        else
+            NSLog(@"Status: %@", urlResponse);
     }];
 }
 
@@ -139,20 +135,10 @@
     self.window.frame = [[UIScreen mainScreen] bounds];
     [self setApplicationDefaults];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    //This is for testing if notifications disappear 07-11-2012
-    //[[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    //This is the start of the push notification settings
 	[self.window makeKeyAndVisible];
     
-    //This is to show an UIAlertView when the app receives push notifications in inactive state (Only for testing purposes)
-    
-    //if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]) {
-    //    NSString* alert = [[[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] objectForKey:@"aps"] objectforkey:@"alert"];
-    //    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Neuer Artikel" message:alert delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-    //    [alertView show];
-    //    }
-    
+    //This is the start of the general push notification settings
 	// Let the device know we want to receive push notifications
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
