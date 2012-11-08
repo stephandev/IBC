@@ -47,6 +47,12 @@
 
     NSLog(@"Nachricht: %@", alert);
     
+    //This is for testing if notifications disappear after the app has been launched 07-11-2012
+    
+    //[[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
+    //[[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
     //This is to inform about new messages when the app is active
     
     //UIApplicationState state = [[UIApplication sharedApplication] applicationState];
@@ -133,6 +139,9 @@
     self.window.frame = [[UIScreen mainScreen] bounds];
     [self setApplicationDefaults];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    //This is for testing if notifications disappear 07-11-2012
+    //[[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     //This is the start of the push notification settings
 	[self.window makeKeyAndVisible];
     
@@ -149,7 +158,7 @@
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
     // Clear application badge when app launches
-    application.applicationIconBadgeNumber = 0;
+    //application.applicationIconBadgeNumber = 0;
 
     
     // Add the tab bar controller's current view as a subview of the window
