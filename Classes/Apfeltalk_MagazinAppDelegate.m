@@ -47,13 +47,6 @@
 
     NSLog(@"Nachricht: %@", alert);
     
-    //This is to inform about new messages when the app is active
-    
-    //UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-    //if (state == UIApplicationStateActive) {
-    //    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Neuer Artikel" message:@"Nachricht" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-    //    [alertView show];
-    //    }
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
