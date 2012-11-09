@@ -394,7 +394,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0828FA6B1637FFC1006A97D7 /* glass.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = glass.caf; sourceTree = "<group>"; };
+		0828FA6B1637FFC1006A97D7 /* Glass.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Glass.caf; sourceTree = "<group>"; };
 		0844CD8B16307685005F5866 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* Apfeltalk_MagazinAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apfeltalk_MagazinAppDelegate.h; sourceTree = "<group>"; };
@@ -871,7 +871,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0828FA6B1637FFC1006A97D7 /* glass.caf */,
+				0828FA6B1637FFC1006A97D7 /* Glass.caf */,
 				320B6C86F11D9990244A9730 /* Three20.bundle */,
 				5E97FE3D1405AD5D00DC2906 /* BoxViewController.xib */,
 				5E600BCB14017E3300187988 /* WriteMessageViewController.xib */,
