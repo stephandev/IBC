@@ -95,7 +95,6 @@
 	if ([[NSUserDefaults standardUserDefaults] objectForKey:@"vibrateOnReload"] == nil)
 	{
 		// no default values have been set, create them here based on what's in our Settings bundle info
-        //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"shakeToReload"];
 		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"vibrateOnReload"];
         [[NSUserDefaults standardUserDefaults] setFloat:12 forKey:@"fontSize"];
 	} 
