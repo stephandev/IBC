@@ -60,7 +60,7 @@
         [theString appendFormat:@"%2.2x", theBytes[i]];
     }
     
-    NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/register?devicetype=4&appkey=23e409isaeroakse23sae0&deviceid=%@&devicekey=%@",theString,theString];
+    NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/client/register?devicetype=4&appkey=23e409isaeroakse23sae0&deviceid=%@&devicekey=%@",theString,theString];
     NSLog(@"APNS URL : %@",url);
     
     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
@@ -92,11 +92,10 @@
 
 - (void)setApplicationDefaults {
 	// !!!:below:20091018 This is not the Apple recommended way of doing this!
-	if ([[NSUserDefaults standardUserDefaults] objectForKey:@"showIconBadge"] == nil)
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:@"vibrateOnReload"] == nil)
 	{
 		// no default values have been set, create them here based on what's in our Settings bundle info
-		[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"showIconBadge"];
-		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"shakeToReload"];
+        //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"shakeToReload"];
 		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"vibrateOnReload"];
         [[NSUserDefaults standardUserDefaults] setFloat:12 forKey:@"fontSize"];
 	} 

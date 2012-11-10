@@ -46,22 +46,6 @@
 		</dict>
 		<dict>
 			<key>Title</key>
-			<string>Group_IconBadge</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>DefaultValue</key>
-			<false/>
-			<key>Key</key>
-			<string>showIconBadge</string>
-			<key>Title</key>
-			<string>ShowIconBadge</string>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-		</dict>
-		<dict>
-			<key>Title</key>
 			<string>Group_VibrateOnReload</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
