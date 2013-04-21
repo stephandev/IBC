@@ -20,8 +20,8 @@
 }
 
 
-@property (retain) NSMutableData *receivedData;
-@property (retain) NSMutableArray *topics;
-@property (retain) ForumViewController *forumViewController;
+@property (strong) NSMutableData *receivedData;
+@property (strong) NSMutableArray *topics;
+@property (strong) ForumViewController *forumViewController;
 @property (assign) BOOL showLoadingCell;
 @end

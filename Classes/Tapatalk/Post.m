@@ -21,7 +21,6 @@
         self.title = [dictionary valueForKey:@"post_title"];
         ContentTranslator *contentTranslator = [[ContentTranslator alloc] init];
         self.content = [contentTranslator translateStringForiOS:[dictionary valueForKey:@"post_content"]];
-        [contentTranslator release];
         self.userIsOnline = [[dictionary valueForKey:@"is_online"] boolValue];
         self.postID = [[dictionary valueForKey:@"post_id"] integerValue];
         
@@ -32,21 +31,14 @@
         NSString *dateFormat = @"yyyyMMdd'T'HH:mm:ssZZZ";
         [dateFormatter setDateFormat:dateFormat];
         self.postDate = [dateFormatter dateFromString:dateString];
-        [dateFormatter release];
-        [locale release];
     }
     return self;
 }
 
 - (void)dealloc {
     self.userIsOnline = NO;
-    self.postDate = nil;
     self.authorID = 0;
     self.postID = 0;
-    self.title = nil;
-    self.content = nil;
-    self.author = nil;
-    [super dealloc];
 }
 
 @end

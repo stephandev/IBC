@@ -55,7 +55,6 @@
 						  otherButtonTitles:NSLocalizedStringFromTable(@"Contact", @"ATLocalizable", @"")
 						  ,nil];
 	[alert show];
-	[alert release];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
@@ -66,9 +65,7 @@
         controller.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;
 		controller.mailComposeDelegate = self;
 		[controller setToRecipients:recipients];
-		[recipients release];
 		[self presentModalViewController:controller animated:YES];
-		[controller release];
 	}
 }
 
@@ -103,7 +100,7 @@
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 		cell.textLabel.font = [UIFont boldSystemFontOfSize:12];
     }
 	
@@ -144,7 +141,6 @@
                                                      bundle:[NSBundle mainBundle]
                                                       story:story];
         [self.navigationController pushViewController:detailController animated:YES];
-        [detailController release];
     } else {
         detailController =  [self.splitViewController.viewControllers lastObject];
         [detailController setStory:story];
@@ -414,7 +410,6 @@
 	long long length = [response expectedContentLength];
 	if (length == NSURLResponseUnknownLength)
 		length = 1024;
-	[xmlData release];
 	xmlData = [[NSMutableData alloc] initWithCapacity:length];
 }
 
@@ -430,8 +425,6 @@
 	[parser setDateElementName:[self dateElementName]];
     [parser setDelegate:self];
     [parser parse];
-    [parser release];	
-	[xmlData release];
 	xmlData = nil;
     isLoading = NO;
 }
@@ -490,22 +483,12 @@
                                                            delegate:nil
                                                   cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"") otherButtonTitles:nil];
             [alert show];
-            [alert release];
         }
         [self.tableView reloadData];
     }
     [self updateApplicationIconBadgeNumber];
 }
 
-- (void)dealloc
-{	
-    [popoverController release];
-    [rootPopoverButtonItem release];
-	[stories release];
-	[loadingCell release];
-	[xmlData release];
-	[super dealloc];
-}
 
 
 #pragma mark -
@@ -537,7 +520,6 @@
                                                         message:ATLocalizedString(@"The feed appears to be actually offline. Please try again later", nil)
 													   delegate:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"ATLocalizable", @"") otherButtonTitles:nil];
     [alertView show];
-    [alertView release];
 }
 
 #pragma mark -

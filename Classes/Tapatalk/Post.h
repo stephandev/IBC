@@ -24,7 +24,7 @@
 @property (copy) NSString *title;
 @property (copy) NSString *content;
 @property (copy) NSString *author;
-@property (retain) NSDate *postDate;
+@property (strong) NSDate *postDate;
 @property (assign) BOOL userIsOnline;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;

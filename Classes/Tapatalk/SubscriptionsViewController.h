@@ -17,6 +17,6 @@
 
 @property (assign) BOOL isUnsubscribingTopic;
 @property (assign) NSInteger numberOfTopics;
-@property (retain) NSMutableArray *topics;
+@property (strong) NSMutableArray *topics;
 
 @end

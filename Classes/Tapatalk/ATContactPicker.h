@@ -19,12 +19,12 @@
 @interface ATContactPicker : UITableViewController {
     NSArray *groups;
     NSArray *groupTitles;
-    id <ATContactPickerDelegate> delegate;
+    id <ATContactPickerDelegate> __weak delegate;
 }
 
-@property (retain) NSArray *groups;
-@property (retain) NSArray *groupTitles;
-@property (assign) id <ATContactPickerDelegate> delegate;
+@property (strong) NSArray *groups;
+@property (strong) NSArray *groupTitles;
+@property (weak) id <ATContactPickerDelegate> delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style groups:(NSArray *)_groups titles:(NSArray *)titles;
 

@@ -41,33 +41,27 @@ static ImageCache *imageCache = nil;
 
 - (void)dealloc {
     [connection cancel];
-    [connection release];
-    [data release];
-    [super dealloc];
 }
 
 -(void)loadImageFromURL:(NSURL*)url {
     if (connection != nil) {
         [connection cancel];
-        [connection release];
         connection = nil;
     }
     if (data != nil) {
-        [data release];
         data = nil;
     }
     
     if (imageCache == nil) // lazily create image cache
         imageCache = [[ImageCache alloc] initWithMaxSize:2*1024*1024];  // 2 MB Image cache
     
-    [urlString release];
     urlString = [[url absoluteString] copy];
     UIImage *cachedImage = [imageCache imageForKey:urlString];
     if (cachedImage != nil) {
         if ([[self subviews] count] > 0) {
             [[[self subviews] objectAtIndex:0] removeFromSuperview];
         }
-        UIImageView *imageView = [[[UIImageView alloc] initWithImage:cachedImage] autorelease];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:cachedImage];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.autoresizingMask = 
 		UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -87,7 +81,6 @@ static ImageCache *imageCache = nil;
 	spinny.center = spinnyCenter;
     [spinny startAnimating];
     [self addSubview:spinny];
-    [spinny release];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url 
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy 
@@ -104,7 +97,6 @@ static ImageCache *imageCache = nil;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)aConnection {
-    [connection release];
     connection = nil;
     
     UIView *spinny = [self viewWithTag:SPINNY_TAG];
@@ -118,8 +110,8 @@ static ImageCache *imageCache = nil;
     
     [imageCache insertImage:image withSize:[data length] forKey:urlString];
     
-    UIImageView *imageView = [[[UIImageView alloc] 
-                               initWithImage:image] autorelease];
+    UIImageView *imageView = [[UIImageView alloc] 
+                               initWithImage:image];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.autoresizingMask = 
 	UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -127,7 +119,6 @@ static ImageCache *imageCache = nil;
     imageView.frame = self.bounds;
     [imageView setNeedsLayout]; // is this necessary if superview gets setNeedsLayout?
     [self setNeedsLayout];
-    [data release];
     data = nil;
 }
 

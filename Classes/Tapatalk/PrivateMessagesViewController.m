@@ -31,10 +31,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)dealloc {
-    self.boxes = nil;
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Private & public methods
@@ -67,9 +63,6 @@
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:messageController];
     navigationController.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;
     [self presentModalViewController:navigationController animated:YES];
-    [navigationController release];
-    [messageController release];
-    [dataSource release];
 }
 
 - (void)writeMessage {
@@ -148,7 +141,6 @@
             if (![[dictionary valueForKey:@"result"] boolValue]) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Error", nil) message:[dictionary valueForKey:@"result_text"] delegate:nil cancelButtonTitle:ATLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
                 [alertView show];
-                [alertView release];
             } 
             return;
         }
@@ -159,7 +151,6 @@
             Box *box = [[Box alloc] initWithDictionary:dict];
             unreadCount +=box.numberOfUnreadMessages;
             [self.boxes addObject:box];
-            [box release];
         }
         [self updateTabBarItemBadge];
         [self.tableView reloadData];
@@ -193,7 +184,6 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     UIBarButtonItem *writeMessageButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(writeMessage)];
     self.navigationItem.rightBarButtonItem = writeMessageButton;
-    [writeMessageButton release];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadBoxes) name:@"ATLoginWasSuccessful" object:nil];
     
 }
@@ -266,7 +256,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     if (![[User sharedUser] isLoggedIn]) {
@@ -336,7 +326,6 @@
     }
     BoxViewController *boxViewController = [[BoxViewController alloc] initWithNibName:@"BoxViewController" bundle:nil box:[self.boxes objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:boxViewController animated:YES];
-    [boxViewController release];
      
 }
 

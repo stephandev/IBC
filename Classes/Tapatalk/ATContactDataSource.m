@@ -25,9 +25,7 @@
 
 - (void)dealloc {
     self.messageController = nil;
-    self.contactModel = nil;
     self.items = nil;
-    [super dealloc];
 }
 
 

@@ -18,7 +18,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.messageLabel = [[[UILabel alloc] initWithFrame:CGRectMake(10.0, 160.0 - 21.0 -10.0, 140.0, 21.0)] autorelease];
+        self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 160.0 - 21.0 -10.0, 140.0, 21.0)];
         self.messageLabel.backgroundColor = [UIColor clearColor];
         self.messageLabel.textColor = [UIColor whiteColor];
         self.messageLabel.textAlignment = UITextAlignmentCenter;
@@ -30,7 +30,7 @@
         self.opaque = NO;
         self.alpha = 1.0;
         
-        self.spinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+        self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         
         self.spinner.frame = CGRectMake(self.bounds.size.width/2 - 30.0, self.bounds.size.height/2 - 30.0, 60.0, 60.0);
         [self addSubview:spinner];
@@ -43,7 +43,7 @@
                                                                                                    0.0, 
                                                                                                    160.0, 
                                                                                                    160.0)];
-    return [activityIndicator autorelease];
+    return activityIndicator;
 }
 
 - (void)dismiss {
@@ -58,10 +58,5 @@
     [self.spinner stopAnimating];
 }
 
-- (void)dealloc {
-    self.messageLabel = nil;
-    self.spinner = nil;
-    [super dealloc];
-}
 
 @end

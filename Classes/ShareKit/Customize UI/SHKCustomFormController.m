@@ -32,4 +32,24 @@
 
 // See http://getsharekit.com/customize/ for additional information on customizing
 
+// Change the cell border color to match
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // Change the background color to something yellow/paperishy
+    self.tableView.backgroundColor = [UIColor colorWithRed:233.0/255.0
+                                                     green:231.0/255.0
+                                                      blue:214.0/255.0
+                                                     alpha:1];
+    
+    // Change the cell border color to match
+    self.tableView.separatorColor = [UIColor colorWithRed:207.0/255.0
+                                                    green:204.0/255.0
+                                                     blue:199.0/255.0
+                                                    alpha:1];
+    
+}
+
+
 @end

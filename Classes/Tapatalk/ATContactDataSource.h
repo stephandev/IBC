@@ -14,10 +14,10 @@
 
 @interface ATContactDataSource : TTSectionedDataSource {
     ATContactModel* contactModel;
-    TTMessageController *messageController;
+    TTMessageController *__weak messageController;
 }
 
-@property (retain) ATContactModel* contactModel;
-@property (assign) TTMessageController *messageController;
+@property (strong) ATContactModel* contactModel;
+@property (weak) TTMessageController *messageController;
 
 @end

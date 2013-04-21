@@ -32,10 +32,8 @@
     self.userCanPost = NO;
     self.numberOfPosts = 0;
     self.hasNewPost = NO;
-    self.title = nil;
     self.topicID = 0;
     self.forumID = 0;
-    [super dealloc];
 }
 
 

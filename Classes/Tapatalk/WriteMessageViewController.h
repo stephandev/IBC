@@ -12,6 +12,6 @@
     NSMutableData *receivedData;
 }
 
-@property (retain) NSMutableData *receivedData;
+@property (strong) NSMutableData *receivedData;
 
 @end

@@ -56,7 +56,7 @@
 	    self.requestURL = [NSURL URLWithString:@"https://api.login.yahoo.com/oauth/v2/get_request_token"];
 	    self.accessURL = [NSURL URLWithString:@"https://api.login.yahoo.com/oauth/v2/get_token"];
 		
-		self.signatureProvider = [[[OAPlaintextSignatureProvider alloc] init] autorelease];
+		self.signatureProvider = [[OAPlaintextSignatureProvider alloc] init];
 	}	
 	return self;
 }
@@ -168,7 +168,6 @@
 					  didFailSelector:@selector(sendTicket:didFailWithError:)];	
 		
 		[fetcher start];
-		[oRequest release];
 		
 		// Notify delegate
 		[self sendDidStart];
@@ -195,7 +194,7 @@
 		// Look for oauth problems		
 		// TODO - I'd prefer to use regex for this but that would require OS4 or adding a regex library
 		NSError *error;
-		NSString *body = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+		NSString *body = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 				
 		// Expired token
 		if ([body rangeOfString:@"token_expired"].location != NSNotFound)

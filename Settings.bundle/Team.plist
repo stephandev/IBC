@@ -259,7 +259,7 @@ Tin Hau, Hong Kong S.A.R.</string>
 			<key>DoNotLocalize</key>
 			<string>YES</string>
 			<key>FooterText</key>
-			<string>Für die Richtigkeit der Inhalte wird nicht gehaftet.</string>
+			<string>Für die Richtigkeit der Inhalte wird nicht gehaftet. Mit freundlicher Unterstützung der Cocoaheads Usergroup Zürich.</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

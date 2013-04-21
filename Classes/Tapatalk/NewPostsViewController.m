@@ -20,10 +20,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -34,7 +30,7 @@
 }
 
 - (void)loadTopics {
-    NSString *xmlString = @"<?xml version=\"1.0\"?><methodCall><methodName>get_new_topic</methodName></methodCall>";
+    NSString *xmlString = @"<?xml version=\"1.0\"?><methodCall><methodName>get_latest_topic</methodName></methodCall>";
     [self sendRequestWithXMLString:xmlString cookies:YES delegate:self];
 }
 
@@ -52,7 +48,6 @@
         for (NSDictionary *dictionary in array) {
             Topic *topic = [[Topic alloc] initWithDictionary:dictionary];
             [self.topics addObject:topic];
-            [topic release];
         }
         [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     }
@@ -71,7 +66,6 @@
     self.navigationItem.rightBarButtonItem = nil;
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
-    [doneButton release];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -112,7 +106,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     cell.imageView.image = nil;
@@ -193,7 +187,6 @@
     
     DetailThreadController *detailThreadController = [[DetailThreadController alloc] initWithNibName:@"DetailThreadController" bundle:nil topic:(Topic *)[self.topics objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:detailThreadController animated:YES];
-    [detailThreadController release];
     
 }
 
@@ -201,7 +194,6 @@
     DetailThreadController *detailThreadController = [[DetailThreadController alloc] initWithNibName:@"DetailThreadController" bundle:nil topic:(Topic *)[self.topics objectAtIndex:indexPath.row]];
     [detailThreadController loadLastSite];
     [self.navigationController pushViewController:detailThreadController animated:YES];
-    [detailThreadController release];
 }
 
 @end

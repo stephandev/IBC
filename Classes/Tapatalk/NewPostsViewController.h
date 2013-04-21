@@ -16,7 +16,7 @@
     NSInteger numberOfTopics;
 }
 
-@property (retain) NSMutableArray *topics;
+@property (strong) NSMutableArray *topics;
 @property (assign) NSInteger numberOfTopics;
 
 @end

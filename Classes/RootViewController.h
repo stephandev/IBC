@@ -55,11 +55,11 @@
 	sqlite3 * database;
 }
 
-@property(retain) NSArray *stories;
+@property(strong) NSArray *stories;
 @property (readonly) BOOL shakeToReload;
-@property (readonly) NSDictionary * desiredKeys;
-@property (nonatomic, retain) UIPopoverController *popoverController;
-@property (nonatomic, retain) UIBarButtonItem *rootPopoverButtonItem;
+@property (weak, readonly) NSDictionary * desiredKeys;
+@property (nonatomic, strong) UIPopoverController *popoverController;
+@property (nonatomic, strong) UIBarButtonItem *rootPopoverButtonItem;
 
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;

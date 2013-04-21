@@ -15,7 +15,7 @@
     xmlDocPtr theXMLDoc;
 }
 
-@property (nonatomic, retain) NSDictionary *xPaths;
+@property (nonatomic, strong) NSDictionary *xPaths;
 
 + (ATMXMLUtilities *)xmlUtilitiesWithURLString:(NSString *)urlString;
 

@@ -31,9 +31,9 @@
 	NSString *secret;
 	NSString *sessionHandle;
 }
-@property(retain) NSString *key;
-@property(retain) NSString *secret;
-@property(retain) NSString *sessionHandle;
+@property(strong) NSString *key;
+@property(strong) NSString *secret;
+@property(strong) NSString *sessionHandle;
 
 - (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret;
 - (id)initWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix;

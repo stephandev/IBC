@@ -38,20 +38,20 @@
 
 const int SAVED_MESSAGES_SECTION_INDEX = 1;
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [savedStories release];
 	savedStories = [[NSKeyedUnarchiver unarchiveObjectWithFile:[self savedStoryFilepath]] mutableCopy];
+    
 }
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-	[savedStories release];
 	savedStories = [[NSKeyedUnarchiver unarchiveObjectWithFile:[self savedStoryFilepath]] mutableCopy];
     
 	UIBarButtonItem *safariButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(openSafari:)];
 	self.navigationItem.leftBarButtonItem = safariButton;
-	[safariButton release];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -90,7 +90,7 @@ const int SAVED_MESSAGES_SECTION_INDEX = 1;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 		cell.textLabel.font = [UIFont boldSystemFontOfSize:12];
    }
     
@@ -150,7 +150,6 @@ const int SAVED_MESSAGES_SECTION_INDEX = 1;
         detailController = [[detailClass alloc] initWithNibName:[self detailNibName] bundle:[NSBundle mainBundle] story:story];
         [detailController setShowSave:NO];
         [self.navigationController pushViewController:detailController animated:YES];
-        [detailController release];
     } else {
         detailController = [self.splitViewController.viewControllers lastObject];
         [detailController setStory:story];
@@ -345,7 +344,6 @@ const int SAVED_MESSAGES_SECTION_INDEX = 1;
 		[newsTable reloadData];
 	}
 	if (actionSheet == myMenu) {
-		[myMenu release];
 		myMenu = nil;
 	}
 }
@@ -353,9 +351,5 @@ const int SAVED_MESSAGES_SECTION_INDEX = 1;
 /*- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
 }*/
-- (void) dealloc {
-	[savedStories release];
-	[super dealloc];
-}
 
 @end

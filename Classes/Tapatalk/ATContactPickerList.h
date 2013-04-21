@@ -13,8 +13,8 @@
     NSMutableArray *letters;
 }
 
-@property (retain) NSMutableArray *sections;
-@property (retain) NSMutableArray *letters;
+@property (strong) NSMutableArray *sections;
+@property (strong) NSMutableArray *letters;
 
 - (id)initWithStyle:(UITableViewStyle)style contacts:(NSArray *)contacts;
 

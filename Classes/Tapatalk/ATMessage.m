@@ -28,8 +28,6 @@
         NSString *dateFormat = @"yyyyMMdd'T'HH:mm:ssZZZ";
         [dateFormatter setDateFormat:dateFormat];
         self.sentDate = [dateFormatter dateFromString:dateString];
-        [dateFormatter release];
-        [locale release];
         
         self.recipients = [NSMutableArray array];
         for (NSDictionary *dict in [dictionary valueForKey:@"msg_to"]) {
@@ -45,12 +43,6 @@
     self.boxID = 0;
     self.state = ATMessageStateNone;
     self.messageID = 0;
-    self.content = nil;
-    self.sender = nil;
-    self.subject = nil;
-    self.sentDate = nil;
-    self.recipients = nil;
-    [super dealloc];
 }
 
 @end

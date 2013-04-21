@@ -43,19 +43,14 @@ static ImageCache *imageCache = nil;
 
 - (void)dealloc {
     [connection cancel];
-    [connection release];
-    [data release];
-    [super dealloc];
 }
 
 -(void)loadImageFromURL:(NSURL*)url {
     if (connection != nil) {
         [connection cancel];
-        [connection release];
         connection = nil;
     }
     if (data != nil) {
-        [data release];
         data = nil;
     }
     
@@ -65,7 +60,6 @@ static ImageCache *imageCache = nil;
     UIView *spinnyDelete = [self viewWithTag:SPINNY_TAG];
     [spinnyDelete removeFromSuperview];
 
-    [urlString release];
     urlString = [[url absoluteString] copy];
     UIImage *cachedImage = [imageCache imageForKey:urlString];
     
@@ -89,7 +83,6 @@ static ImageCache *imageCache = nil;
 	spinny.center = spinnyCenter;
     [spinny startAnimating];
     [self addSubview:spinny];
-    [spinny release];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url 
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy 
@@ -106,7 +99,6 @@ static ImageCache *imageCache = nil;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)aConnection {
-    [connection release];
     connection = nil;
     
     UIView *spinny = [self viewWithTag:SPINNY_TAG];
@@ -125,19 +117,16 @@ static ImageCache *imageCache = nil;
     //self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
     [self setNeedsLayout];
-    [data release];
     data = nil;
 }
 
 - (void)connection:(NSURLConnection *)aConnection didFailWithError:(NSError *)error {
-    [connection release];
     connection = nil;
     
     UIView *spinny = [self viewWithTag:SPINNY_TAG];
     [spinny removeFromSuperview];
     
     [self setNeedsLayout];
-    [data release];
     data = nil;
 }
 

@@ -32,21 +32,15 @@
 -(id)initWithSize:(NSUInteger)sz Image:(UIImage*)anImage{
     if (self = [super init]) {
         size = sz;
-        timeStamp = [[NSDate date] retain];
-        image = [anImage retain];
+        timeStamp = [NSDate date];
+        image = anImage;
     }
     return self;
 }
 
 -(void)resetTimeStamp {
-    [timeStamp release];
-    timeStamp = [[NSDate date] retain];
+    timeStamp = [NSDate date];
 }
 
--(void) dealloc {
-    [timeStamp release];
-    [image release];
-    [super dealloc];
-}
 
 @end

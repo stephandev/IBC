@@ -29,9 +29,9 @@ typedef enum {
 
 @property (assign) ATMessageState state;
 @property (assign) NSInteger messageID;
-@property (retain) NSDate *sentDate;
+@property (strong) NSDate *sentDate;
 @property (copy) NSString *sender;
-@property (retain) NSMutableArray *recipients;
+@property (strong) NSMutableArray *recipients;
 @property (copy) NSString *subject;
 @property (copy) NSString *content;
 @property (assign) NSInteger boxID;

@@ -52,12 +52,7 @@
 
 - (void)dealloc {
     self.isSending = NO;
-    self.requestParameters = nil;
     self.isNotLoggedIn = NO;
-    self.usernameTextField = nil;
-    self.passwordTextField = nil;
-    self.receivedData = nil;
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,7 +69,6 @@
 - (void)showAlertViewWithErrorString:(NSString *)errorString {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Error", nil) message:errorString delegate:nil cancelButtonTitle:ATLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
     [alertView show];
-    [alertView release];
 }
 
 - (void)showAlertViewWithError:(NSError *)error {
@@ -91,13 +85,12 @@
 }
 
 - (void)parse {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    XMLRPCResponseParser *parser = [[XMLRPCResponseParser alloc] initWithData:self.receivedData delegate:self];
-    [parser parse];
-    [parser release];
-    self.receivedData = nil;
-    [pool release];
-}
+    @autoreleasepool {
+        XMLRPCResponseParser *parser = [[XMLRPCResponseParser alloc] initWithData:self.receivedData delegate:self];
+        [parser parse];
+        }
+    }
+
 
 - (void)sendRequestWithXMLString:(NSString *)xmlString cookies:(BOOL)cookies delegate:(id)delegate {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -105,7 +98,6 @@
     [dict setValue:[NSNumber numberWithBool:cookies] forKey:@"Cookies"];
     [dict setValue:delegate forKey:@"Delegate"];
     self.requestParameters = dict;
-    [dict release];
     NSURL *url = [NSURL URLWithString:[self tapatalkPluginPath]];
     NSData *data = [xmlString dataUsingEncoding:NSASCIIStringEncoding];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -157,9 +149,6 @@
     [usernameTextField becomeFirstResponder];
     
     [alertView show];
-    [alertView release];
-    [uField release];
-    [pField release];
 }
 
 - (void)logout {
@@ -208,7 +197,6 @@
                                               otherButtonTitles:NSLocalizedStringFromTable(@"Retry", @"ATLocalizable", @""), nil];
     alertView.tag = 1;
     [alertView show];
-    [alertView release];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ATLoginDidFail" object:nil];
 }
 
@@ -248,17 +236,32 @@
     [self.receivedData appendData:data];
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    unsigned long length = [self.receivedData length];
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    const unsigned long length = [self.receivedData length];
     NSLog(@"Received length: %lu", length);
-    if ([self.receivedData length] != 0) {
-        NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(parse) object:nil];
-        [thread start];
-        [thread release];
-    } else {
+    if ( length )
+    {
+        [self parse];
+    }
+    else
+    {
         [self.tableView reloadData];
     }
 }
+
+// This is optional code, which calls a new thread each time.
+
+//- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+//    unsigned long length = [self.receivedData length];
+//    NSLog(@"Received length: %lu", length);
+//    if ([self.receivedData length] != 0) {
+//        NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(parse) object:nil];
+//        [thread start];
+//    } else {
+//        [self.tableView reloadData];
+//    }
+//}
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     self.receivedData = nil;
@@ -284,8 +287,6 @@
     navigationController.navigationBar.tintColor = ATNavigationBarTintColor;
     [contactPicker tableView:contactPicker.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     [controller presentModalViewController:navigationController animated:YES];
-    [navigationController release];
-    [contactPicker release];
 }
 
 - (void)composeController:(TTMessageController *)controller didSendFields:(NSArray *)fields {
@@ -324,11 +325,9 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
     backButton.title = NSLocalizedStringFromTable(@"Back", @"ATLocalizable", @"");
     self.navigationItem.backBarButtonItem = backButton;
-    [backButton release];
     
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet)];
     self.navigationItem.rightBarButtonItem = rightBarButton;
-    [rightBarButton release];
 }
 
 - (void)viewDidUnload {

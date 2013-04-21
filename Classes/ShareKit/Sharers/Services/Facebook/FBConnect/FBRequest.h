@@ -21,13 +21,13 @@
 
 @interface FBRequest : NSObject {
   FBSession*            _session;
-  id<FBRequestDelegate> _delegate;
-  NSString*             _url;
+  id<FBRequestDelegate> __weak _delegate;
+  NSString*             __weak _url;
   NSString*             _method;
   id                    _userInfo;
-  NSMutableDictionary*  _params;
-  NSObject*             _dataParam;
-  NSDate*               _timestamp;
+  NSMutableDictionary*  __weak _params;
+  NSObject*             __weak _dataParam;
+  NSDate*               __weak _timestamp;
   NSURLConnection*      _connection;
   NSMutableData*        _responseText;
 }
@@ -52,12 +52,12 @@
  */
 + (FBRequest*)requestWithSession:(FBSession*)session delegate:(id<FBRequestDelegate>)delegate;
 
-@property(nonatomic,assign) id<FBRequestDelegate> delegate;
+@property(nonatomic,weak) id<FBRequestDelegate> delegate;
 
 /**
  * The URL which will be contacted to execute the request.
  */
-@property(nonatomic,readonly) NSString* url;
+@property(weak, nonatomic,readonly) NSString* url;
 
 /**
  * The API method which will be called.
@@ -67,7 +67,7 @@
 /**
  * An object used by the user of the request to help identify the meaning of the request.
  */
-@property(nonatomic,retain) id userInfo;
+@property(nonatomic,strong) id userInfo;
 
 /**
  * The dictionary of parameters to pass to the method.
@@ -75,7 +75,7 @@
  * These values in the dictionary will be converted to strings using the 
  * standard Objective-C object-to-string conversion facilities.
  */
-@property(nonatomic,readonly) NSDictionary* params;
+@property(weak, nonatomic,readonly) NSDictionary* params;
 
 /**
  * A data parameter.
@@ -83,12 +83,12 @@
  * Used for methods such as photos.upload, video.upload, events.create, and
  * events.edit.
  */
-@property(nonatomic,readonly) NSObject* dataParam;
+@property(weak, nonatomic,readonly) NSObject* dataParam;
 
 /**
  * The timestamp of when the request was sent to the server.
  */
-@property(nonatomic,readonly) NSDate* timestamp;
+@property(weak, nonatomic,readonly) NSDate* timestamp;
 
 /**
  * Indicates if the request has been sent and is awaiting a response.

@@ -49,7 +49,7 @@ extern NSString *const ATStoryContent;
 @property (readwrite, copy) NSString *author;
 @property (readwrite, copy) NSString *link;
 @property (readwrite, copy) NSString *thumbnailLink;
-@property (readonly, retain) NSArray *content;
+@property (readonly, strong) NSArray *content;
 
 - (void)addStoryPage:(NSString *)pageContent;
 

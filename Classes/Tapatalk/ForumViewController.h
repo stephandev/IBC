@@ -23,8 +23,8 @@
     BOOL searchButtonClicked;
 }
 
-@property (retain) UISearchBar *searchBar;
-@property (retain) NSMutableArray *sections;
-@property (retain) SearchTableViewController *searchTableViewController;
+@property (strong) UISearchBar *searchBar;
+@property (strong) NSMutableArray *sections;
+@property (strong) SearchTableViewController *searchTableViewController;
 
 @end

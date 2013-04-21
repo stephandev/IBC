@@ -22,12 +22,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    self.topicField = nil;
-    self.forum = nil;
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -41,14 +35,12 @@
     if ([self.topicField.text length] == 0 || [self.textView.text length] == 0) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"ATLocalizable", @"") message:NSLocalizedStringFromTable(@"No title or text entered", @"ATLocalizable", @"") delegate:nil cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"") otherButtonTitles:nil, nil];
         [alertView show];
-        [alertView release];
         return;
     }
     
     if (![[User sharedUser] isLoggedIn]) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"ATLocalizable", @"") message:NSLocalizedStringFromTable(@"Please login...", @"ATLocalizable", @"") delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"") otherButtonTitles:nil, nil];
         [alertView show];
-        [alertView release];
         return;
     }
     
@@ -64,7 +56,6 @@
     
     NSString *title = [translator translateStringForAT:self.topicField.text];
     NSString *content = [translator translateStringForAT:self.textView.text];
-    [translator release];
     NSURL *url = [NSURL URLWithString:ATTapatalkPluginPath];
     NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>new_topic</methodName><params><param><value><string>%i</string></value></param><param><value><base64>%@</base64></value></param><param><value><base64>%@</base64></value></param></params></methodCall>", self.forum.forumID, 
                            encodeString(title), 
@@ -93,7 +84,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.topicField = [[[UITextField alloc] initWithFrame:CGRectMake(10.0, 0, self.view.frame.size.width-20.0, 31)] autorelease];
+    self.topicField = [[UITextField alloc] initWithFrame:CGRectMake(10.0, 0, self.view.frame.size.width-20.0, 31)];
     self.topicField.placeholder = NSLocalizedStringFromTable(@"Title", @"ATLocalizable", @"");
     self.topicField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.textView resignFirstResponder];
@@ -122,7 +113,6 @@
     seperator.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     seperator.backgroundColor = [UIColor grayColor];
     [self.view addSubview:seperator];
-    [seperator release];
     self.navigationItem.title = NSLocalizedStringFromTable(@"New Topic", @"ATLocalizable", @"");
     self.navigationItem.rightBarButtonItem.title = NSLocalizedStringFromTable(@"Create", @"ATLocalizable", @"");
 }

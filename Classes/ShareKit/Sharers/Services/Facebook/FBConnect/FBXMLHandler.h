@@ -19,14 +19,14 @@
 @interface FBXMLHandler : NSObject <NSXMLParserDelegate> {
   NSMutableArray* _stack;
   NSMutableArray* _nameStack;
-  id _rootObject;
-  NSString* _rootName;
+  id __weak _rootObject;
+  NSString* __weak _rootName;
   NSMutableString* _chars;
-  NSError* _parseError;
+  NSError* __weak _parseError;
 }
 
-@property(nonatomic,readonly) id rootObject;
-@property(nonatomic,readonly) NSString* rootName;
-@property(nonatomic,readonly) NSError* parseError;
+@property(weak, nonatomic,readonly) id rootObject;
+@property(weak, nonatomic,readonly) NSString* rootName;
+@property(weak, nonatomic,readonly) NSError* parseError;
 
 @end

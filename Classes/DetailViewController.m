@@ -44,7 +44,6 @@
             Story *aStory = [[Story alloc] init];
             aStory.summary = [NSString stringWithFormat:@"<div style=\"text-align: center;\">%@</div>", NSLocalizedStringFromTable(@"Loading data", @"ATLocalizable", @"")];
             [self setStory:aStory];
-            [aStory release];
         }
         self.hidesBottomBarWhenPushed = [[NSUserDefaults standardUserDefaults] boolForKey:@"hideTabBar"];
 	}
@@ -59,7 +58,7 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
 {	
-    NSURL *loadURL = [[request URL] retain]; // retain the loadURL for use
+    NSURL *loadURL = [request URL]; // retain the loadURL for use
     NSString *loadURLString = [loadURL absoluteString];
     if (([[loadURL scheme] isEqualToString:@"http"] || [[loadURL scheme] isEqualToString:@"https"]) && (navigationType == UIWebViewNavigationTypeLinkClicked )) { // Check if the scheme is http/https. You can also use these for custom links to open parts of your application.
         NSString *extension = [loadURLString pathExtension];
@@ -82,8 +81,6 @@
             } else {
                 [self.navigationController pushViewController:galleryImageViewController animated:YES];
             }
-            [galleryImageViewController release];
-            [loadURL release];
             return NO;
         } else {
             ATWebViewController *webViewController = [[ATWebViewController alloc] initWithNibName:@"ATWebViewController" bundle:nil URL:loadURL];
@@ -92,12 +89,9 @@
             } else {
                 [self.navigationController pushViewController:webViewController animated:YES];
             }
-            [webViewController release];
-            [loadURL release];
             return NO;
         }
     }
-    [ loadURL release ];
     return YES; // URL is not http/https and should open in UIWebView
 }
 
@@ -167,10 +161,7 @@
         [items addObject:flexibleSpace];
         [items addObject:speichernButton];
         [toolbar setItems:items animated:NO];
-        [flexibleSpace release];
-        [items release];
     }
-    [speichernButton release];
 }
 
 - (IBAction)speichern:(id)sender {
@@ -191,7 +182,6 @@
     NSMutableArray *itemsArray = [toolbar.items mutableCopy];
     [itemsArray insertObject:barButtonItem atIndex:0];
     [toolbar setItems:itemsArray animated:NO];
-    [itemsArray release];
 }
 
 
@@ -201,7 +191,6 @@
     NSMutableArray *itemsArray = [toolbar.items mutableCopy];
     [itemsArray removeObject:barButtonItem];
     [toolbar setItems:itemsArray animated:NO];
-    [itemsArray release];
 }
 
 #pragma mark - Interfacerotation
@@ -220,12 +209,5 @@
     [webview loadHTMLString:[self htmlString] baseURL:nil];
 }
 
-- (void)dealloc {
-    self.activityIndicator = nil;
-    self.toolbar = nil;
-    [story release];
-	[myMenu release];
-	[super dealloc];
-}
 
 @end

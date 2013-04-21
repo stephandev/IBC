@@ -27,10 +27,6 @@
 - (void)dealloc
 {
     self.showLoadingCell = NO;
-    self.forumViewController = nil;
-    self.topics = nil;
-    self.receivedData = nil;
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,11 +38,11 @@
 }
 
 - (void)parse {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    XMLRPCResponseParser *parser = [XMLRPCResponseParser parserWithData:self.receivedData delegate:self];
-    [parser parse];
-    self.receivedData = nil;
-    [pool release];
+    @autoreleasepool {
+        XMLRPCResponseParser *parser = [XMLRPCResponseParser parserWithData:self.receivedData delegate:self];
+        [parser parse];
+        self.receivedData = nil;
+    }
 }
 
 #pragma mark-
@@ -78,7 +74,6 @@
     if ([self.receivedData length] != 0) {
         NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(parse) object:nil];
         [thread start];
-        [thread release];
     } else {
         [self.tableView reloadData];
     }
@@ -101,7 +96,6 @@
         for (NSDictionary *dict in array) {
             Topic *topic = [[Topic alloc] initWithDictionary:dict];
             [self.topics addObject:topic];
-            [topic release];
         }
         [self.tableView reloadData];
     }
@@ -181,7 +175,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     cell.imageView.image = nil;
@@ -260,14 +254,12 @@
     
     DetailThreadController *detailThreadController = [[DetailThreadController alloc] initWithNibName:@"DetailThreadController" bundle:nil topic:(Topic *)[self.topics objectAtIndex:indexPath.row]];
     [self.forumViewController.navigationController pushViewController:detailThreadController animated:YES];
-    [detailThreadController release];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     DetailThreadController *detailThreadController = [[DetailThreadController alloc] initWithNibName:@"DetailThreadController" bundle:nil topic:(Topic *)[self.topics objectAtIndex:indexPath.row]];
     [detailThreadController loadLastSite];
     [self.forumViewController.navigationController pushViewController:detailThreadController animated:YES];
-    [detailThreadController release];
 }
 
 @end

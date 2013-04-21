@@ -142,14 +142,14 @@
 	{
 		NSDictionary *formValues = [pendingForm formValues];
 		
-		OARequestParameter *username = [[[OARequestParameter alloc] initWithName:@"x_auth_username"
-																			 value:[formValues objectForKey:@"username"]] autorelease];
+		OARequestParameter *username = [[OARequestParameter alloc] initWithName:@"x_auth_username"
+																			 value:[formValues objectForKey:@"username"]];
 		
-		OARequestParameter *password = [[[OARequestParameter alloc] initWithName:@"x_auth_password"
-																			 value:[formValues objectForKey:@"password"]] autorelease];
+		OARequestParameter *password = [[OARequestParameter alloc] initWithName:@"x_auth_password"
+																			 value:[formValues objectForKey:@"password"]];
 		
-		OARequestParameter *mode = [[[OARequestParameter alloc] initWithName:@"x_auth_mode"
-																			 value:@"client_auth"] autorelease];
+		OARequestParameter *mode = [[OARequestParameter alloc] initWithName:@"x_auth_mode"
+																			 value:@"client_auth"];
 		
 		[oRequest setParameters:[NSArray arrayWithObjects:username, password, mode, nil]];
 	}
@@ -167,7 +167,7 @@
 		
 		else
 		{
-			NSString *response = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+			NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 			
 			SHKLog(@"tokenAccessTicket Response Body: %@", response);
 			
@@ -240,7 +240,7 @@
 	if (!quiet)
 		[[SHKActivityIndicator currentIndicator] displayActivity:SHKLocalizedString(@"Shortening URL...")];
 	
-	self.request = [[[SHKRequest alloc] initWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"http://api.bit.ly/v3/shorten?login=%@&apikey=%@&longUrl=%@&format=txt",
+	self.request = [[SHKRequest alloc] initWithURL:[NSURL URLWithString:[NSMutableString stringWithFormat:@"http://api.bit.ly/v3/shorten?login=%@&apikey=%@&longUrl=%@&format=txt",
 																		 SHKBitLyLogin,
 																		  SHKBitLyKey,																		  
 																		  SHKEncodeURL(item.URL)
@@ -249,7 +249,7 @@
 										  delegate:self
 								isFinishedSelector:@selector(shortenURLFinished:)
 											method:@"GET"
-										  autostart:YES] autorelease];
+										  autostart:YES];
 }
 
 - (void)shortenURLFinished:(SHKRequest *)aRequest
@@ -261,11 +261,11 @@
 	if (result == nil || [NSURL URLWithString:result] == nil)
 	{
 		// TODO - better error message
-		[[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Shorten URL Error")
+		[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Shorten URL Error")
 									 message:SHKLocalizedString(@"We could not shorten the URL.")
 									delegate:nil
 						   cancelButtonTitle:SHKLocalizedString(@"Continue")
-						   otherButtonTitles:nil] autorelease] show];
+						   otherButtonTitles:nil] show];
 		
 		[item setCustomValue:[NSString stringWithFormat:@"%@ %@", item.text ? item.text : item.title, [item.URL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] forKey:@"status"];
 	}
@@ -332,7 +332,6 @@
 																		 value:[item customValueForKey:@"status"]];
 	NSArray *params = [NSArray arrayWithObjects:statusParam, nil];
 	[oRequest setParameters:params];
-	[statusParam release];
 	
 	OAAsynchronousDataFetcher *fetcher = [OAAsynchronousDataFetcher asynchronousFetcherWithRequest:oRequest
 						 delegate:self
@@ -340,7 +339,6 @@
 				  didFailSelector:@selector(sendStatusTicket:didFailWithError:)];	
 
 	[fetcher start];
-	[oRequest release];
 }
 
 - (void)sendStatusTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data 
@@ -357,7 +355,7 @@
 		
 		// CREDIT: Oliver Drobnik
 		
-		NSString *string = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];		
+		NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];		
 		
 		// in case our makeshift parsing does not yield an error message
 		NSString *errorMessage = @"Unknown Error";		
@@ -417,7 +415,6 @@
 		NSDictionary * headerDict = [oRequest allHTTPHeaderFields];
 		NSString * oauthHeader = [NSString stringWithString:[headerDict valueForKey:@"Authorization"]];
 		
-		[oRequest release];
 		oRequest = nil;
 		
 		serviceURL = [NSURL URLWithString:@"http://img.ly/api/2/upload.xml"];
@@ -491,7 +488,6 @@
 	[fetcher start];
 	
 	
-	[oRequest release];
 }
 
 - (void)sendImageTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data {
@@ -501,7 +497,7 @@
 	if (ticket.didSucceed) {
 		[self sendDidFinish];
 		// Finished uploading Image, now need to posh the message and url in twitter
-		NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+		NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 		NSRange startingRange = [dataString rangeOfString:@"<url>" options:NSCaseInsensitiveSearch];
 		//NSLog(@"found start string at %d, len %d",startingRange.location,startingRange.length);
 		NSRange endingRange = [dataString rangeOfString:@"</url>" options:NSCaseInsensitiveSearch];
@@ -544,7 +540,6 @@
 				  didFailSelector:nil];	
 	
 	[fetcher start];
-	[oRequest release];
 }
 
 @end

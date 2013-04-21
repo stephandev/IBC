@@ -24,12 +24,12 @@
     BOOL isTotalTopicNumber;
 }
 
-@property (retain) SubForum *subForum;
-@property (retain) Topic *currentTopic;
-@property (retain) NSMutableArray *topics;
+@property (strong) SubForum *subForum;
+@property (strong) Topic *currentTopic;
+@property (strong) NSMutableArray *topics;
 @property (assign) BOOL isLoadingPinnedTopics;
 @property (assign) NSInteger numberOfTopics;
-@property (retain) NSMutableArray *dataArray;
+@property (strong) NSMutableArray *dataArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil subForum:(SubForum *)aSubForum;
 

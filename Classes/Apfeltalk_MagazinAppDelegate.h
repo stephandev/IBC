@@ -5,7 +5,7 @@
 //	IBC Magazin -- An iPhone Application for the site http://www.mtb-news.de
 //	Copyright (C) 2011	Stephan König (s dot konig at me dot com), Manuel Burghard
 //						Alexander von Below
-//						
+//
 //	This program is free software; you can redistribute it and/or
 //	modify it under the terms of the GNU General Public License
 //	as published by the Free Software Foundation; either version 2
@@ -23,13 +23,17 @@
 
 #import <UIKit/UIKit.h>
 #import "LivetickerNavigationController.h"
+#import "PNNotificationDelegate.h"
 
-@interface Apfeltalk_MagazinAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
+@class PNPushNotification;
+
+@interface Apfeltalk_MagazinAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate,PNNotificationDelegate> {
     UIWindow *window;
     UITabBarController *tabBarController;
     IBOutlet UINavigationController *newsController;
     IBOutlet UINavigationController *galleryController;
     IBOutlet LivetickerNavigationController *livetickerController;
+    PNPushNotification* pushNotifications;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

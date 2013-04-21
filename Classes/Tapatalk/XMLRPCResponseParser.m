@@ -27,7 +27,6 @@
         self.delegate = _delegate;
         NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
         self.xmlParser = parser;
-        [parser release];
         [self.xmlParser setDelegate:self];
         self.decodeBase64Data = YES;
     }
@@ -35,20 +34,12 @@
 }
 
 + (XMLRPCResponseParser *)parserWithData:(NSData *)data delegate:(id)_delegate {
-    return [[[XMLRPCResponseParser alloc] initWithData:data delegate:_delegate] autorelease];
+    return [[XMLRPCResponseParser alloc] initWithData:data delegate:_delegate];
 }
 
 - (void)dealloc {
     self.delegate = nil;
     self.decodeBase64Data = NO;
-    self.lastObjects = nil;
-    self.currentString = nil;
-    self.valueTypes = nil;
-    self.name = nil;
-    self.value = nil;
-    self.currentObject = nil;
-    self.xmlParser = nil;
-    [super dealloc];
 }
 
 - (BOOL)parse {

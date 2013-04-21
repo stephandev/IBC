@@ -16,7 +16,7 @@
     BOOL subForaOnly;
 }
 
-@property (retain) NSMutableArray *subFora;
+@property (strong) NSMutableArray *subFora;
 @property (copy) NSString *title;
 @property (assign) BOOL subForaOnly;
 @property (assign) NSInteger forumID;

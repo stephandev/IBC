@@ -9,16 +9,18 @@
 #import "User.h"
 #import "ForumViewController.h"
 
+
 @implementation User
 SYNTHESIZE_SINGLETON_FOR_CLASS(User)
 @synthesize loggedIn, username, password, friends, receivedData, isLoadingFriends;
 
-- (void)parse {
+- (void)parse: (NSData*)data
+{
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    XMLRPCResponseParser *parser = [[XMLRPCResponseParser alloc] initWithData:self.receivedData delegate:self];
+    
+    XMLRPCResponseParser *parser = [[XMLRPCResponseParser alloc] initWithData:data delegate:self];
     [parser parse];
     [parser release];
-    self.receivedData = nil;
     [pool release];
 }
 
@@ -162,10 +164,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User)
     [self.receivedData appendData:data];
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(parse) object:nil];
-    [thread start];
-    [thread release];
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    [self performSelectorInBackground:@selector(parse:) withObject:[NSData dataWithData:self.receivedData]];
+    //NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(parse:) object:[NSData dataWithData:self.receivedData]];
+    //[thread start];
+    //[thread retain];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {

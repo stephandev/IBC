@@ -88,7 +88,6 @@
 }
 
 - (void)dealloc {
-    [super dealloc];
 	[_progressLayer removeAllAnimations];
 	[_progressLayer removeFromSuperlayer];
 }

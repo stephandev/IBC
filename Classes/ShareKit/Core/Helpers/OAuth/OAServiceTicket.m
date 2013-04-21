@@ -36,7 +36,7 @@
 }
 
 - (id)initWithRequest:(OAMutableURLRequest *)aRequest response:(NSHTTPURLResponse *)aResponse data:(NSData *)aData didSucceed:(BOOL)success {
-    [super init];
+    if (!(self = [super init])) return nil;
     request = aRequest;
     response = aResponse;
 	data = aData;
@@ -50,7 +50,7 @@
 		return nil;
 	}
 	
-	return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+	return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 @end

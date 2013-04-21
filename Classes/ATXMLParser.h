@@ -44,7 +44,7 @@
 
 @interface ATXMLParser : NSObject <NSXMLParserDelegate>
 {
-    id <ATXMLParserDelegateProtocol> delegate;
+    id <ATXMLParserDelegateProtocol> __weak delegate;
     Class                            storyClass;
     id                               story;
     NSMutableArray                  *stories;
@@ -58,15 +58,15 @@
     NSXMLParser  *xmlParser;
 }
 
-@property(assign) id <ATXMLParserDelegateProtocol> delegate;
+@property(weak) id <ATXMLParserDelegateProtocol> delegate;
 @property(assign) Class storyClass;
-@property(retain) id story;
-@property(retain) NSMutableArray *stories;
+@property(strong) id story;
+@property(strong) NSMutableArray *stories;
 @property(copy) NSString *dateElementName;
-@property(retain) NSDateFormatter *dateFormatter;
-@property(retain) NSMutableString *currentContent;
-@property(retain) NSDictionary *desiredElementKeys;
-@property(retain) NSDictionary *htmlEntities;
+@property(strong) NSDateFormatter *dateFormatter;
+@property(strong) NSMutableString *currentContent;
+@property(strong) NSDictionary *desiredElementKeys;
+@property(strong) NSDictionary *htmlEntities;
 
 + (ATXMLParser *)parserWithURLString:(NSString *)urlString;
 + (ATXMLParser *)parserWithData:(NSData *)data;

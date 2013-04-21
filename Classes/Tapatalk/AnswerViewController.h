@@ -19,9 +19,9 @@
     
 }
 
-@property (retain) UITextView *textView;
-@property (retain) Topic *topic;
-@property (retain) NSMutableData *receivedData;
+@property (strong) UITextView *textView;
+@property (strong) Topic *topic;
+@property (strong) NSMutableData *receivedData;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil topic:(Topic *)aTopic;
 - (void)cancel;

@@ -26,10 +26,8 @@
 
 - (void)dealloc {
     self.topBar = nil;
-    self.url = nil;
     self.toolbar = nil;
     self.webView = nil;
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,7 +73,6 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIBarButtonItem *doneButton = [[UIBarButtonItem  alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancel)];
         [self.topBar setItems:[NSArray arrayWithObject:doneButton] animated:YES];
-        [doneButton release];
     }
 }
 
@@ -107,7 +104,6 @@
     [items insertObject:reloadButton atIndex:ReloadButtonIndex];
 
     [self.toolbar setItems:items];
-    [reloadButton release];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView {
@@ -120,7 +116,6 @@
     [items insertObject:reloadButton atIndex:ReloadButtonIndex];
     [self.toolbar setItems:items];
     self.url = self.webView.request.URL;
-    [reloadButton release];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -133,7 +128,6 @@
                                                                                  action:@selector(reload)];
     [items insertObject:reloadButton atIndex:ReloadButtonIndex];
     [self.toolbar setItems:items];
-    [reloadButton release];
 }
 
 @end

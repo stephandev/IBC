@@ -31,8 +31,8 @@
 }
 
 @property (nonatomic, readonly) NSUInteger size;
-@property (nonatomic, retain, readonly) NSDate *timeStamp;
-@property (nonatomic, retain, readonly) UIImage *image;
+@property (nonatomic, strong, readonly) NSDate *timeStamp;
+@property (nonatomic, strong, readonly) UIImage *image;
 
 -(id)initWithSize:(NSUInteger)sz Image:(UIImage*)anImage;
 -(void)resetTimeStamp;

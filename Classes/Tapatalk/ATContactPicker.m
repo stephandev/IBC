@@ -41,9 +41,6 @@
 
 - (void)dealloc {
     self.delegate = nil;
-    self.groupTitles = nil;
-    self.groups = nil;
-    [super dealloc];
 }
 
 #pragma mark -
@@ -64,7 +61,6 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
     self.navigationItem.rightBarButtonItem = cancelButton;
-    [cancelButton release];
 }
 
 - (void)viewDidUnload
@@ -120,7 +116,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     cell.textLabel.text = [self.groupTitles objectAtIndex:indexPath.row];
@@ -176,7 +172,6 @@
     contactPickerList.title = [self.groupTitles objectAtIndex:indexPath.row];
     contactPickerList.navigationItem.rightBarButtonItem = self.navigationItem.rightBarButtonItem;
     [self.navigationController pushViewController:contactPickerList animated:YES];
-    [contactPickerList release];
 }
 
 @end

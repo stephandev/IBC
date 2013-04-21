@@ -26,6 +26,8 @@
 #import <MessageUI/MessageUI.h>
 #import <Twitter/Twitter.h>
 
+SLComposeViewController *mySLComposerSheet;
+
 @interface DetailNews : DetailViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate, UIAlertViewDelegate> {
 	BOOL showSave;
 	UIActionSheet *loadingActionSheet;
@@ -34,7 +36,7 @@
 }
 
 @property (readwrite) BOOL showSave;
-@property (nonatomic, retain) IBOutlet UIPageControl *pageControl;
+@property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, assign) NSInteger currentPage;
 
 - (IBAction)changePage:(UIPageControl *)sender;

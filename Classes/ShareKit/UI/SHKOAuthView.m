@@ -33,21 +33,14 @@
 
 @synthesize webView, delegate, spinner;
 
-- (void)dealloc
-{
-	[webView release];
-	[delegate release];
-	[spinner release];
-	[super dealloc];
-}
 
 - (id)initWithURL:(NSURL *)authorizeURL delegate:(id)d
 {
     if ((self = [super initWithNibName:nil bundle:nil])) 
 	{
-		[self.navigationItem setLeftBarButtonItem:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+		[self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
 																								  target:self
-																								  action:@selector(cancel)] autorelease] animated:NO];
+																								  action:@selector(cancel)] animated:NO];
 		
 		self.delegate = d;
 		
@@ -55,7 +48,6 @@
 		webView.delegate = self;
 		webView.scalesPageToFit = YES;
 		webView.dataDetectorTypes = UIDataDetectorTypeNone;
-		[webView release];
 		
 		[webView loadRequest:[NSURLRequest requestWithURL:authorizeURL]];		
 		
@@ -133,9 +125,8 @@
 	if (spinner == nil)
 	{
 		self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-		[self.navigationItem setRightBarButtonItem:[[[UIBarButtonItem alloc] initWithCustomView:spinner] autorelease] animated:NO];
+		[self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:spinner] animated:NO];
 		spinner.hidesWhenStopped = YES;
-		[spinner release];
 	}
 	
 	[spinner startAnimating];

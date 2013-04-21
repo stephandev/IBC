@@ -37,9 +37,9 @@
 	UIActionSheet *myMenu;
 }
 
-@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
-@property (readwrite, retain) Story *story;
-@property (nonatomic, retain) IBOutlet ATActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) IBOutlet UIToolbar *toolbar;
+@property (readwrite, strong) Story *story;
+@property (nonatomic, strong) IBOutlet ATActivityIndicatorView *activityIndicator;
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle story:(Story *)newStory;
 - (NSUInteger)imageWidth;

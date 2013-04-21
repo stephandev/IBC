@@ -6,6 +6,8 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+
 #import "ATTextView.h"
 
 
@@ -82,7 +84,6 @@
     UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Quote", @"ATLocalizable", @"") action:@selector(quote:)];
     UIMenuController *menuCont = [UIMenuController sharedMenuController];
     menuCont.menuItems = [NSArray arrayWithObject:menuItem];
-    [menuItem release];
     return YES;
 }
 

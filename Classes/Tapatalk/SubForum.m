@@ -20,8 +20,4 @@
     return self;
 }
 
-- (void)dealloc {
-    self.description = nil;
-    [super dealloc];
-}
 @end

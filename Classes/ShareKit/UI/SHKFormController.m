@@ -39,15 +39,6 @@
 @synthesize autoSelect;
 
 
-- (void)dealloc 
-{
-	[delegate release];
-	[sections release];
-	[values release];
-	[activeField release];
-	
-    [super dealloc];
-}
 
 
 #pragma mark -
@@ -159,7 +150,7 @@
     SHKCustomFormFieldCell *cell = (SHKCustomFormFieldCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
-        cell = [[[SHKCustomFormFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[SHKCustomFormFieldCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 		cell.form = self;
 		
 		if (SHKFormFontColorRed != -1)		

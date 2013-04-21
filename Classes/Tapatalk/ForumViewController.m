@@ -130,7 +130,7 @@
         for (NSDictionary *dictionary in (NSArray *)dictionaryOrArray) {
             Section *section = [[Section alloc] initWithDictionary:dictionary];
             [self.sections addObject:section];
-            [section release];
+            [section retain];
         }
 
         [self.tableView reloadData];

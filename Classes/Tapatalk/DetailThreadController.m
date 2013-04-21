@@ -37,14 +37,8 @@ const CGFloat kDefaultRowHeight = 44.0;
 }
 
 - (void)dealloc {
-    self.username = nil;
-    self.answerCell = nil;
     self.site = 0;
     self.numberOfPosts = 0;
-    self.currentPost = nil;
-    self.posts = nil;
-    self.topic = nil;
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -153,17 +147,14 @@ const CGFloat kDefaultRowHeight = 44.0;
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"ATLocalizable", @"") message:NSLocalizedStringFromTable(@"Please login...", @"ATLocalizable", @"") delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"") otherButtonTitles:nil, nil];
         alertView.tag = 2;
         [alertView show];
-        [alertView release];
         return;
     } else if (!self.topic.userCanPost) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"ATLocalizable", @"") message:NSLocalizedStringFromTable(@"You don't have rights to answer", @"ATLocalizable", @"") delegate:nil cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"") otherButtonTitles:nil, nil];
         [alertView show];
-        [alertView release];
         return;
     } else if (self.topic.closed) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"ATLocalizable", @"") message:NSLocalizedStringFromTable(@"Topic is closed", @"ATLocalizable", @"") delegate:nil cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"") otherButtonTitles:nil, nil];
         [alertView show];
-        [alertView release];
         return;
     }
     
@@ -173,7 +164,6 @@ const CGFloat kDefaultRowHeight = 44.0;
     
     ContentTranslator *translator = [[ContentTranslator alloc] init];
     NSString *content = [translator translateStringForAT:answerCell.textView.text];
-    [translator release];
     NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>reply_post</methodName><params><param><value><string>%i</string></value></param><param><value><string>%i</string></value></param><param><value><base64>%@</base64></value></param><param><value><base64>%@</base64></value></param></params></methodCall>", self.topic.forumID, 
                            self.topic.topicID, 
                            encodeString(@"answer"), 
@@ -226,7 +216,6 @@ const CGFloat kDefaultRowHeight = 44.0;
     } else {
         [actionSheet showInView:self.view];
     }
-    [actionSheet release];
 }
 
 #pragma mark -
@@ -257,7 +246,6 @@ const CGFloat kDefaultRowHeight = 44.0;
                 if (self.topic.userCanPost && !self.topic.closed) {
                     answerViewController = [[AnswerViewController alloc] initWithNibName:@"AnswerViewController" bundle:nil topic:self.topic];
                     [self.navigationController pushViewController:answerViewController animated:YES];
-                    [answerViewController release]; 
                 }
                 break;
             default:
@@ -312,7 +300,6 @@ const CGFloat kDefaultRowHeight = 44.0;
                 else
                    alertView = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Error", nil) message:ATLocalizedString(@"There was an error when subscribing to the topic.", nil) delegate:nil cancelButtonTitle:ATLocalizedString(@"OK", nil) otherButtonTitles:nil, nil]; 
                 [alertView show];
-                [alertView release];
             }
             result = NO;
             return;
@@ -326,7 +313,6 @@ const CGFloat kDefaultRowHeight = 44.0;
                 NSLog(@"Error: %@", [dictionary valueForKey:@"result_text"]);
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Error", nil) message:ATLocalizedString(@"There was an error when replying to the topic.", nil) delegate:nil cancelButtonTitle:ATLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
                 [alertView show];
-                [alertView release];
             }
             return;
         }
@@ -338,7 +324,6 @@ const CGFloat kDefaultRowHeight = 44.0;
         for (NSDictionary *dict in array) {
             Post *post = [[Post alloc] initWithDictionary:dict];
             [self.posts addObject:post];
-            [post release];
         }
         [self dismissActivityIndicator];
         [self.tableView reloadData];
@@ -370,7 +355,6 @@ const CGFloat kDefaultRowHeight = 44.0;
         } else {
             [self.navigationController pushViewController:imageViewer animated:YES];
         }   
-        [imageViewer release];
         return NO;
     }
     
@@ -380,7 +364,6 @@ const CGFloat kDefaultRowHeight = 44.0;
     } else {
         [self.navigationController pushViewController:webViewController animated:YES];
     }
-    [webViewController release];
     
     return NO;
 }
@@ -394,7 +377,6 @@ const CGFloat kDefaultRowHeight = 44.0;
     self.navigationItem.hidesBackButton = YES;
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(endEditing:)];
     [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
-    [leftButton release];
 }
 
 - (void)contentCell:(ContentCell *)cell shouldQuoteText:(NSString *)quoteText ofObjectAtIndexPath:(NSIndexPath *)indexPath {
@@ -402,7 +384,6 @@ const CGFloat kDefaultRowHeight = 44.0;
     [self.navigationController pushViewController:answerViewController animated:YES];
     Post *post = [self.posts objectAtIndex:indexPath.section];
     answerViewController.textView.text = [NSString stringWithFormat:@"[QUOTE=%@;%ld]%@[/QUOTE]", post.author, (long)post.postID, quoteText];
-    [answerViewController release];
 }
 
 - (void)contentCellDidEndEditing:(ContentCell *)cell {
@@ -441,7 +422,6 @@ const CGFloat kDefaultRowHeight = 44.0;
             CGRect rect = view.detailTextLabel.frame;
             [menuController setTargetRect:CGRectMake(rect.size.width/2, rect.size.height, 0.0f, 0.0f) inView:view.textLabel];
             [menuController setMenuVisible:YES animated:YES];
-            [menuItem release];
         }
     }
 }
@@ -451,7 +431,6 @@ const CGFloat kDefaultRowHeight = 44.0;
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Error", nil) message:ATLocalizedString(@"Please login...", nil) delegate:self cancelButtonTitle:ATLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
         alertView.tag = 2;
         [alertView show];
-        [alertView release];
     } else {
         [self dismissModalViewControllerAnimated:NO];
         UITabBarController *tabBarController = [Apfeltalk_MagazinAppDelegate sharedAppDelegate].tabBarController;
@@ -484,13 +463,11 @@ const CGFloat kDefaultRowHeight = 44.0;
     leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
     
     [self.tableView addGestureRecognizer:leftSwipeGestureRecognizer];
-    [leftSwipeGestureRecognizer release];
     
     UISwipeGestureRecognizer *rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     
     [self.tableView addGestureRecognizer:rightSwipeGestureRecognizer];
-    [rightSwipeGestureRecognizer release];
     
 }
 
@@ -689,7 +666,6 @@ const CGFloat kDefaultRowHeight = 44.0;
                 
                 if (answerCell == nil) {
                     self.answerCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AnswerCellIdentifier  tableViewWidth:CGRectGetWidth(self.tableView.frame)]; 
-                    [answerCell release];
                 }
                 answerCell.textView.scrollEnabled = YES;
                 answerCell.textView.editable = YES;
@@ -699,10 +675,9 @@ const CGFloat kDefaultRowHeight = 44.0;
             
             UITableViewCell *authorCell = [tableView dequeueReusableCellWithIdentifier:AuthorCellIdentifier];
             if (authorCell == nil) {
-                authorCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:AuthorCellIdentifier] autorelease];
+                authorCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:AuthorCellIdentifier];
                 UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
                 [authorCell addGestureRecognizer:longPressGestureRecognizer];
-                [longPressGestureRecognizer release];
             }
             
             NSDateFormatter *outFormatter = [[NSDateFormatter alloc] init];
@@ -717,7 +692,6 @@ const CGFloat kDefaultRowHeight = 44.0;
             } else {
                 authorCell.imageView.image = [UIImage imageNamed:@"offline.png"];
             }
-            [outFormatter release];
             return authorCell;
             
             break;
@@ -725,7 +699,7 @@ const CGFloat kDefaultRowHeight = 44.0;
             if (indexPath.section == self.posts.count) {
                 UITableViewCell *actionsCell = [tableView dequeueReusableCellWithIdentifier:ActionsCellIdentifier];
                 if (actionsCell == nil) {
-                    actionsCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ActionsCellIdentifier] autorelease];
+                    actionsCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ActionsCellIdentifier];
                 }
                 actionsCell.textLabel.text = NSLocalizedStringFromTable(@"Answer", @"ATLocalizable", @"");
                 actionsCell.textLabel.textAlignment = UITextAlignmentCenter;
@@ -735,7 +709,7 @@ const CGFloat kDefaultRowHeight = 44.0;
             
             ContentCell *contentCell = (ContentCell *)[tableView dequeueReusableCellWithIdentifier:ContentCellIdentifier];
             if (contentCell == nil) {
-                contentCell = [[[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContentCellIdentifier  tableViewWidth:CGRectGetWidth(self.tableView.frame)] autorelease];
+                contentCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContentCellIdentifier  tableViewWidth:CGRectGetWidth(self.tableView.frame)];
                 contentCell.textView.scrollEnabled = NO;
                 contentCell.delegate = self;
             }
@@ -769,7 +743,6 @@ const CGFloat kDefaultRowHeight = 44.0;
     [self.navigationController pushViewController:answerViewController animated:YES];
     answerViewController.textView.text = answerCell.textView.text;
     answerCell.textView.text = @"";
-    [answerViewController release];
 }
 
 @end

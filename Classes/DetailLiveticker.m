@@ -56,15 +56,11 @@
         [items addObject:flexibleSpace];
         [items addObject:rightItem];
         [self.toolbar setItems:items];
-        [flexibleSpace release];
-        [items release];
     } else {
         [[self navigationItem] setRightBarButtonItem:rightItem];
         [livetickerController changeStory:segControl];
     }
 
-    [segControl release];
-    [rightItem release];
 
     [webview setDelegate:self];
     [self updateInterface];
@@ -105,7 +101,7 @@
     }
     
     Story           *theStory = self.story;
-    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setDateFormat:[NSString stringWithFormat:@"%@ HH:mm", [dateFormatter dateFormat]]];

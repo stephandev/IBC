@@ -39,22 +39,6 @@
 @synthesize authorizeResponseQueryVars;
 
 
-- (void)dealloc
-{
-	[consumerKey release];
-	[secretKey release];
-	[authorizeCallbackURL release];
-	[authorizeURL release];
-	[requestURL release];
-	[accessURL release];
-	[consumer release];
-	[requestToken release];
-	[accessToken release];
-	[signatureProvider release];
-	[authorizeResponseQueryVars release];
-	
-	[super dealloc];
-}
 
 
 
@@ -94,7 +78,6 @@
                 didFinishSelector:@selector(tokenRequestTicket:didFinishWithData:)
                   didFailSelector:@selector(tokenRequestTicket:didFailWithError:)];
 	[fetcher start];	
-	[oRequest release];
 }
 
 - (void)tokenRequestModifyRequest:(OAMutableURLRequest *)oRequest
@@ -114,7 +97,6 @@
 		NSString *responseBody = [[NSString alloc] initWithData:data
 													   encoding:NSUTF8StringEncoding];
 		self.requestToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
-		[responseBody release];
 		
 		[self tokenAuthorize];
 	}
@@ -128,11 +110,11 @@
 {
 	[[SHKActivityIndicator currentIndicator] hide];
 	
-	[[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Request Error")
+	[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Request Error")
 								 message:error!=nil?[error localizedDescription]:SHKLocalizedString(@"There was an error while sharing")
 								delegate:nil
 					   cancelButtonTitle:SHKLocalizedString(@"Close")
-					   otherButtonTitles:nil] autorelease] show];
+					   otherButtonTitles:nil] show];
 }
 
 
@@ -144,7 +126,6 @@
 	
 	SHKOAuthView *auth = [[SHKOAuthView alloc] initWithURL:url delegate:self];
 	[[SHK currentHelper] showViewController:auth];	
-	[auth release];
 }
 
 - (void)tokenAuthorizeView:(SHKOAuthView *)authView didFinishWithSuccess:(BOOL)success queryParams:(NSMutableDictionary *)queryParams error:(NSError *)error;
@@ -153,11 +134,11 @@
 	
 	if (!success)
 	{
-		[[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Authorize Error")
+		[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Authorize Error")
 									 message:error!=nil?[error localizedDescription]:SHKLocalizedString(@"There was an error while authorizing")
 									delegate:nil
 						   cancelButtonTitle:SHKLocalizedString(@"Close")
-						   otherButtonTitles:nil] autorelease] show];
+						   otherButtonTitles:nil] show];
 	}	
 	
 	else 
@@ -201,7 +182,6 @@
                 didFinishSelector:@selector(tokenAccessTicket:didFinishWithData:)
                   didFailSelector:@selector(tokenAccessTicket:didFailWithError:)];
 	[fetcher start];
-	[oRequest release];
 }
 
 - (void)tokenAccessModifyRequest:(OAMutableURLRequest *)oRequest
@@ -221,7 +201,6 @@
 		NSString *responseBody = [[NSString alloc] initWithData:data
 													   encoding:NSUTF8StringEncoding];
 		self.accessToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
-		[responseBody release];
 		
 		[self storeAccessToken];
 		
@@ -238,11 +217,11 @@
 {
 	[[SHKActivityIndicator currentIndicator] hide];
 	
-	[[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Access Error")
+	[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Access Error")
 								 message:error!=nil?[error localizedDescription]:SHKLocalizedString(@"There was an error while sharing")
 								delegate:nil
 					   cancelButtonTitle:SHKLocalizedString(@"Close")
-					   otherButtonTitles:nil] autorelease] show];
+					   otherButtonTitles:nil] show];
 }
 
 - (void)storeAccessToken
@@ -285,12 +264,11 @@
 			[storage deleteCookie:each];
 		}
 	}
-	[sharer release];
 }
 
 - (BOOL)restoreAccessToken
 {
-	self.consumer = [[[OAConsumer alloc] initWithKey:consumerKey secret:secretKey] autorelease];
+	self.consumer = [[OAConsumer alloc] initWithKey:consumerKey secret:secretKey];
 	
 	if (accessToken != nil)
 		return YES;
@@ -306,7 +284,7 @@
 	
 	if (key != nil && secret != nil)
 	{
-		self.accessToken = [[[OAToken alloc] initWithKey:key secret:secret] autorelease];
+		self.accessToken = [[OAToken alloc] initWithKey:key secret:secret];
 		
 		if (sessionHandle != nil)
 			accessToken.sessionHandle = sessionHandle;

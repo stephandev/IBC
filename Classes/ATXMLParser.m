@@ -40,12 +40,12 @@
 
 + (ATXMLParser *)parserWithURLString:(NSString *)urlString
 {
-    return [[[ATXMLParser alloc] initWithURLString:urlString] autorelease];
+    return [[ATXMLParser alloc] initWithURLString:urlString];
 }
 
 + (ATXMLParser *)parserWithData:(NSData *)data
 {
-	return [[[ATXMLParser alloc] initWithData:data] autorelease];
+	return [[ATXMLParser alloc] initWithData:data];
 }
 
 - (id) init
@@ -88,19 +88,6 @@
 
 
 
-- (void)dealloc
-{
-    [story release];
-    [stories release];
-    [dateElementName release];
-    [dateFormatter release];
-    [currentContent release];
-    [desiredElementKeys release];
-    [htmlEntities release];
-    [xmlParser release];
-	
-    [super dealloc];
-}
 
 
 
@@ -113,8 +100,6 @@
     [formatter setLocale:locale];
     [self setDateFormatter:formatter];
 
-    [locale release];
-    [formatter release];
 }
 
 
@@ -130,16 +115,16 @@
 - (void)parseInBackgroundWithDelegate:(id <ATXMLParserDelegateProtocol>)object
 {
     BOOL               result;
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
 
-    [self setDelegate:object];
+        [self setDelegate:object];
 
-    result = [self parse];
-    if ([(NSObject *)delegate respondsToSelector:@selector(parser:didFinishedSuccessfull:)])
-        [delegate parser:self didFinishedSuccessfull:result];
+        result = [self parse];
+        if ([(NSObject *)delegate respondsToSelector:@selector(parser:didFinishedSuccessfull:)])
+            [delegate parser:self didFinishedSuccessfull:result];
 
-    [pool release];
-}
+    }
+
 
 
 #pragma mark -
@@ -167,7 +152,6 @@
     {
         id storyObject = [[storyClass alloc] init];
         [self setStory:storyObject];
-        [storyObject release];
     }
     else if ([[desiredElementKeys allKeys] containsObject:elementName])
     {

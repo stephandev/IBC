@@ -18,8 +18,8 @@
     BOOL isDeletingMessage;
 }
 
-@property (retain) NSMutableArray *messages;
-@property (retain) Box *box;
+@property (strong) NSMutableArray *messages;
+@property (strong) Box *box;
 @property (assign) BOOL isDeletingMessage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil box:(Box *)aBox;

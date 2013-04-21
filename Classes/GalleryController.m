@@ -67,7 +67,6 @@
 		}
 	}
 
-	[stories release];
 	stories = thumbnailStories;
 }
 
@@ -80,7 +79,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     } else {
 		AsyncImageView* oldImage = (AsyncImageView*) [cell.contentView viewWithTag:999];
 		[oldImage removeFromSuperview];
@@ -92,7 +91,7 @@
 	previewImageFrame.origin.x=6;
 	previewImageFrame.origin.y=0;
 	
-	AsyncImageView* asyncImage = [[[AsyncImageView alloc] initWithFrame:previewImageFrame] autorelease];
+	AsyncImageView* asyncImage = [[AsyncImageView alloc] initWithFrame:previewImageFrame];
 	asyncImage.tag = 999;
 	Story *story = [stories objectAtIndex:indexPath.row];
 	NSString *urlString = [story thumbnailLink];
@@ -126,7 +125,6 @@
         detailController = [[DetailGallery alloc] initWithNibName:@"DetailView" bundle:[NSBundle mainBundle] 
                                                             story:story];
         [self.navigationController pushViewController:detailController animated:YES];
-        [detailController release];
     } else {
         detailController = [self.splitViewController.viewControllers lastObject];
         [detailController setStory:story];

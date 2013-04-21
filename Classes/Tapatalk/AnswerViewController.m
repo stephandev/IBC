@@ -30,13 +30,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    self.receivedData = nil;
-    self.textView = nil;
-    self.topic = nil;
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -53,7 +46,6 @@
     NSLog(@"%@: %@", ATLocalizedString(@"Error", nil), [error localizedDescription]);
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:ATLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
     [alertView show];
-    [alertView release];
 }
 
 - (void)cancel {
@@ -64,13 +56,11 @@
     if ([self.textView.text length] ==0) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"ATLocalizable", @"") message:NSLocalizedStringFromTable(@"No text entered", @"ATLocalizable", @"") delegate:nil cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"") otherButtonTitles:nil, nil];
         [alertView show];
-        [alertView release];
         return;
     }
     if (![[User sharedUser] isLoggedIn]) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", @"ATLocalizable", @"") message:NSLocalizedStringFromTable(@"Please login...", @"ATLocalizable", @"") delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"") otherButtonTitles:nil, nil];
         [alertView show];
-        [alertView release];
         return;
     }
     
@@ -84,7 +74,6 @@
     ContentTranslator *translator = [[ContentTranslator alloc] init];
     
     NSString *content = [translator translateStringForAT:self.textView.text];
-    [translator release];
     NSURL *url = [NSURL URLWithString:ATTapatalkPluginPath];
     NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>reply_post</methodName><params><param><value><string>%i</string></value></param><param><value><string>%i</string></value></param><param><value><base64>%@</base64></value></param><param><value><base64>%@</base64></value></param></params></methodCall>", self.topic.forumID, 
                            self.topic.topicID, 
@@ -130,7 +119,6 @@
             [[SHKActivityIndicator currentIndicator] hide];
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Error", nil) message:ATLocalizedString(@"An unexpected error occurred. Please try later.", nil) delegate:self cancelButtonTitle:ATLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
             [alertView show];
-            [alertView release];
         }
     }
 }
@@ -188,9 +176,7 @@
     UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"Cancel", @"ATLocalizable", @"") style:UIBarButtonItemStyleBordered target:self action:@selector(cancel)];
     self.navigationItem.leftBarButtonItem = leftBarButton;
     
-    [rightBarButton release];
-    [leftBarButton release];
-    self.textView = [[[UITextView alloc] init] autorelease];
+    self.textView = [[UITextView alloc] init];
     
     CGFloat keyboardHeight;
     

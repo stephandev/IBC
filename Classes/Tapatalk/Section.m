@@ -25,7 +25,6 @@
             for (NSDictionary *dict in array) {
                 SubForum *subForum = [[SubForum alloc] initWithDictionary:dict];
                 [self.subFora addObject:subForum];
-                [subForum release];
             }
         }
     }
@@ -35,8 +34,5 @@
 - (void)dealloc {
     self.subForaOnly = NO;
     self.forumID = 0;
-    self.subFora = nil;
-    self.title = nil;
-    [super dealloc];
 }
 @end

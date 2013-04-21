@@ -35,16 +35,6 @@
 @synthesize lastError;
 @synthesize quiet, pendingAction;
 
-- (void)dealloc
-{
-	[item release];
-	[shareDelegate release];
-	[pendingForm release];
-	[request release];
-	[lastError release];
-	
-	[super dealloc];
-}
 
 
 #pragma mark -
@@ -162,7 +152,7 @@
 	if (self = [super initWithNibName:nil bundle:nil])
 	{
 		self.shareDelegate = self;
-		self.item = [[[SHKItem alloc] init] autorelease];
+		self.item = [[SHKItem alloc] init];
 				
 		if ([self respondsToSelector:@selector(modalPresentationStyle)])
 			self.modalPresentationStyle = [SHK modalPresentationStyle];
@@ -188,7 +178,7 @@
 	// share and/or show UI
 	[controller share];
 	
-	return [controller autorelease];
+	return controller;
 }
 
 + (id)shareURL:(NSURL *)url
@@ -207,7 +197,7 @@
 	// share and/or show UI
 	[controller share];
 
-	return [controller autorelease];
+	return controller;
 }
 
 + (id)shareImage:(UIImage *)image title:(NSString *)title
@@ -221,7 +211,7 @@
 	// share and/or show UI
 	[controller share];
 	
-	return [controller autorelease];
+	return controller;
 }
 
 + (id)shareText:(NSString *)text
@@ -234,7 +224,7 @@
 	// share and/or show UI
 	[controller share];
 	
-	return [controller autorelease];
+	return controller;
 }
 
 + (id)shareFile:(NSData *)file filename:(NSString *)filename mimeType:(NSString *)mimeType title:(NSString *)title
@@ -250,7 +240,7 @@
 	// share and/or show UI
 	[controller share];
 	
-	return [controller autorelease];
+	return controller;
 }
 
 
@@ -310,11 +300,11 @@
 	{
 		if (!quiet)
 		{
-			[[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Offline")
+			[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Offline")
 										 message:SHKLocalizedString(@"You must be online to login to %@", [self sharerTitle])
 										delegate:nil
 							   cancelButtonTitle:SHKLocalizedString(@"Close")
-							   otherButtonTitles:nil] autorelease] show];
+							   otherButtonTitles:nil] show];
 		}
 		return;
 	}
@@ -345,7 +335,6 @@
 	form.autoSelect = YES;
 	
 	[[SHK currentHelper] showViewController:form];
-	[form release];
 }
 
 - (void)authorizationFormValidate:(SHKFormController *)form
@@ -426,7 +415,6 @@
 {	
 	SHKSharer *controller = [[self alloc] init];
 	BOOL isAuthorized = [controller isAuthorized];
-	[controller release];
 	
 	return isAuthorized;	
 }
@@ -582,11 +570,11 @@
 	
 	else if (!quiet)
 	{
-		[[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Offline")
+		[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Offline")
 									 message:SHKLocalizedString(@"You must be online in order to share with %@", [self sharerTitle])
 									delegate:nil
 						   cancelButtonTitle:SHKLocalizedString(@"Close")
-						   otherButtonTitles:nil] autorelease] show];
+						   otherButtonTitles:nil] show];
 		
 		return YES;
 	}
@@ -629,11 +617,11 @@
 	{
 		[[SHKActivityIndicator currentIndicator] hide];
 		
-		[[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Error")
+		[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Error")
 									 message:sharer.lastError!=nil?[sharer.lastError localizedDescription]:SHKLocalizedString(@"There was an error while sharing")
 									delegate:nil
 						   cancelButtonTitle:SHKLocalizedString(@"Close")
-						   otherButtonTitles:nil] autorelease] show];
+						   otherButtonTitles:nil] show];
 		
 		if (shouldRelogin)
 			[self promptAuthorization];

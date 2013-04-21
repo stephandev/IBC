@@ -44,14 +44,12 @@
     
     if ((encodedParameters == nil) || ([encodedParameters isEqualToString:@""]))
 	{
-		if (shouldfree)
-			[encodedParameters release];
 		
         return nil;
 	}
     
     NSArray *encodedParameterPairs = [encodedParameters componentsSeparatedByString:@"&"];
-    NSMutableArray *requestParameters = [[[NSMutableArray alloc] initWithCapacity:16] autorelease];
+    NSMutableArray *requestParameters = [[NSMutableArray alloc] initWithCapacity:16];
     
     for (NSString *encodedPair in encodedParameterPairs) 
 	{
@@ -62,8 +60,6 @@
     }
     
 	// Cleanup
-	if (shouldfree)
-		[encodedParameters release];
 	
     return requestParameters;
 }

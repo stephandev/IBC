@@ -14,8 +14,8 @@
     UILabel *messageLabel;
 }
 
-@property (retain) UIActivityIndicatorView *spinner;
-@property (retain) UILabel *messageLabel;
+@property (strong) UIActivityIndicatorView *spinner;
+@property (strong) UILabel *messageLabel;
 
 + (ATActivityIndicator *)activityIndicator;
 - (void)dismiss;

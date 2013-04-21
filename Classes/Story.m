@@ -53,7 +53,7 @@ NSString *const ATStoryContent = @"content";
 			[self setAuthor:[aDecoder decodeObjectForKey:ATStoryAuthor]];
 			[self setLink:[aDecoder decodeObjectForKey:ATStoryLink]];
 			[self setThumbnailLink:[aDecoder decodeObjectForKey:ATStoryThumbnailLink]];
-            storyContent = [[aDecoder decodeObjectForKey:ATStoryContent] retain];
+            storyContent = [aDecoder decodeObjectForKey:ATStoryContent];
 		}
 	}
 	return self;
@@ -69,18 +69,6 @@ NSString *const ATStoryContent = @"content";
     [aCoder encodeObject:[self content] forKey:ATStoryContent];
 }
 
-- (void) dealloc
-{
-	[title release];
-	[summary release];
-	[date release];
-	[author release];
-	[link release];
-	[thumbnailLink release];
-    [storyContent release];
-
-	[super dealloc];
-}
 
 - (void)addStoryPage:(NSString *)pageContent
 {

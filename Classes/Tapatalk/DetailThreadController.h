@@ -27,13 +27,13 @@
     NSString *username;
 }
 
-@property (retain) Topic *topic;
-@property (retain) NSMutableArray *posts;
-@property (retain) Post *currentPost;
+@property (strong) Topic *topic;
+@property (strong) NSMutableArray *posts;
+@property (strong) Post *currentPost;
 @property (assign) NSInteger site;
 @property (assign) NSInteger numberOfPosts;
-@property (retain) ContentCell *answerCell;
-@property (retain) NSString *username;
+@property (strong) ContentCell *answerCell;
+@property (strong) NSString *username;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil topic:(Topic *)aTopic;
 - (void)loadLastSite;

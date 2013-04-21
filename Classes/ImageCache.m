@@ -37,10 +37,6 @@
     return self;
 }
 
--(void)dealloc {
-    [myDictionary release];
-    [super dealloc];
-}
 
 -(void)insertImage:(UIImage*)image withSize:(NSUInteger)sz forKey:(NSString*)key{
     ImageCacheObject *object = [[ImageCacheObject alloc] initWithSize:sz Image:image];
@@ -61,7 +57,6 @@
         [myDictionary removeObjectForKey:oldestKey];
     }
     [myDictionary setObject:object forKey:key];
-    [object release];
 }
 
 -(UIImage*)imageForKey:(NSString*)key {

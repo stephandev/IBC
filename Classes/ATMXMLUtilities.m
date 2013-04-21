@@ -25,7 +25,7 @@ NSString *const kItemPagesLinksKey = @"pagesLinks";
 
 + (ATMXMLUtilities *)xmlUtilitiesWithURLString:(NSString *)urlString
 {
-    return [[[ATMXMLUtilities alloc] initWithURLString:urlString] autorelease];
+    return [[ATMXMLUtilities alloc] initWithURLString:urlString];
 }
 
 
@@ -38,7 +38,6 @@ NSString *const kItemPagesLinksKey = @"pagesLinks";
         theXMLDoc = htmlReadFile([urlString UTF8String], "ISO-8851-1", HTML_PARSE_RECOVER | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING);
         if (theXMLDoc == NULL)
         {
-            [self release];
             self = nil;
         }
 
@@ -53,9 +52,7 @@ NSString *const kItemPagesLinksKey = @"pagesLinks";
 {
     if (theXMLDoc)
         xmlFreeDoc(theXMLDoc);
-    self.xPaths = nil;
 
-    [super dealloc];
 }
 
 

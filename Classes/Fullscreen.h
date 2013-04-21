@@ -28,7 +28,7 @@
 	IBOutlet UIImageView *imageview;
 	NSString *string;
 }
-@property (nonatomic, retain) NSString *string;
+@property (nonatomic, strong) NSString *string;
 
 
 @end

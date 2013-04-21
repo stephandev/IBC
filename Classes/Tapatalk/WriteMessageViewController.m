@@ -21,10 +21,6 @@
     return self;
 }
 
-- (void)dealloc {
-    self.receivedData = nil;
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -95,7 +91,6 @@
     NSLog(@"%@", [error localizedDescription]);
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"Error", ATLocalizable, @"") message:[error localizedDescription] delegate:nil cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"") otherButtonTitles:nil, nil];
     [alertView show];
-    [alertView release];
 }
 
 #pragma mark - View lifecycle
@@ -109,8 +104,6 @@
     UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithTitle:ATLocalizedString(@"Send", nil) style:UIBarButtonItemStyleDone target:self action:@selector(send)];
     self.navigationItem.rightBarButtonItem = sendButton;
     
-    [sendButton release];
-    [cancelButton release];
 }
 
 - (void)viewDidUnload

@@ -37,13 +37,6 @@
 @synthesize counter;
 @synthesize hasAttachment;
 
-- (void)dealloc 
-{
-	[delegate release];
-	[textView release];
-	[counter release];
-    [super dealloc];
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil 
 {
@@ -165,7 +158,6 @@
 		[self.view addSubview:counter];
 		[self layoutCounter];
 		
-		[counter release];
 	}
 	
 	int count = (hasAttachment?115:140) - textView.text.length;
@@ -207,21 +199,21 @@
 {	
 	if (textView.text.length > (hasAttachment?115:140))
 	{
-		[[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Message is too long")
+		[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Message is too long")
 									 message:SHKLocalizedString(@"Twitter posts can only be 140 characters in length.")
 									delegate:nil
 						   cancelButtonTitle:SHKLocalizedString(@"Close")
-						   otherButtonTitles:nil] autorelease] show];
+						   otherButtonTitles:nil] show];
 		return;
 	}
 	
 	else if (textView.text.length == 0)
 	{
-		[[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Message is empty")
+		[[[UIAlertView alloc] initWithTitle:SHKLocalizedString(@"Message is empty")
 									 message:SHKLocalizedString(@"You must enter a message in order to post.")
 									delegate:nil
 						   cancelButtonTitle:SHKLocalizedString(@"Close")
-						   otherButtonTitles:nil] autorelease] show];
+						   otherButtonTitles:nil] show];
 		return;
 	}
 	

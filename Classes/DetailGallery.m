@@ -49,7 +49,6 @@
                                                              delegate:nil cancelButtonTitle:NSLocalizedString (@"OK", @"")
                                                     otherButtonTitles:nil];
 		[errorAlert show];
-		[errorAlert release];
         return;
     }
     
@@ -61,7 +60,6 @@
     } else {
         [self presentModalViewController:galleryImageViewController animated:YES];
     }
-    [galleryImageViewController release];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
@@ -72,16 +70,14 @@
     
     thumbLink = [thumbLink stringByReplacingOccurrencesOfString:@"/thumbs" withString:@""];
     
-    NSURL *loadURL = [[request URL] retain]; // retain the loadURL for use
+    NSURL *loadURL = [request URL]; // retain the loadURL for use
    
     if ([[loadURL absoluteString] isEqualToString:thumbLink]) {
         if (![webView isLoading]) {
             [self showFullscreen];
         }
-        [loadURL release];
         return NO;
     }
-    [loadURL release];
     return YES;
 }
 
@@ -124,7 +120,7 @@
 }
 
 - (NSString *) storyTitle {
-	if ([[self story] title] == @"")
+	if ([[[self story] title] isEqual: @""])
 		return NSLocalizedString (@"--Kein Titel--", @"");
 	else
 		return [[self story] title];
@@ -134,25 +130,22 @@
 void characters(	void * 	user_data,
 				const xmlChar * 	ch,
 				int  	len) {
-	NSMutableString *output = (NSMutableString *)user_data;
-	NSString *charString = (NSString *)CFStringCreateWithBytes(kCFAllocatorDefault,
+	NSMutableString *output = (NSMutableString *)CFBridgingRelease(user_data);
+	NSString *charString = (NSString *)CFBridgingRelease(CFStringCreateWithBytes(kCFAllocatorDefault,
 															   ch, len, 
-															   kCFStringEncodingUTF8, NO);
+															   kCFStringEncodingUTF8, NO));
 	[output appendString:charString];
-	[charString release];
 }
 
 void endElement (void *userData, const xmlChar *name) {
 	if (strcmp((const char *)name, "br") == 0) {
-		NSMutableString *output = (NSMutableString *)userData;
+		NSMutableString *output = (NSMutableString *)CFBridgingRelease(userData);
 		[output appendString:@"<br/>"];
 	}		
 }
 
 - (NSString *) htmlString
 {
-	[cleanedString release];
-	[elementString release];
 	cleanedString = [NSMutableString new];
 	//elementString = [NSMutableString new];
 	xmlSAXHandler saxInfo;
@@ -176,7 +169,7 @@ void endElement (void *userData, const xmlChar *name) {
 	htmlDocPtr	htmlDoc = htmlSAXParseDoc		(xmlCharString, 
 												 "utf-8", 
 												 &saxInfo, 
-												 cleanedString)	;
+												 CFBridgingRetain(cleanedString))	;
 		
 	free (htmlDoc);
 	//[elementString release];
@@ -184,7 +177,6 @@ void endElement (void *userData, const xmlChar *name) {
     
 	NSString *showpicture = [NSString stringWithFormat:@"<a href=\"%@\"><img src=\"%@\" alt=\"No Medium Picture.\" /></a> ", str, str];
 	NSString *resultString = [NSString stringWithFormat:@"%@%@", showpicture, cleanedString];
-	[cleanedString release];
     
 	cleanedString = nil;
     
@@ -209,7 +201,7 @@ void endElement (void *userData, const xmlChar *name) {
     
     [self.story setAuthor:author];
     Story           *theStory = self.story;
-    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setDateFormat:[NSString stringWithFormat:@"%@ HH:mm", [dateFormatter dateFormat]]];
@@ -254,7 +246,6 @@ void endElement (void *userData, const xmlChar *name) {
                                                              delegate:nil cancelButtonTitle:NSLocalizedString (@"OK", @"")
                                                     otherButtonTitles:nil];
 		[errorAlert show];
-		[errorAlert release];
         return;
     }
 
@@ -272,7 +263,6 @@ void endElement (void *userData, const xmlChar *name) {
             
             UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Picture saved", nil) message:ATLocalizedString(@"The picture has been saved to your library successfully", nil) delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"") otherButtonTitles:nil];
             [errorAlert show];
-            [errorAlert release];
             
         }
             break;
@@ -288,7 +278,6 @@ void endElement (void *userData, const xmlChar *name) {
     
 	// :below:20090920 This is only to placate the analyzer
 	if (actionSheet == myMenu) {
-		[myMenu release];
 		myMenu = nil;
 	}
 }
@@ -313,8 +302,6 @@ void endElement (void *userData, const xmlChar *name) {
                                                            delegate:nil cancelButtonTitle:NSLocalizedString (@"OK", @"")
                                                   otherButtonTitles:nil];
         [alertView show];
-        [alertView release];
-        [controller release];
         return;
     }
     
@@ -323,7 +310,6 @@ void endElement (void *userData, const xmlChar *name) {
     
 	[controller setSubject:[story title]];
 	[self presentModalViewController:controller animated:YES];
-	[controller release];
 }
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
@@ -331,10 +317,5 @@ void endElement (void *userData, const xmlChar *name) {
 	[self dismissModalViewControllerAnimated:YES];
 }
 
-- (void) dealloc
-{
-	[cleanedString release];
-	[super dealloc];
-}
 
 @end

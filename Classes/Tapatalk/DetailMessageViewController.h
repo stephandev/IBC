@@ -17,6 +17,6 @@
     ATMessage *message;
 }
 
-@property (retain) ATMessage *message;
+@property (strong) ATMessage *message;
 
 @end

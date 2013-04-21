@@ -51,8 +51,7 @@
 - (void)setTimer:(NSTimer *)newTimer {
     if (timer != newTimer) {
         [timer invalidate];
-        [timer release];
-        timer = [newTimer retain];
+        timer = newTimer;
     }
 }
 
@@ -94,12 +93,10 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIBarButtonItem *doneButton = [[UIBarButtonItem  alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancel)];
         [self.topBar setItems:[NSArray arrayWithObject:doneButton] animated:YES];
-        [doneButton release];
     }
 	NSURLRequest* request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
 	NSURLConnection* conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 	[conn start];
-    [conn release];
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];
     [self willAnimateRotationToInterfaceOrientation:self.interfaceOrientation duration:0];
 }
@@ -111,7 +108,6 @@
 	expectedLength = length;
 	if (length == NSURLResponseUnknownLength)
 		length = 1024;
-	[responseData release];
 	responseData = [[NSMutableData alloc] initWithCapacity:length];
 }
 
@@ -129,7 +125,6 @@
 										  cancelButtonTitle:NSLocalizedStringFromTable(@"OK", @"ATLocalizable", @"")
 										  otherButtonTitles:nil];
 	[alert show];
-	[alert release];
 	
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
@@ -138,7 +133,6 @@
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 	
 	[bar removeFromSuperview];
-	[bar release];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         self.imageView.image = [UIImage imageWithData:responseData];
@@ -154,13 +148,13 @@
         myScrollView.tag = 999;
         myScrollView.delegate = self;
     } else {
-        self.imageView = [[[UIImageView alloc] initWithImage:[UIImage imageWithData:responseData]] autorelease];
+        self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:responseData]];
         [imageView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
         [imageView setContentMode:UIViewContentModeScaleAspectFit];
         [imageView setTag:2];
         
-        self.myScrollView = [[[UIScrollView alloc] initWithFrame:imageView.frame] autorelease];
+        self.myScrollView = [[UIScrollView alloc] initWithFrame:imageView.frame];
         myScrollView.contentSize = CGSizeMake(imageView.frame.size.width, imageView.frame.size.height);
         myScrollView.maximumZoomScale = 4.0;
         myScrollView.minimumZoomScale = 1.0;
@@ -173,7 +167,6 @@
     }
 	UITapGestureRecognizer* tapRegonizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideBars)];
 	[myScrollView addGestureRecognizer:tapRegonizer];
-	[tapRegonizer release];
     [self.view addSubview:self.topBar];
 }
 
@@ -240,10 +233,6 @@
 - (void)dealloc {
     self.topBar = nil;
     [self setTimer:nil];
-    [navBarColor release];
-	[myScrollView release];
-	[imageView release];
-    [super dealloc];
 }
 
 

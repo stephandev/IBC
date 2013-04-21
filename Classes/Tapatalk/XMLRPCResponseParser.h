@@ -34,20 +34,20 @@ typedef enum {
     
     BOOL decodeBase64Data;
     
-    id <XMLRPCResponseParserDelegate> delegate;
+    id <XMLRPCResponseParserDelegate> __weak delegate;
     
 }
 
-@property (retain) NSXMLParser *xmlParser;
-@property (retain) NSMutableString *currentString;
-@property (retain) NSString *name;
-@property (retain) NSObject *value;
-@property (retain) NSArray *valueTypes;
-@property (retain) NSObject *currentObject;
-@property (retain) NSMutableArray *lastObjects;
+@property (strong) NSXMLParser *xmlParser;
+@property (strong) NSMutableString *currentString;
+@property (strong) NSString *name;
+@property (strong) NSObject *value;
+@property (strong) NSArray *valueTypes;
+@property (strong) NSObject *currentObject;
+@property (strong) NSMutableArray *lastObjects;
 @property (assign) BOOL decodeBase64Data; // Default is YES
 
-@property (assign) id <XMLRPCResponseParserDelegate> delegate;
+@property (weak) id <XMLRPCResponseParserDelegate> delegate;
 
 
 - (id)initWithData:(NSData *)data delegate:(id)delegate;

@@ -20,8 +20,8 @@
 @class FBSession;
 
 @interface FBDialog : UIView <UIWebViewDelegate> {
-  id<FBDialogDelegate> _delegate;
-  FBSession* _session;
+  id<FBDialogDelegate> __weak _delegate;
+  FBSession* __weak _session;
   NSURL* _loadingURL;
   UIWebView* _webView;
   UIActivityIndicatorView* _spinner;
@@ -35,12 +35,12 @@
 /**
  * The delegate.
  */
-@property(nonatomic,assign) id<FBDialogDelegate> delegate;
+@property(nonatomic,weak) id<FBDialogDelegate> delegate;
 
 /**
  * The session for which the login is taking place.
  */
-@property(nonatomic,assign) FBSession* session;
+@property(weak, nonatomic) FBSession* session;
 
 /**
  * The title that is shown in the header atop the view;

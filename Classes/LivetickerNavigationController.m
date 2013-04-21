@@ -38,8 +38,7 @@
     if (timer != reloadTimer)
     {
         [reloadTimer invalidate];
-        [reloadTimer release];
-        reloadTimer = [timer retain];
+        reloadTimer = timer;
     }
     
 }
@@ -51,10 +50,8 @@
     if (reloadTimer)
     {
         [reloadTimer invalidate];
-        [reloadTimer release];
     }
 
-    [super dealloc];
 }
 
 

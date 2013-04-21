@@ -31,13 +31,8 @@
 
 - (void)dealloc
 {
-    self.dataArray = nil;
     self.numberOfTopics = 0;
     self.isLoadingPinnedTopics = NO;
-    self.subForum = nil;
-    self.currentTopic = nil;
-    self.topics = nil;
-    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,7 +65,6 @@
 - (void)newTopic {
     NewTopicViewController *newTopicViewController = [[NewTopicViewController alloc] initWithNibName:@"NewTopicViewController" bundle:nil forum:self.subForum];
     [self.navigationController pushViewController:newTopicViewController animated:YES];
-    [newTopicViewController release];
 }
 
 - (void)showActionSheet {
@@ -83,7 +77,6 @@
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"ATLocalizable", @"") destructiveButtonTitle:nil otherButtonTitles:buttonTitle, NSLocalizedStringFromTable(@"New", @"ATLocalizable", @""), nil];
     [actionSheet showFromTabBar:self.navigationController.tabBarController.tabBar];
-    [actionSheet release];
 }
 
 #pragma mark -
@@ -133,7 +126,6 @@
         for (NSDictionary *dict in array) {
             Topic *topic = [[Topic alloc] initWithDictionary:dict];
             [self.dataArray addObject:topic];
-            [topic release];
         }
     }
     if (isLoadingPinnedTopics) {
@@ -224,7 +216,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     cell.imageView.image = nil;
@@ -320,7 +312,6 @@
                                                                                     subForum:(SubForum *)[self.subForum.subFora objectAtIndex:indexPath.row]];
         
         [self.navigationController pushViewController:subForumController animated:YES];
-        [subForumController release];
         return;
     }
     
@@ -333,7 +324,6 @@
     //Ausblenden der TabBar im beim lesen der Themen
     //detailThreadController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detailThreadController animated:YES];
-    [detailThreadController release];
     
 }
 
@@ -341,7 +331,6 @@
     DetailThreadController *detailThreadController = [[DetailThreadController alloc] initWithNibName:@"DetailThreadController" bundle:nil topic:(Topic *)[self.topics objectAtIndex:indexPath.row]];
     [detailThreadController loadLastSite];
     [self.navigationController pushViewController:detailThreadController animated:YES];
-    [detailThreadController release];
 }
 
 @end

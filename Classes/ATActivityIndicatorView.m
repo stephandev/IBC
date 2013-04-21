@@ -31,7 +31,7 @@
 
     if (self)
     {
-        indicatorView = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+        indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         indicatorView.center = CGPointMake(frame.size.width / 2.0, frame.size.height / 2.0 + 2.0);
 
         self.opaque = NO;

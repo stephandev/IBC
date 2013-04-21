@@ -28,11 +28,11 @@
     
 }
 
-@property (retain) NSMutableData *receivedData;
-@property (retain) UITextField *usernameTextField;
-@property (retain) UITextField *passwordTextField;
+@property (strong) NSMutableData *receivedData;
+@property (strong) UITextField *usernameTextField;
+@property (strong) UITextField *passwordTextField;
 @property (assign) BOOL isNotLoggedIn;
-@property (retain) NSDictionary *requestParameters;
+@property (strong) NSDictionary *requestParameters;
 @property (assign) BOOL isSending;
 
 - (NSString *)tapatalkPluginPath;

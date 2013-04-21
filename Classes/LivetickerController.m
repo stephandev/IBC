@@ -39,16 +39,6 @@
 @synthesize rootPopoverButtonItem, popoverController, xmlData;
 
 
-- (void)dealloc
-{
-    [xmlData release];
-    [popoverController release];
-    [rootPopoverButtonItem release];
-    [stories release];
-    [shortTimeFormatter release];
-
-    [super dealloc];
-}
 
 
 
@@ -61,7 +51,6 @@
 
     [formatter setDateFormat:@"HH:mm"];
     [self setShortTimeFormatter:formatter];
-    [formatter release];
 
     [self setStories:[NSArray array]];
 }
@@ -86,7 +75,6 @@
 	long long length = [response expectedContentLength];
 	if (length == NSURLResponseUnknownLength)
 		length = 1024;
-	[xmlData release];
 	xmlData = [[NSMutableData alloc] initWithCapacity:length];
 }
 
@@ -101,8 +89,6 @@
     [parser setStoryClass:[Story self]];
     [parser setDelegate:self];
     [parser parse];
-    [parser release];	
-	[xmlData release];
 	xmlData = nil;
 }
 
@@ -124,7 +110,6 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.apfeltalk.de/live/?feed=rss2"]];
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [connection start];
-    [connection release];
 }
 
 
@@ -185,12 +170,12 @@
 
     if (cell == nil)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdendifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdendifier];
 
         CGRect contentRect = [[cell contentView] frame];
 
         // Creating the time label
-        timeLabel = [[[UILabel alloc] initWithFrame:CGRectMake(10.0, 0.0, 50.0, contentRect.size.height)] autorelease];
+        timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 0.0, 50.0, contentRect.size.height)];
         [timeLabel setTag:TIMELABEL_TAG];
         [timeLabel setFont:[UIFont boldSystemFontOfSize:12.0]];
         [timeLabel setTextColor:[UIColor colorWithRed:0.22 green:0.33 blue:0.53 alpha:1.0]];
@@ -202,7 +187,7 @@
         [[cell contentView] addSubview:timeLabel];
 
         // Creating the title label
-        titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(50.0, 0.0, contentRect.size.width - 60.0, contentRect.size.height)] autorelease];
+        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(50.0, 0.0, contentRect.size.width - 60.0, contentRect.size.height)];
         [titleLabel setTag:TITLELABEL_TAG];
         [titleLabel setFont:[UIFont boldSystemFontOfSize:12.0]];
         [titleLabel setTextColor:[UIColor blackColor]];
@@ -287,7 +272,6 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         detailController = [[DetailLiveticker alloc] initWithNibName:@"DetailView" bundle:nil story:story];
         [[self navigationController] pushViewController:detailController animated:YES];
-        [detailController release];
     } else {
         detailController = [self.splitViewController.viewControllers lastObject];
         [detailController setStory:story];
@@ -337,7 +321,6 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Content konnte nicht geladen werden", nil) message:@"Der Feed ist im Moment nicht verfügbar. Versuche es bitte später erneut."
 													   delegate:nil cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"ATLocalizable", @"") otherButtonTitles:nil];
     [alertView show];
-    [alertView release];
     [[[[loadingCell.subviews lastObject] subviews] lastObject] removeFromSuperview];
     [loadingCell.textLabel setText:NSLocalizedStringFromTable(@"LivetickerController.noTicker", @"ATLocalizable", @"")];
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];

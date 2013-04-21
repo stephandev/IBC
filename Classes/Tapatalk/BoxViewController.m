@@ -33,9 +33,6 @@
 
 - (void)dealloc {
     self.isDeletingMessage = NO;
-    self.box = nil;
-    self.messages = nil;
-    [super dealloc];
 }
 
 #pragma mark -
@@ -52,13 +49,10 @@
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:messageController];
     navigationController.navigationBar.tintColor = self.navigationController.navigationBar.tintColor;
     [self presentModalViewController:navigationController animated:YES];
-    [navigationController release];
-    [messageController release];
-    [dataSource release];
 }
 
 - (void)loadMessages {
-    NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>get_box</methodName><params><param><value><string>%ld</string></value></param></params></methodCall>", self.box.boxID ];
+    NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>get_box</methodName><params><param><value><string>%ld</string></value></param></params></methodCall>", (long)self.box.boxID ];
     [self sendRequestWithXMLString:xmlString cookies:YES delegate:self];
 }
 
@@ -170,7 +164,6 @@
             ATMessage *message = [[ATMessage alloc] initWithDictionary:dict];
             message.boxID = self.box.boxID;
             [self.messages addObject:message];
-            [message release];
         }
         [self.tableView reloadData];
     }
@@ -184,7 +177,6 @@
     self.title = self.box.title;
     UIBarButtonItem *writeMessageButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(writeMessage)];
     self.navigationItem.rightBarButtonItem = writeMessageButton;
-    [writeMessageButton release];
 }
 
 - (void)viewDidUnload
@@ -246,7 +238,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     ATMessage *message = [self.messages objectAtIndex:indexPath.row];
@@ -280,7 +272,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         ATMessage *message = [self.messages objectAtIndex:indexPath.row];
-        NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>delete_message</methodName><params><param><value><string>%ld</string></value></param><param><value><string>%ld</string></value></param></params></methodCall>", message.messageID, self.box.boxID];
+        NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>delete_message</methodName><params><param><value><string>%ld</string></value></param><param><value><string>%ld</string></value></param></params></methodCall>", (long)message.messageID, (long)self.box.boxID];
         
         self.isDeletingMessage = YES;
         [[SHKActivityIndicator currentIndicator] displayActivity:ATLocalizedString(@"Deleting message", nil)];
@@ -320,7 +312,6 @@
         [(PrivateMessagesViewController *)[self.navigationController.viewControllers objectAtIndex:0] updateTabBarItemBadge];
     }
     [self.navigationController pushViewController:detailMessageViewController animated:YES];
-    [detailMessageViewController release];
      
 }
 

@@ -64,13 +64,13 @@ typedef enum
 	SHKSharerPendingAction pendingAction;
 }
 
-@property (nonatomic, retain)	id<SHKSharerDelegate> shareDelegate;
+@property (nonatomic, strong)	id<SHKSharerDelegate> shareDelegate;
 
-@property (retain) SHKItem *item;
-@property (retain) SHKFormController *pendingForm;
-@property (retain) SHKRequest *request;
+@property (strong) SHKItem *item;
+@property (strong) SHKFormController *pendingForm;
+@property (strong) SHKRequest *request;
 
-@property (nonatomic, retain) NSError *lastError;
+@property (nonatomic, strong) NSError *lastError;
 
 @property BOOL quiet;
 @property SHKSharerPendingAction pendingAction;

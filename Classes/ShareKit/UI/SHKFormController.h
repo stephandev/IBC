@@ -45,16 +45,16 @@
 	BOOL autoSelect;
 }
 
-@property (retain) id delegate;
+@property (strong) id delegate;
 @property SEL validateSelector;
 @property SEL saveSelector;
 
-@property (retain) NSMutableArray *sections;
-@property (retain) NSMutableDictionary *values;
+@property (strong) NSMutableArray *sections;
+@property (strong) NSMutableDictionary *values;
 
 @property CGFloat labelWidth;
 
-@property (nonatomic, retain) UITextField *activeField;
+@property (nonatomic, strong) UITextField *activeField;
 
 @property BOOL autoSelect;
 

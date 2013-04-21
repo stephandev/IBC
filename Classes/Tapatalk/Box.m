@@ -30,10 +30,8 @@
 
 - (void)dealloc {
     self.boxID = 0;
-    self.title = nil;
     self.numberOfMessages = 0;
     self.numberOfUnreadMessages = 0;
     self.boxType = BoxTypeNone;
-    [super dealloc];
 }
 @end

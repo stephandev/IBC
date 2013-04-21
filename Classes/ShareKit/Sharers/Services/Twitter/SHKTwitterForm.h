@@ -36,9 +36,9 @@
 	BOOL hasAttachment;
 }
 
-@property (nonatomic, retain) id delegate;
-@property (nonatomic, retain) UITextView *textView;
-@property (nonatomic, retain) UILabel *counter;
+@property (nonatomic, strong) id delegate;
+@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) UILabel *counter;
 @property BOOL hasAttachment;
 
 - (void)layoutCounter;

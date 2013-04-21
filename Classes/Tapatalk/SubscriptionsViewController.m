@@ -31,10 +31,8 @@
 }
 
 - (void)dealloc {
-    self.topics = nil;
     self.numberOfTopics = 0;
     self.isUnsubscribingTopic = NO;
-    [super dealloc];
 }
 
 #pragma mark -
@@ -73,7 +71,6 @@
     [super viewWillAppear:animated];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
     [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
-    [doneButton release];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -103,7 +100,6 @@
             if (![[dictionary valueForKey:@"result"] boolValue]) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Error", nil) message:ATLocalizedString(@"There was an error when unsubscribing the topic.", nil) delegate:nil cancelButtonTitle:ATLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
                 [alertView show];
-                [alertView release];
             }
             return;
         }
@@ -114,7 +110,6 @@
         for (NSDictionary *dict in array) {
             Topic *topic = [[Topic alloc] initWithDictionary:dict];
             [self.topics addObject:topic];
-            [topic release];
         }
     }
     [self.tableView reloadData];
@@ -161,7 +156,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     cell.imageView.image = nil;
@@ -241,7 +236,6 @@
     
     DetailThreadController *detailThreadController = [[DetailThreadController alloc] initWithNibName:@"DetailThreadController" bundle:nil topic:(Topic *)[self.topics objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:detailThreadController animated:YES];
-    [detailThreadController release];
     
 }
 
@@ -249,7 +243,6 @@
     DetailThreadController *detailThreadController = [[DetailThreadController alloc] initWithNibName:@"DetailThreadController" bundle:nil topic:(Topic *)[self.topics objectAtIndex:indexPath.row]];
     [detailThreadController loadLastSite];
     [self.navigationController pushViewController:detailThreadController animated:YES];
-    [detailThreadController release];
 }
 
 @end

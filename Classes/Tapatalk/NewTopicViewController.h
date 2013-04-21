@@ -15,8 +15,8 @@
     UITextField *topicField;
 }
 
-@property (retain) SubForum *forum;
-@property (retain) UITextField *topicField;
+@property (strong) SubForum *forum;
+@property (strong) UITextField *topicField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forum:(SubForum *)aForum;
 

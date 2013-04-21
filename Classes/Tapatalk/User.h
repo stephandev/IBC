@@ -34,5 +34,6 @@
 
 - (void)login;
 - (void)logout;
+- (oneway void)release; \
 
 @end

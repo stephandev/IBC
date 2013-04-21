@@ -5,7 +5,7 @@
 //	IBC Magazin -- An iPhone Application for the site http://www.mtb-news.de
 //	Copyright (C) 2011	Stephan König (s dot konig at me dot com), Manuel Burghard
 //						Alexander von Below
-//						
+//
 //	This program is free software; you can redistribute it and/or
 //	modify it under the terms of the GNU General Public License
 //	as published by the Free Software Foundation; either version 2
@@ -29,50 +29,83 @@
 #import "DetailLiveticker.h"
 #import "User.h"
 #import "NewsController.h"
-
+#import "iRate.h"
 
 @implementation Apfeltalk_MagazinAppDelegate
 
 @synthesize window;
 @synthesize tabBarController;
 
+#pragma mark Application lifecycle
+
+-(void)initialize
+
+{
+    
+    //set the bundle ID. normally you wouldn't need to do this
+    //as it is picked up automatically from your Info.plist file
+    //but we want to test with an app that's actually on the store
+    
+  
+    
+    [iRate sharedInstance].applicationBundleID = @"com.ibc.de";
+    [iRate sharedInstance].onlyPromptIfLatestVersion = NO;
+    [iRate sharedInstance].daysUntilPrompt = 2; //5
+    [iRate sharedInstance].usesUntilPrompt = 15; //15
+    
+    //enable preview mode
+    
+    [iRate sharedInstance].previewMode = NO;
+        
+}
+
 #pragma mark - Push Notifications
 
 //These are the methods for push notifications and it's registration
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+//    /* NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
+     
+//     NSString* alert = [[userInfo objectForKey:@"aps"] objectForKey:@"id"];
+     
+//     NSLog(@"Nachricht: %@", alert);*/
+//    NSLog(@"receive pn: %@",userInfo);
+//    [pushNotifications receivePushNotification:userInfo];
     
-    NSString* alert = [[userInfo objectForKey:@"aps"] objectForKey:@"id"];
+    
+//}
 
-    NSLog(@"Nachricht: %@", alert);
-    
+-(void) notificationReceived:(NSString*) title message:(NSString*)message badget:(NSString*) count target:(NSString*)target
+{
+    NSLog(@"Message %@ %@  %@ %@", title,message,count,target);
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSLog(@"Device Token=%@", deviceToken);
+//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    /* NSLog(@"Device Token=%@", deviceToken);
+     
+     NSUInteger theCount = [deviceToken length];
+     NSMutableString *theString = [NSMutableString stringWithCapacity:2 * theCount];
+     unsigned char const *theBytes = [deviceToken bytes];
+     
+     for(NSUInteger i = 0; i < theCount; ++i) {
+     [theString appendFormat:@"%2.2x", theBytes[i]];
+     }
+     
+     NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/client/register?devicetype=4&appkey=23e409isaeroakse23sae0&deviceid=%@&devicekey=%@",theString,theString];
+     NSLog(@"APNS URL : %@",url);
+     
+     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+     
+     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *urlResponse, NSData *data, NSError *error) {
+     if (error) {
+     NSLog(@"Error: %@", error);
+     }
+     else
+     NSLog(@"Status: %@", urlResponse);
+     }];*/
+//    [pushNotifications setPushToken:deviceToken];
     
-    NSUInteger theCount = [deviceToken length];
-    NSMutableString *theString = [NSMutableString stringWithCapacity:2 * theCount];
-    unsigned char const *theBytes = [deviceToken bytes];
-    
-    for(NSUInteger i = 0; i < theCount; ++i) {
-        [theString appendFormat:@"%2.2x", theBytes[i]];
-    }
-    
-    NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/client/register?devicetype=4&appkey=23e409isaeroakse23sae0&deviceid=%@&devicekey=%@",theString,theString];
-    NSLog(@"APNS URL : %@",url);
-    
-    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *urlResponse, NSData *data, NSError *error) {
-        if (error) {
-            NSLog(@"Error: %@", error);
-        }
-        else
-            NSLog(@"Status: %@", urlResponse);
-    }];
-}
+//}
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
     NSLog(@"Error bei der Registrierung");
@@ -88,7 +121,7 @@
 
 + (Apfeltalk_MagazinAppDelegate*)sharedAppDelegate {
     return (Apfeltalk_MagazinAppDelegate *)[[UIApplication sharedApplication] delegate];
-} 
+}
 
 - (void)setApplicationDefaults {
 	// !!!:below:20091018 This is not the Apple recommended way of doing this!
@@ -97,8 +130,8 @@
 		// no default values have been set, create them here based on what's in our Settings bundle info
 		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"vibrateOnReload"];
         [[NSUserDefaults standardUserDefaults] setFloat:12 forKey:@"fontSize"];
-	} 
-
+	}
+    
     if ([[NSUserDefaults standardUserDefaults] floatForKey:@"fontSize"] == 0) {
         [[NSUserDefaults standardUserDefaults] setFloat:12 forKey:@"fontSize"];
     }
@@ -128,17 +161,22 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
 	[self.window makeKeyAndVisible];
     
+    
+    
     //This is the start of the general push notification settings
 	// Let the device know we want to receive push notifications
-	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+	//[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+    // (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+//    pushNotifications = [[PNPushNotification alloc] initWithDelegate:self];
+//    [pushNotifications setAppKey:@"23e409isaeroakse23sae0"];
     
     //Clear the notification center when the app has been launched
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-
+    
     
     // Add the tab bar controller's current view as a subview of the window
     
@@ -155,7 +193,7 @@
         [splitviewController release];
         [detailNews release];
         
-
+        
         
         tabBarController.viewControllers = viewControllers;
     }

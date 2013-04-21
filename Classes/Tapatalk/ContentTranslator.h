@@ -15,8 +15,8 @@
     NSDictionary *atTranslations;
 }
 
-@property (retain) NSDictionary *iOSTranslations;
-@property (retain) NSDictionary *atTranslations;
+@property (strong) NSDictionary *iOSTranslations;
+@property (strong) NSDictionary *atTranslations;
 
 + (ContentTranslator *)contentTranslator;
 - (NSString *)translateStringForiOS:(NSString *)aString;

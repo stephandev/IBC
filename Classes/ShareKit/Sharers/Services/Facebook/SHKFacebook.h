@@ -45,8 +45,8 @@ typedef enum
 	FBLoginDialog *login;
 }
 
-@property (retain) FBSession *session;
+@property (strong) FBSession *session;
 @property SHKFacebookPendingAction pendingFacebookAction;
-@property (retain) FBLoginDialog *login;
+@property (strong) FBLoginDialog *login;
 
 @end

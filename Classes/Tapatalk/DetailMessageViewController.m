@@ -22,10 +22,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)dealloc {
-    self.message = nil;
-    [super dealloc];
-}
 
 #pragma mark -
 
@@ -111,7 +107,6 @@
             if (![[dictionary valueForKey:@"result"] boolValue]) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Error", nil) message:[dictionary valueForKey:@"result_text"] delegate:nil cancelButtonTitle:ATLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
                 [alertView show];
-                [alertView release];
             } 
             return;
         }
@@ -238,7 +233,7 @@
             ContentCell *contentCell = (ContentCell *)[tableView dequeueReusableCellWithIdentifier:ContentCellIdentifier];
             
             if (contentCell == nil) {
-                contentCell = [[[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContentCellIdentifier tableViewWidth:CGRectGetWidth(self.tableView.frame)] autorelease];
+                contentCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContentCellIdentifier tableViewWidth:CGRectGetWidth(self.tableView.frame)];
             }
             
             contentCell.textView.text = self.message.content;
@@ -247,7 +242,7 @@
         } case 1: {
             UITableViewCell *answerCell = [tableView dequeueReusableCellWithIdentifier:AnswerCellIdentifier];
             if (answerCell == nil) {
-                answerCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AnswerCellIdentifier] autorelease];
+                answerCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AnswerCellIdentifier];
             }
             
             answerCell.textLabel.text = ATLocalizedString(@"Answer", nil);
@@ -289,9 +284,6 @@
             
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:messageController];
             [self presentModalViewController:navigationController animated:YES];
-            [navigationController release];
-            [messageController release];
-            [dataSource release];
             break;
         } default: {
             break;

@@ -65,13 +65,6 @@ BOOL SHKinit;
 	}
 }
 
-- (void)dealloc
-{
-	[currentView release];
-	[pendingView release];
-	[offlineQueue release];
-	[super dealloc];
-}
 
 
 
@@ -129,7 +122,7 @@ BOOL SHKinit;
 	// Wrap the view in a nav controller if not already
 	if (![vc respondsToSelector:@selector(pushViewController:animated:)])
 	{
-		UINavigationController *nav = [[[UINavigationController alloc] initWithRootViewController:vc] autorelease];
+		UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
 		
 		if ([nav respondsToSelector:@selector(modalPresentationStyle)])
 			nav.modalPresentationStyle = [SHK modalPresentationStyle];
@@ -281,15 +274,15 @@ BOOL SHKinit;
 		switch (type) 
 		{
 			case SHKShareTypeURL:
-				favoriteSharers = [NSArray arrayWithObjects:@"SHKTwitter",@"SHKFacebook",@"SHKReadItLater",nil];
+				favoriteSharers = [NSArray arrayWithObjects:nil];
 				break;
 				
 			case SHKShareTypeImage:
-				favoriteSharers = [NSArray arrayWithObjects:@"SHKMail",@"SHKFacebook",@"SHKCopy",nil];
+				favoriteSharers = [NSArray arrayWithObjects:@"SHKMail",@"SHKCopy",nil];
 				break;
 				
 			case SHKShareTypeText:
-				favoriteSharers = [NSArray arrayWithObjects:@"SHKMail",@"SHKTwitter",@"SHKFacebook", nil];
+				favoriteSharers = [NSArray arrayWithObjects:@"SHKMail", nil];
 				break;
 				
 			case SHKShareTypeFile:
@@ -317,7 +310,6 @@ BOOL SHKinit;
 		favoriteSharers = [NSArray arrayWithArray:newFavs];
 		[self setFavorites:favoriteSharers forType:type];
 		
-		[newFavs release];
 	}
 	
 	return favoriteSharers;
@@ -335,7 +327,6 @@ BOOL SHKinit;
 	
 	[self setFavorites:favs forType:type];
 	
-	[favs release];
 }
 
 + (void)setFavorites:(NSArray *)favs forType:(SHKShareType)type
@@ -418,7 +409,7 @@ static NSDictionary *sharersDictionary = nil;
 + (NSDictionary *)sharersDictionary
 {
 	if (sharersDictionary == nil)
-		sharersDictionary = [[NSDictionary dictionaryWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"SHKSharers.plist"]] retain];
+		sharersDictionary = [NSDictionary dictionaryWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"SHKSharers.plist"]];
 	
 	return sharersDictionary;
 }
@@ -448,7 +439,7 @@ static NSDictionary *sharersDictionary = nil;
 
 + (NSMutableArray *)getOfflineQueueList
 {
-	return [[[NSArray arrayWithContentsOfFile:[self offlineQueueListPath]] mutableCopy] autorelease];
+	return [[NSArray arrayWithContentsOfFile:[self offlineQueueListPath]] mutableCopy];
 }
 
 + (void)saveOfflineQueueList:(NSMutableArray *)queueList
@@ -459,7 +450,7 @@ static NSDictionary *sharersDictionary = nil;
 + (BOOL)addToOfflineQueue:(SHKItem *)item forSharer:(NSString *)sharerId
 {
 	// Generate a unique id for the share to use when saving associated files
-	NSString *uid = [NSString stringWithFormat:@"%@-%i-%i-%i", sharerId, item.shareType, [[NSDate date] timeIntervalSince1970], arc4random()];
+	NSString *uid = [NSString stringWithFormat:@"%@-%i-%f-%i", sharerId, item.shareType, [[NSDate date] timeIntervalSince1970], arc4random()];
 	
 	
 	// store image in cache
@@ -518,7 +509,7 @@ static NSDictionary *sharersDictionary = nil;
 			uid = [entry objectForKey:@"uid"];
 			
 			if (item != nil && sharerId != nil)
-				[helper.offlineQueue addOperation:[[[SHKOfflineSharer alloc] initWithItem:item forSharer:sharerId uid:uid] autorelease]];
+				[helper.offlineQueue addOperation:[[SHKOfflineSharer alloc] initWithItem:item forSharer:sharerId uid:uid]];
 		}
 		
 		// Remove offline queue - TODO: only do this if everything was successful?
@@ -533,7 +524,7 @@ static NSDictionary *sharersDictionary = nil;
 {
 	va_list args;
     va_start(args, description);
-    NSString *string = [[[NSString alloc] initWithFormat:description arguments:args] autorelease];
+    NSString *string = [[NSString alloc] initWithFormat:description arguments:args];
     va_end(args);
 	
 	return [NSError errorWithDomain:@"sharekit" code:1 userInfo:[NSDictionary dictionaryWithObject:string forKey:NSLocalizedDescriptionKey]];
@@ -577,13 +568,12 @@ NSString * SHKEncodeURL(NSURL * value)
 	if (value == nil)
 		return @"";
 	
-	NSString *result = (NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+	NSString *result = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
                                                                            (CFStringRef)value.absoluteString,
                                                                            NULL,
 																		   CFSTR("!*'();:@&=+$,/?%#[]"),
-                                                                           kCFStringEncodingUTF8);
-    [result autorelease];
-	return result;
+                                                                           kCFStringEncodingUTF8));
+    	return result;
 }
 
 void SHKSwizzle(Class c, SEL orig, SEL newClassName)
@@ -603,7 +593,7 @@ NSString* SHKLocalizedString(NSString* key, ...)
 	
 	va_list args;
     va_start(args, key);
-    NSString *string = [[[NSString alloc] initWithFormat:localizedStringFormat arguments:args] autorelease];
+    NSString *string = [[NSString alloc] initWithFormat:localizedStringFormat arguments:args];
     va_end(args);
 	
 	return string;

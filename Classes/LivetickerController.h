@@ -38,12 +38,12 @@
     BOOL didFirstLoad;
 }
 
-@property(retain) NSMutableData *xmlData;
-@property(retain) NSArray *stories;
-@property(retain) NSDateFormatter *shortTimeFormatter;
+@property(strong) NSMutableData *xmlData;
+@property(strong) NSArray *stories;
+@property(strong) NSDateFormatter *shortTimeFormatter;
 @property(assign) NSUInteger displayedStoryIndex;
-@property (nonatomic, retain) UIPopoverController *popoverController;
-@property (nonatomic, retain) UIBarButtonItem *rootPopoverButtonItem;
+@property (nonatomic, strong) UIPopoverController *popoverController;
+@property (nonatomic, strong) UIBarButtonItem *rootPopoverButtonItem;
 
 - (void)reloadTickerEntries:(NSTimer *)timer;
 - (void)changeStory:(id)sender;
