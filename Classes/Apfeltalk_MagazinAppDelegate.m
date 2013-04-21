@@ -32,7 +32,6 @@
 #import "iRate.h"
 
 @implementation Apfeltalk_MagazinAppDelegate
-
 @synthesize window;
 @synthesize tabBarController;
 
