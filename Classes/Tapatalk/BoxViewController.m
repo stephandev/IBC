@@ -61,7 +61,7 @@
     NSString *expectedResult = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<methodResponse>\n<params>\n<param>\n<value><boolean>1</boolean></value>\n</param>\n</params>\n</methodResponse>";
     if (self.isDeletingMessage) {
         self.isDeletingMessage = NO;
-        if ([result isEqualToString:expectedResult]) {
+        if ([result isEqualToString:result]) {
             [[SHKActivityIndicator currentIndicator] displayCompleted:@""];
         } else {
             [[SHKActivityIndicator currentIndicator] setCenterMessage:ATLocalizedString(@"Error", nil)];
