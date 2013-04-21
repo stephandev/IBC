@@ -75,10 +75,10 @@
     
 //}
 
--(void) notificationReceived:(NSString*) title message:(NSString*)message badget:(NSString*) count target:(NSString*)target
-{
-    NSLog(@"Message %@ %@  %@ %@", title,message,count,target);
-}
+//-(void) notificationReceived:(NSString*) title message:(NSString*)message badget:(NSString*) count target:(NSString*)target
+//{
+//    NSLog(@"Message %@ %@  %@ %@", title,message,count,target);
+//}
 
 //- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     /* NSLog(@"Device Token=%@", deviceToken);
@@ -107,9 +107,9 @@
     
 //}
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    NSLog(@"Error bei der Registrierung");
-}
+//- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+//    NSLog(@"Error bei der Registrierung");
+//}
 //This is the end of the methods for push notifications
 
 - (id)init {
@@ -173,9 +173,9 @@
     
     //Clear the notification center when the app has been launched
     
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
+//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+//    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
     
     // Add the tab bar controller's current view as a subview of the window
