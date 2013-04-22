@@ -30,7 +30,7 @@
 }
 
 - (void)loadTopics {
-    NSString *xmlString = @"<?xml version=\"1.0\"?><methodCall><methodName>get_latest_topic</methodName></methodCall>";
+    NSString *xmlString = @"<?xml version=\"1.0\"?><methodCall><methodName>get_latest_topic</methodName><params><param><value><i4>0</i4></value></param><param><value><i4>19</i4></value></param></params></methodCall>";
     [self sendRequestWithXMLString:xmlString cookies:YES delegate:self];
 }
 
