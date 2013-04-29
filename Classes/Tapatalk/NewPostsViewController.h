@@ -11,6 +11,7 @@
 #import "DetailThreadController.h"
 #import "Topic.h"
 
+
 @interface NewPostsViewController : ATTableViewController {
     NSMutableArray *topics;
     NSInteger numberOfTopics;
@@ -18,5 +19,6 @@
 
 @property (strong) NSMutableArray *topics;
 @property (assign) NSInteger numberOfTopics;
+@property (assign) NSInteger isUnsubscribingTopic;
 
 @end

@@ -88,7 +88,7 @@
 			<key>DoNotLocalize</key>
 			<true/>
 			<key>FooterText</key>
-			<string>Push Notification Server:</string>
+			<string>Push Notification Consultant:</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -267,7 +267,7 @@ Tin Hau, Hong Kong S.A.R.</string>
 			<key>DoNotLocalize</key>
 			<string>YES</string>
 			<key>FooterText</key>
-			<string>© 2012 IBC Bike Community</string>
+			<string>© 2011 - 2013 IBC Bike Community</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

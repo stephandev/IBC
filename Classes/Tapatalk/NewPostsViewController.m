@@ -7,9 +7,10 @@
 //
 
 #import "NewPostsViewController.h"
+#import "DetailThreadController.h"
 
 @implementation NewPostsViewController
-@synthesize numberOfTopics, topics;
+@synthesize isUnsubscribingTopic, topics, numberOfTopics;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -20,7 +21,6 @@
     return self;
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -29,28 +29,24 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)loadTopics {
-    NSString *xmlString = @"<?xml version=\"1.0\"?><methodCall><methodName>get_latest_topic</methodName><params><param><value><i4>0</i4></value></param><param><value><i4>19</i4></value></param></params></methodCall>";
-    [self sendRequestWithXMLString:xmlString cookies:YES delegate:self];
+- (void)dealloc {
+    self.numberOfTopics = 0;
+    self.isUnsubscribingTopic = NO;
 }
+
+#pragma mark -
+#pragma mark Private Methods
 
 - (void)done {
     [self dismissModalViewControllerAnimated:YES];
 }
 
-#pragma mark -
-#pragma mark XMLRPCResponseParserDelegate
-
-- (void)parserDidFinishWithObject:(NSObject *)dictionaryOrArray ofType:(XMLRPCResultType)type {
-    if (type == XMLRPCResultTypeArray) {
-        self.topics = [NSMutableArray array];
-        NSArray *array = (NSArray *)dictionaryOrArray;
-        for (NSDictionary *dictionary in array) {
-            Topic *topic = [[Topic alloc] initWithDictionary:dictionary];
-            [self.topics addObject:topic];
-        }
-        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-    }
+- (void)loadSubscriptions {
+    self.topics = [NSMutableArray array];
+    self.numberOfTopics = 0;
+    NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>get_latest_topic</methodName><params><param><value><int>0</int></value></param><param><value><int>29</int></value></param></params></methodCall>"];
+    [self sendRequestWithXMLString:xmlString cookies:YES delegate:self];
+    
 }
 
 #pragma mark - View lifecycle
@@ -58,19 +54,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedStringFromTable(@"New Posts", @"ATLocalizable", @"");
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationItem.rightBarButtonItem = nil;
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-    [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self loadTopics];
+    self.title = ATLocalizedString(@"New Posts", @"");
 }
 
 - (void)viewDidUnload
@@ -80,29 +64,96 @@
     // e.g. self.myOutlet = nil;
 }
 
-#pragma mark - Table view data source
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return NSLocalizedStringFromTable(@"Threads", @"ATLocalizable", @"");
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationItem.rightBarButtonItem = nil;
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+    [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
+    [self loadSubscriptions];
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+}
+
+#pragma mark -
+#pragma mark XMLRPCResponseDelegate
+
+- (void)parserDidFinishWithObject:(NSObject *)dictionaryOrArray ofType:(XMLRPCResultType)type {
+    if (type  == XMLRPCResultTypeDictionary) {
+        NSDictionary *dictionary = (NSDictionary *)dictionaryOrArray;
+        if (self.isUnsubscribingTopic) {
+            self.isUnsubscribingTopic = NO;
+            if (![[dictionary valueForKey:@"result"] boolValue]) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:ATLocalizedString(@"Error", nil) message:ATLocalizedString(@"There was an error when unsubscribing the topic.", nil) delegate:nil cancelButtonTitle:ATLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+                [alertView show];
+            }
+            return;
+        }
+        self.numberOfTopics += [[dictionary valueForKey:@"total_topic_num"] integerValue];
+        
+        NSArray *array = [dictionary valueForKey:@"topics"];
+        
+        for (NSDictionary *dict in array) {
+            Topic *topic = [[Topic alloc] initWithDictionary:dict];
+            [self.topics addObject:topic];
+        }
+    }
+    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+}
+
+#pragma mark - Device Orientations
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return YES;
+    }
+    
+    return (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    
     // Return the number of rows in the section.
-    if ([self.topics count] == 0) {
+    if (self.topics.count == 0)
         return 1;
-    }
-    return [self.topics count];
+    return self.topics.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
+    
+    if ([self.topics count] == 0) {
+        if(loadingCell == nil) {
+			[[NSBundle mainBundle] loadNibNamed:@"LoadingCell" owner:self options:nil];
+		}
+		return loadingCell;
+    }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -112,12 +163,6 @@
     cell.imageView.image = nil;
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    if ([self.topics count] == 0) {
-        if(loadingCell == nil) {
-			[[NSBundle mainBundle] loadNibNamed:@"LoadingCell" owner:self options:nil];
-		}
-		return loadingCell;
-    }
     Topic *t = (Topic *)[self.topics objectAtIndex:indexPath.row];
     cell.textLabel.text = [t title];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -134,45 +179,6 @@
     
     return cell;
 }
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }   
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }   
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 #pragma mark - Table view delegate
 
