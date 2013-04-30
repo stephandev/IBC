@@ -47,6 +47,7 @@
     self.numberOfTopics = 0;
     NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>get_subscribed_topic</methodName><params><param><value><int>0</int></value></param><param><value><int>49</int></value></param></params></methodCall>"];
     [self sendRequestWithXMLString:xmlString cookies:YES delegate:self];
+    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 }
 
 #pragma mark - View lifecycle
