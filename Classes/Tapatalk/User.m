@@ -16,12 +16,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(User)
 
 - (void)parse: (NSData*)data
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    //NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     XMLRPCResponseParser *parser = [[XMLRPCResponseParser alloc] initWithData:data delegate:self];
     [parser parse];
-    [parser release];
-    [pool release];
+    //[parser release];
+    //[pool release];
 }
 
 - (void)deleteKeychainItem {
