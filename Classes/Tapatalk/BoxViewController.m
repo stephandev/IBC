@@ -63,9 +63,11 @@
         self.isDeletingMessage = NO;
         if ([result isEqualToString:result]) {
             [[SHKActivityIndicator currentIndicator] displayCompleted:@""];
+            [self loadMessages];
         } else {
             [[SHKActivityIndicator currentIndicator] setCenterMessage:ATLocalizedString(@"Error", nil)];
             [[SHKActivityIndicator currentIndicator] hideAfterDelay];
+            [self loadMessages];
         }
     } else if (self.isSending) {
         self.isSending = NO;
@@ -78,7 +80,6 @@
             [[SHKActivityIndicator currentIndicator] hideAfterDelay];
         }
     }
-    
     [super connectionDidFinishLoading:connection];
 }
 
