@@ -267,6 +267,14 @@ Tin Hau, Hong Kong S.A.R.</string>
 			<key>DoNotLocalize</key>
 			<string>YES</string>
 			<key>FooterText</key>
+			<string>Das Foto für den Splashscreen stammt von Manuel Sulzer (manuelsulzer.de)</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
 			<string>© 2011 - 2013 IBC Bike Community</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
