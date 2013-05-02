@@ -29,6 +29,7 @@
 		085D250B1698F400007FBD3B /* PNPushServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D24F61698F400007FBD3B /* PNPushServerConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		085D250C1698F400007FBD3B /* PNRequestProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D24F81698F400007FBD3B /* PNRequestProperty.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		085D250D1698F400007FBD3B /* PNSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D24FA1698F400007FBD3B /* PNSettings.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		088A4A17173312EC007E18A7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088A4A16173312EC007E18A7 /* Parse.framework */; };
 		08B196B11655BA7900F39E38 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08B196A71655B7D900F39E38 /* iRate.bundle */; };
 		08B196B21655BA7F00F39E38 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B196A91655B7D900F39E38 /* iRate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1D3623260D0F684500981E51 /* Apfeltalk_MagazinAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* Apfeltalk_MagazinAppDelegate.m */; settings = {COMPILER_FLAGS = " -fno-objc-arc"; }; };
@@ -440,6 +441,7 @@
 		085D24F81698F400007FBD3B /* PNRequestProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNRequestProperty.m; sourceTree = "<group>"; };
 		085D24F91698F400007FBD3B /* PNSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNSettings.h; sourceTree = "<group>"; };
 		085D24FA1698F400007FBD3B /* PNSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNSettings.m; sourceTree = "<group>"; };
+		088A4A16173312EC007E18A7 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		08B196A71655B7D900F39E38 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		08B196A81655B7D900F39E38 /* iRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		08B196A91655B7D900F39E38 /* iRate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
@@ -830,6 +832,7 @@
 				CBA438FA105836D9002B2077 /* libxml2.dylib in Frameworks */,
 				22ACCBD51062BAB700EC4E5A /* AudioToolbox.framework in Frameworks */,
 				CBC26121108B9DC500E5F36B /* SystemConfiguration.framework in Frameworks */,
+				088A4A17173312EC007E18A7 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1029,6 +1032,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				088A4A16173312EC007E18A7 /* Parse.framework */,
 				081C73F21652D40400B9B670 /* Social.framework */,
 				081C73F01652D3FA00B9B670 /* Accounts.framework */,
 				3201088596B4756681693700 /* Three20UICommon.xcodeproj */,
@@ -2180,6 +2184,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Stephan Koenig (CU3AUBYQNK)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stephan Koenig (CU3AUBYQNK)";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2225,6 +2233,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Apfeltalk_Magazin_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
@@ -2302,6 +2314,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
