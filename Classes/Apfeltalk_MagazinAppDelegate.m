@@ -30,6 +30,7 @@
 #import "User.h"
 #import "NewsController.h"
 #import "iRate.h"
+#import "PNPushNotification.h"
 
 @implementation Apfeltalk_MagazinAppDelegate
 @synthesize window;
@@ -62,25 +63,25 @@
 
 //These are the methods for push notifications and it's registration
 
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-//    /* NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+     NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
      
-//     NSString* alert = [[userInfo objectForKey:@"aps"] objectForKey:@"id"];
+     NSString* alert = [[userInfo objectForKey:@"aps"] objectForKey:@"id"];
      
-//     NSLog(@"Nachricht: %@", alert);*/
-//    NSLog(@"receive pn: %@",userInfo);
-//    [pushNotifications receivePushNotification:userInfo];
+    NSLog(@"Nachricht: %@", alert);
+    NSLog(@"receive pn: %@",userInfo);
+    [pushNotifications receivePushNotification:userInfo];
     
     
-//}
+}
 
-//-(void) notificationReceived:(NSString*) title message:(NSString*)message badget:(NSString*) count target:(NSString*)target
-//{
-//    NSLog(@"Message %@ %@  %@ %@", title,message,count,target);
-//}
+-(void) notificationReceived:(NSString*) title message:(NSString*)message badget:(NSString*) count target:(NSString*)target
+{
+    NSLog(@"Message %@ %@  %@ %@", title,message,count,target);
+}
 
-//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    /* NSLog(@"Device Token=%@", deviceToken);
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+     NSLog(@"Device Token=%@", deviceToken);
      
      NSUInteger theCount = [deviceToken length];
      NSMutableString *theString = [NSMutableString stringWithCapacity:2 * theCount];
@@ -89,6 +90,11 @@
      for(NSUInteger i = 0; i < theCount; ++i) {
      [theString appendFormat:@"%2.2x", theBytes[i]];
      }
+    
+    {
+        NSString *str = [deviceToken description];
+        NSLog(@"%@", str);
+    }
      
      NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/client/register?devicetype=4&appkey=23e409isaeroakse23sae0&deviceid=%@&devicekey=%@",theString,theString];
      NSLog(@"APNS URL : %@",url);
@@ -101,14 +107,14 @@
      }
      else
      NSLog(@"Status: %@", urlResponse);
-     }];*/
-//    [pushNotifications setPushToken:deviceToken];
+     }];
+    [pushNotifications setPushToken:deviceToken];
     
-//}
+}
 
-//- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-//    NSLog(@"Error bei der Registrierung");
-//}
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"Fehler bei der Registrierung");
+}
 //This is the end of the methods for push notifications
 
 - (id)init {
@@ -164,11 +170,11 @@
     
     //This is the start of the general push notification settings
 	// Let the device know we want to receive push notifications
-	//[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-    // (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
-//    pushNotifications = [[PNPushNotification alloc] initWithDelegate:self];
-//    [pushNotifications setAppKey:@"23e409isaeroakse23sae0"];
+    pushNotifications = [[PNPushNotification alloc] initWithDelegate:self];
+    [pushNotifications setAppKey:@"23e409isaeroakse23sae0"];
     
     //Clear the notification center when the app has been launched
     
