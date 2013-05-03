@@ -440,7 +440,6 @@
 		085D24F81698F400007FBD3B /* PNRequestProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNRequestProperty.m; sourceTree = "<group>"; };
 		085D24F91698F400007FBD3B /* PNSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNSettings.h; sourceTree = "<group>"; };
 		085D24FA1698F400007FBD3B /* PNSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNSettings.m; sourceTree = "<group>"; };
-		088A4A16173312EC007E18A7 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		08B196A71655B7D900F39E38 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		08B196A81655B7D900F39E38 /* iRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		08B196A91655B7D900F39E38 /* iRate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
@@ -1030,7 +1029,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				088A4A16173312EC007E18A7 /* Parse.framework */,
 				081C73F21652D40400B9B670 /* Social.framework */,
 				081C73F01652D3FA00B9B670 /* Accounts.framework */,
 				3201088596B4756681693700 /* Three20UICommon.xcodeproj */,
