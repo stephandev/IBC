@@ -31,6 +31,7 @@
 #import "NewsController.h"
 #import "iRate.h"
 #import "PNPushNotification.h"
+#import "PNPushServerConnection.h"
 
 @implementation Apfeltalk_MagazinAppDelegate
 @synthesize window;
@@ -64,10 +65,10 @@
 //These are the methods for push notifications and it's registration
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-     NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
-     
-     NSString* alert = [[userInfo objectForKey:@"aps"] objectForKey:@"id"];
-     
+    NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
+    
+    NSString* alert = [[userInfo objectForKey:@"aps"] objectForKey:@"id"];
+    
     NSLog(@"Nachricht: %@", alert);
     NSLog(@"receive pn: %@",userInfo);
     [pushNotifications receivePushNotification:userInfo];
@@ -81,33 +82,7 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-     NSLog(@"Device Token=%@", deviceToken);
-     
-     NSUInteger theCount = [deviceToken length];
-     NSMutableString *theString = [NSMutableString stringWithCapacity:2 * theCount];
-     unsigned char const *theBytes = [deviceToken bytes];
-     
-     for(NSUInteger i = 0; i < theCount; ++i) {
-     [theString appendFormat:@"%2.2x", theBytes[i]];
-     }
-    
-    {
-        NSString *str = [deviceToken description];
-        NSLog(@"%@", str);
-    }
-     
-     NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/client/register?devicetype=4&appkey=23e409isaeroakse23sae0&deviceid=%@&devicekey=%@",theString,theString];
-     NSLog(@"APNS URL : %@",url);
-     
-     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-     
-     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *urlResponse, NSData *data, NSError *error) {
-     if (error) {
-     NSLog(@"Error: %@", error);
-     }
-     else
-     NSLog(@"Status: %@", urlResponse);
-     }];
+    NSLog(@"Device Token=%@", deviceToken);
     [pushNotifications setPushToken:deviceToken];
     
 }
@@ -175,6 +150,8 @@
     
     pushNotifications = [[PNPushNotification alloc] initWithDelegate:self];
     [pushNotifications setAppKey:@"23e409isaeroakse23sae0"];
+    //[pushNotifications setSandbox:true];
+    
     
     //Clear the notification center when the app has been launched
     
