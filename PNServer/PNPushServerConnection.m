@@ -30,7 +30,7 @@ NSInteger PN_IOS_SANDBOX_DEVICE = 5;
 	{
 		serverUrl = [@"http://byte-welt.net:8080/PushServer" copy];
 //		serverUrl = [@"http://192.168.0.102:8080/PushServer" copy];
-        [self setSandbox:false];
+        [self setSandbox:true];
         
         settings = [[PNSettings alloc]init];
         
