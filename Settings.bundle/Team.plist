@@ -128,7 +128,7 @@
 			<key>DoNotLocalize</key>
 			<string>YES</string>
 			<key>FooterText</key>
-			<string>Das IBC Logo unterliegen dem Copyright von Thomas Paatz – In der Neuwies 10 – 55595 Mandel. Dies gilt auch für die angepassten Grafiken in der gesamten App sowie einzelnen Beiträgen, welche die IBC repräsentieren.</string>
+			<string>Das IBC Logo unterliegt dem Copyright von Thomas Paatz – In der Neuwies 10 – 55595 Mandel. Dies gilt auch für die angepassten Grafiken in der gesamten App sowie einzelnen Beiträgen, welche die IBC repräsentieren.</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
