@@ -31,7 +31,6 @@
 #import "NewsController.h"
 #import "iRate.h"
 #import "PNPushNotification.h"
-#import "PNPushServerConnection.h"
 
 @implementation Apfeltalk_MagazinAppDelegate
 @synthesize window;
@@ -145,12 +144,10 @@
     
     //This is the start of the general push notification settings
 	// Let the device know we want to receive push notifications
-	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
     pushNotifications = [[PNPushNotification alloc] initWithDelegate:self];
     [pushNotifications setAppKey:@"23e409isaeroakse23sae0"];
-    //[pushNotifications setSandbox:true];
+    [pushNotifications setSandboxEnabled:true];
     
     
     //Clear the notification center when the app has been launched
