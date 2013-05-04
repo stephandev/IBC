@@ -68,7 +68,6 @@ NSInteger PN_IOS_SANDBOX_DEVICE = 5;
 
 -(void)registerClient:(id<PNRequestDelegate>) delegate requestParameters:(NSArray *)params
 {
-    NSLog(@"Register client");
 	PNRegisterCommand* command = [[PNRegisterCommand alloc] initWithConnection:self delegate:delegate parameters:params];
     
     [command setDeviceId:[settings getDeviceKey]];
