@@ -35,7 +35,7 @@
 	NSMutableDictionary *exclusions;
 }
 
-@property (strong) SHKItem *item;
+@property (nonatomic) SHKItem *item;
 @property (strong) NSMutableArray *tableData;
 @property (strong) NSMutableDictionary *exclusions;
 
