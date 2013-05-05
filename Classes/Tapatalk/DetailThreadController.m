@@ -166,7 +166,7 @@ const CGFloat kDefaultRowHeight = 44.0;
     NSString *content = [translator translateStringForAT:answerCell.textView.text];
     NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>reply_post</methodName><params><param><value><string>%i</string></value></param><param><value><string>%i</string></value></param><param><value><base64>%@</base64></value></param><param><value><base64>%@</base64></value></param></params></methodCall>", self.topic.forumID, 
                            self.topic.topicID, 
-                           encodeString(@"answer"), 
+                           encodeString(@""), //encodeString(@""),
                            encodeString(content)];
     [self sendRequestWithXMLString:xmlString cookies:YES delegate:self];
 }
