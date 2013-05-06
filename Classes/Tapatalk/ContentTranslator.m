@@ -24,6 +24,7 @@
 
 #import "ContentTranslator.h"
 #import "Base64Transcoder.h"
+#import "Post.h"
 
 
 @implementation ContentTranslator
@@ -31,6 +32,8 @@
 - (NSString *)translateStringForiOS:(NSString *)aString {
     NSString *string = [NSString stringWithString:aString];
    
+#pragma mark - Quotes
+    
     NSRange quoteRange = [string rangeOfString:@"[quote][url=" options:NSCaseInsensitiveSearch];
     while (quoteRange.location != NSNotFound) {
         NSScanner *scanner = [NSScanner scannerWithString:string];
@@ -48,6 +51,28 @@
     
     string = [string stringByReplacingOccurrencesOfString:@"[quote]" withString:@"Zitat:\n----------------------------------------\n" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
     string = [string stringByReplacingOccurrencesOfString:@"[/quote]" withString:@"\n----------------------------------------\n" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
+    
+#pragma mark - Mentions
+    
+    NSRange mentionRange = [string rangeOfString:@"[mention][url=" options:NSCaseInsensitiveSearch];
+    while (mentionRange.location != NSNotFound) {
+        NSScanner *scanner = [NSScanner scannerWithString:string];
+        [scanner setScanLocation:mentionRange.location + mentionRange.length];
+        [scanner scanUpToString:@"]Erwähnung von " intoString:NULL];
+        NSUInteger location = [scanner scanLocation] + 11;
+        [scanner scanUpToString:@"[/url]" intoString:NULL];
+        NSUInteger length = [scanner scanLocation] - location;
+        NSString *username = [string substringWithRange:NSMakeRange(location, length)];
+        location = mentionRange.location;
+        mentionRange = NSMakeRange(location, [scanner scanLocation] + 6 - location);
+        string = [string stringByReplacingCharactersInRange:mentionRange withString:[NSString stringWithFormat:@"Erwähnung von %@:\n----------------------------------------\n", username]];
+        mentionRange = [string rangeOfString:@"[mention][url=" options:NSCaseInsensitiveSearch];
+    }
+    
+    //Here we must find a way to replace 198571 with any value
+    
+    string = [string stringByReplacingOccurrencesOfString:@"[MENTION=198571]" withString:@"Erwähnung von:\n----------------------------------------\n"  options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
+    string = [string stringByReplacingOccurrencesOfString:@"[/MENTION]" withString:@"\n----------------------------------------\n" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
     
     
     if ([string isMatchedByRegex:@"\\[.+=\"\\bhttps?://[a-zA-Z0-9\\-.]+(?:(?:/[a-zA-Z0-9\\-._?,'+\\&%$=~*!():@\\\\]*)+)?\"\\].+\\[.+\\]"]) {
@@ -125,7 +150,7 @@ NSString * encodeString(NSString *aString) {
 - (id)init {
     self = [super init];
     if (self) {
-        NSArray *atSmilies = [NSArray arrayWithObjects:@":-)", @":)", @";-)", @";)", @":-(", @":(", @":-/", @":-o", @":-D", @":-*", @":-p", @":-[", @":-!", @"8-)", @":angry:", @":innocent:", @":-c", nil];
+        NSArray *atSmilies = [NSArray arrayWithObjects:@":lol:", @":)", @";-)", @";)", @":-(", @":(", @":rolleyes:", @":o", @":D", @":love:", @":p", @":confused:", @":eek:", @":cool:", @":mad:", @":daumen:", @":heul:", nil];
         NSArray *iOSSmilies = [NSArray arrayWithObjects:@"\ue056", @"\ue056", @"\ue405", @"\ue405", @"\ue058", @"\ue058", @"\ue40e", @"\ue40b", @"\ue057", @"\ue418", @"\ue105", @"\ue058", @"\ue40d", @"\ue402", @"\ue416", @"\ue417", @"\ue411", nil];
         
         self.atTranslations = [NSDictionary dictionaryWithObjects:atSmilies forKeys:iOSSmilies];

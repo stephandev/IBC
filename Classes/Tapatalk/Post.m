@@ -18,7 +18,7 @@
     if (self) {
         self.author = [dictionary valueForKey:@"post_author_name"];
         self.authorID = [[dictionary valueForKey:@"post_author_id"] integerValue];
-        self.title = [dictionary valueForKey:@"post_title"];
+        //self.title = [dictionary valueForKey:@"post_title"];
         ContentTranslator *contentTranslator = [[ContentTranslator alloc] init];
         self.content = [contentTranslator translateStringForiOS:[dictionary valueForKey:@"post_content"]];
         self.userIsOnline = [[dictionary valueForKey:@"is_online"] boolValue];
