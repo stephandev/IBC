@@ -54,25 +54,18 @@
     
 #pragma mark - Mentions
     
-    NSRange mentionRange = [string rangeOfString:@"[mention][url=" options:NSCaseInsensitiveSearch];
+    NSRange mentionRange = [string rangeOfString:@"[mention=" options:NSCaseInsensitiveSearch];
     while (mentionRange.location != NSNotFound) {
         NSScanner *scanner = [NSScanner scannerWithString:string];
         [scanner setScanLocation:mentionRange.location + mentionRange.length];
-        [scanner scanUpToString:@"]Erwähnung von " intoString:NULL];
-        NSUInteger location = [scanner scanLocation] + 11;
-        [scanner scanUpToString:@"[/url]" intoString:NULL];
-        NSUInteger length = [scanner scanLocation] - location;
-        NSString *username = [string substringWithRange:NSMakeRange(location, length)];
-        location = mentionRange.location;
-        mentionRange = NSMakeRange(location, [scanner scanLocation] + 6 - location);
-        string = [string stringByReplacingCharactersInRange:mentionRange withString:[NSString stringWithFormat:@"Erwähnung von %@:\n----------------------------------------\n", username]];
-        mentionRange = [string rangeOfString:@"[mention][url=" options:NSCaseInsensitiveSearch];
+        [scanner scanUpToString:@"]" intoString:NULL];
+        NSUInteger location = mentionRange.location;
+        mentionRange = NSMakeRange(location, [scanner scanLocation] + 1 - location);
+        string = [string stringByReplacingCharactersInRange:mentionRange withString:@"@ "];
+        mentionRange = [string rangeOfString:@"[mention=" options:NSCaseInsensitiveSearch];
     }
     
-    //Here we must find a way to replace 198571 with any value
-    
-    string = [string stringByReplacingOccurrencesOfString:@"[MENTION=198571]" withString:@"Erwähnung von:\n----------------------------------------\n"  options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
-    string = [string stringByReplacingOccurrencesOfString:@"[/MENTION]" withString:@"\n----------------------------------------\n" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
+    string = [string stringByReplacingOccurrencesOfString:@"[/MENTION]" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
     
     
     if ([string isMatchedByRegex:@"\\[.+=\"\\bhttps?://[a-zA-Z0-9\\-.]+(?:(?:/[a-zA-Z0-9\\-._?,'+\\&%$=~*!():@\\\\]*)+)?\"\\].+\\[.+\\]"]) {
