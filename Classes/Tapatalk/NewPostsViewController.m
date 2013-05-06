@@ -44,7 +44,7 @@
 - (void)loadSubscriptions {
     self.topics = [NSMutableArray array];
     self.numberOfTopics = 0;
-    NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>get_latest_topic</methodName><params><param><value><int>0</int></value></param><param><value><int>29</int></value></param></params></methodCall>"];
+    NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>get_latest_topic</methodName><params><param><value><int>0</int></value></param><param><value><int>49</int></value></param></params></methodCall>"];
     [self sendRequestWithXMLString:xmlString cookies:YES delegate:self];
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     
