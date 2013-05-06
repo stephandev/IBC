@@ -66,7 +66,22 @@
     }
     
     string = [string stringByReplacingOccurrencesOfString:@"[/MENTION]" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
+
+#pragma mark - Split
     
+    NSRange splitRange = [string rangeOfString:@"[split" options:NSCaseInsensitiveSearch];
+    while (splitRange.location != NSNotFound) {
+        NSScanner *scanner = [NSScanner scannerWithString:string];
+        [scanner setScanLocation:splitRange.location + splitRange.length];
+        [scanner scanUpToString:@"]" intoString:NULL];
+        NSUInteger location = splitRange.location;
+        splitRange = NSMakeRange(location, [scanner scanLocation] + 1 - location);
+        string = [string stringByReplacingCharactersInRange:splitRange withString:@"hier: http://www.mtb-news.de/forum/showthread.php?t="];
+        splitRange = [string rangeOfString:@"[split" options:NSCaseInsensitiveSearch];
+    }
+    
+    string = [string stringByReplacingOccurrencesOfString:@"[/split]" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
+
     
     if ([string isMatchedByRegex:@"\\[.+=\"\\bhttps?://[a-zA-Z0-9\\-.]+(?:(?:/[a-zA-Z0-9\\-._?,'+\\&%$=~*!():@\\\\]*)+)?\"\\].+\\[.+\\]"]) {
         NSArray *elements = [string componentsMatchedByRegex:@"\\[.+=\"\\bhttps?://[a-zA-Z0-9\\-.]+(?:(?:/[a-zA-Z0-9\\-._?,'+\\&%$=~*!():@\\\\]*)+)?\"\\].+\\[.+\\]"];
