@@ -47,14 +47,14 @@
 #pragma mark Private Methods
 
 - (void)loadStandartTopics {
-    NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>get_topic</methodName><params><param><value><string>%i</string></value></param><param><value><int>0</int></value></param><param><value><int>19</int></value></param><param><value><string></string></value></param></params></methodCall>", self.subForum.forumID];
+    NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>get_topic</methodName><params><param><value><string>%i</string></value></param><param><value><int>0</int></value></param><param><value><int>49</int></value></param><param><value><string></string></value></param></params></methodCall>", self.subForum.forumID];
     [self sendRequestWithXMLString:xmlString cookies:YES delegate:self];
 }
 
 - (void)loadPinnedTopics {
     self.dataArray = [NSMutableArray array];
     self.isLoadingPinnedTopics = YES;
-    NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>get_topic</methodName><params><param><value><string>%i</string></value></param><param><value><int>0</int></value></param><param><value><int>19</int></value></param><param><value><string>TOP</string></value></param></params></methodCall>", self.subForum.forumID];
+    NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>get_topic</methodName><params><param><value><string>%i</string></value></param><param><value><int>0</int></value></param><param><value><int>49</int></value></param><param><value><string>TOP</string></value></param></params></methodCall>", self.subForum.forumID];
     [self sendRequestWithXMLString:xmlString cookies:YES delegate:self];
 }
 
