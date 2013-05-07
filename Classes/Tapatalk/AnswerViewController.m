@@ -77,7 +77,7 @@
     NSURL *url = [NSURL URLWithString:ATTapatalkPluginPath];
     NSString *xmlString = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><methodCall><methodName>reply_post</methodName><params><param><value><string>%i</string></value></param><param><value><string>%i</string></value></param><param><value><base64>%@</base64></value></param><param><value><base64>%@</base64></value></param></params></methodCall>", self.topic.forumID, 
                            self.topic.topicID, 
-                           encodeString(@"answer"), 
+                           encodeString(@""), //encodeString(@"answer"),
                            encodeString(content)];
     NSData *data = [xmlString dataUsingEncoding:NSASCIIStringEncoding];
     

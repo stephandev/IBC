@@ -24,6 +24,7 @@
 
 #import "ContentTranslator.h"
 #import "Base64Transcoder.h"
+#import "Post.h"
 
 
 @implementation ContentTranslator
@@ -31,6 +32,8 @@
 - (NSString *)translateStringForiOS:(NSString *)aString {
     NSString *string = [NSString stringWithString:aString];
    
+#pragma mark - Quotes
+    
     NSRange quoteRange = [string rangeOfString:@"[quote][url=" options:NSCaseInsensitiveSearch];
     while (quoteRange.location != NSNotFound) {
         NSScanner *scanner = [NSScanner scannerWithString:string];
@@ -49,6 +52,36 @@
     string = [string stringByReplacingOccurrencesOfString:@"[quote]" withString:@"Zitat:\n----------------------------------------\n" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
     string = [string stringByReplacingOccurrencesOfString:@"[/quote]" withString:@"\n----------------------------------------\n" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
     
+#pragma mark - Mentions
+    
+    NSRange mentionRange = [string rangeOfString:@"[mention=" options:NSCaseInsensitiveSearch];
+    while (mentionRange.location != NSNotFound) {
+        NSScanner *scanner = [NSScanner scannerWithString:string];
+        [scanner setScanLocation:mentionRange.location + mentionRange.length];
+        [scanner scanUpToString:@"]" intoString:NULL];
+        NSUInteger location = mentionRange.location;
+        mentionRange = NSMakeRange(location, [scanner scanLocation] + 1 - location);
+        string = [string stringByReplacingCharactersInRange:mentionRange withString:@"@ "];
+        mentionRange = [string rangeOfString:@"[mention=" options:NSCaseInsensitiveSearch];
+    }
+    
+    string = [string stringByReplacingOccurrencesOfString:@"[/MENTION]" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
+
+#pragma mark - Split
+    
+    NSRange splitRange = [string rangeOfString:@"[split" options:NSCaseInsensitiveSearch];
+    while (splitRange.location != NSNotFound) {
+        NSScanner *scanner = [NSScanner scannerWithString:string];
+        [scanner setScanLocation:splitRange.location + splitRange.length];
+        [scanner scanUpToString:@"]" intoString:NULL];
+        NSUInteger location = splitRange.location;
+        splitRange = NSMakeRange(location, [scanner scanLocation] + 1 - location);
+        string = [string stringByReplacingCharactersInRange:splitRange withString:@"hier: http://www.mtb-news.de/forum/showthread.php?t="];
+        splitRange = [string rangeOfString:@"[split" options:NSCaseInsensitiveSearch];
+    }
+    
+    string = [string stringByReplacingOccurrencesOfString:@"[/split]" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [string length])];
+
     
     if ([string isMatchedByRegex:@"\\[.+=\"\\bhttps?://[a-zA-Z0-9\\-.]+(?:(?:/[a-zA-Z0-9\\-._?,'+\\&%$=~*!():@\\\\]*)+)?\"\\].+\\[.+\\]"]) {
         NSArray *elements = [string componentsMatchedByRegex:@"\\[.+=\"\\bhttps?://[a-zA-Z0-9\\-.]+(?:(?:/[a-zA-Z0-9\\-._?,'+\\&%$=~*!():@\\\\]*)+)?\"\\].+\\[.+\\]"];
@@ -125,7 +158,7 @@ NSString * encodeString(NSString *aString) {
 - (id)init {
     self = [super init];
     if (self) {
-        NSArray *atSmilies = [NSArray arrayWithObjects:@":-)", @":)", @";-)", @";)", @":-(", @":(", @":-/", @":-o", @":-D", @":-*", @":-p", @":-[", @":-!", @"8-)", @":angry:", @":innocent:", @":-c", nil];
+        NSArray *atSmilies = [NSArray arrayWithObjects:@":lol:", @":)", @";-)", @";)", @":-(", @":(", @":rolleyes:", @":o", @":D", @":love:", @":p", @":confused:", @":eek:", @":cool:", @":mad:", @":daumen:", @":heul:", nil];
         NSArray *iOSSmilies = [NSArray arrayWithObjects:@"\ue056", @"\ue056", @"\ue405", @"\ue405", @"\ue058", @"\ue058", @"\ue40e", @"\ue40b", @"\ue057", @"\ue418", @"\ue105", @"\ue058", @"\ue40d", @"\ue402", @"\ue416", @"\ue417", @"\ue411", nil];
         
         self.atTranslations = [NSDictionary dictionaryWithObjects:atSmilies forKeys:iOSSmilies];

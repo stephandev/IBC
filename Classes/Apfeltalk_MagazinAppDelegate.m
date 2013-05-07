@@ -30,6 +30,7 @@
 #import "User.h"
 #import "NewsController.h"
 #import "iRate.h"
+#import "PNPushNotification.h"
 
 @implementation Apfeltalk_MagazinAppDelegate
 @synthesize window;
@@ -62,53 +63,32 @@
 
 //These are the methods for push notifications and it's registration
 
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-//    /* NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
-     
-//     NSString* alert = [[userInfo objectForKey:@"aps"] objectForKey:@"id"];
-     
-//     NSLog(@"Nachricht: %@", alert);*/
-//    NSLog(@"receive pn: %@",userInfo);
-//    [pushNotifications receivePushNotification:userInfo];
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    NSLog(@"Eine Nachricht ist angekommen, während die App aktiv ist");
+    
+    NSString* alert = [[userInfo objectForKey:@"aps"] objectForKey:@"id"];
+    
+    NSLog(@"Nachricht: %@", alert);
+    NSLog(@"receive pn: %@",userInfo);
+    [pushNotifications receivePushNotification:userInfo];
     
     
-//}
+}
 
-//-(void) notificationReceived:(NSString*) title message:(NSString*)message badget:(NSString*) count target:(NSString*)target
-//{
-//    NSLog(@"Message %@ %@  %@ %@", title,message,count,target);
-//}
+-(void) notificationReceived:(NSString*) title message:(NSString*)message badget:(NSString*) count target:(NSString*)target
+{
+    NSLog(@"Message %@ %@  %@ %@", title,message,count,target);
+}
 
-//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    /* NSLog(@"Device Token=%@", deviceToken);
-     
-     NSUInteger theCount = [deviceToken length];
-     NSMutableString *theString = [NSMutableString stringWithCapacity:2 * theCount];
-     unsigned char const *theBytes = [deviceToken bytes];
-     
-     for(NSUInteger i = 0; i < theCount; ++i) {
-     [theString appendFormat:@"%2.2x", theBytes[i]];
-     }
-     
-     NSString* url = [NSString stringWithFormat:@"http://byte-welt.net:8080/PushServer/client/register?devicetype=4&appkey=23e409isaeroakse23sae0&deviceid=%@&devicekey=%@",theString,theString];
-     NSLog(@"APNS URL : %@",url);
-     
-     NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-     
-     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue currentQueue] completionHandler:^(NSURLResponse *urlResponse, NSData *data, NSError *error) {
-     if (error) {
-     NSLog(@"Error: %@", error);
-     }
-     else
-     NSLog(@"Status: %@", urlResponse);
-     }];*/
-//    [pushNotifications setPushToken:deviceToken];
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"Device Token=%@", deviceToken);
+    [pushNotifications setPushToken:deviceToken];
     
-//}
+}
 
-//- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-//    NSLog(@"Error bei der Registrierung");
-//}
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"Fehler bei der Registrierung");
+}
 //This is the end of the methods for push notifications
 
 - (id)init {
@@ -164,17 +144,17 @@
     
     //This is the start of the general push notification settings
 	// Let the device know we want to receive push notifications
-	//[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-    // (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
-//    pushNotifications = [[PNPushNotification alloc] initWithDelegate:self];
-//    [pushNotifications setAppKey:@"23e409isaeroakse23sae0"];
+    pushNotifications = [[PNPushNotification alloc] initWithDelegate:self];
+    [pushNotifications setAppKey:@"23e409isaeroakse23sae0"];
+    [pushNotifications setSandboxEnabled:true];
+    
     
     //Clear the notification center when the app has been launched
     
-//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
-//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
-//    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
     
     // Add the tab bar controller's current view as a subview of the window

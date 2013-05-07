@@ -44,7 +44,7 @@
 	SHKFormController *__weak form;
 }
 
-@property (strong) SHKFormFieldSettings *settings;
+@property (nonatomic) SHKFormFieldSettings *settings;
 
 @property (nonatomic) CGFloat labelWidth;
 
