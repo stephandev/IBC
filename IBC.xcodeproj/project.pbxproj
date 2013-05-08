@@ -2201,6 +2201,7 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = IBC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Stephan Koenig (CU3AUBYQNK)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stephan Koenig (CU3AUBYQNK)";
 				COPY_PHASE_STRIP = NO;
@@ -2234,8 +2235,8 @@
 					"-licucore",
 				);
 				PRODUCT_NAME = IBC;
-				PROVISIONING_PROFILE = "3C7511C2-D104-4FD4-A899-1D27A86029E1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3C7511C2-D104-4FD4-A899-1D27A86029E1";
+				PROVISIONING_PROFILE = "AA39B5F3-B6B3-4442-9A01-9AD0B9F8C981";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AA39B5F3-B6B3-4442-9A01-9AD0B9F8C981";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/../../three20 $(BUILT_PRODUCTS_DIR)/../three20 three20/Build/Products/three20 fbconnect-iphone/src";
@@ -2251,6 +2252,7 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = IBC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Stephan Koenig (6ZYA59CD26)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stephan Koenig (6ZYA59CD26)";
 				COPY_PHASE_STRIP = YES;
@@ -2282,8 +2284,8 @@
 					"-licucore",
 				);
 				PRODUCT_NAME = IBC;
-				PROVISIONING_PROFILE = "111C9DD1-A0BF-4270-90D5-F16B2F644E61";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "111C9DD1-A0BF-4270-90D5-F16B2F644E61";
+				PROVISIONING_PROFILE = "9F184BAD-0690-4E7B-A21A-6AD80465225A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9F184BAD-0690-4E7B-A21A-6AD80465225A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/../../three20 $(BUILT_PRODUCTS_DIR)/../three20 three20/Build/Products/three20 fbconnect-iphone/src";
@@ -2333,6 +2335,7 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = IBC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Stephan Koenig (6ZYA59CD26)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stephan Koenig (6ZYA59CD26)";
 				COPY_PHASE_STRIP = NO;
@@ -2363,8 +2366,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = ApfeltalkMagazin;
-				PROVISIONING_PROFILE = "111C9DD1-A0BF-4270-90D5-F16B2F644E61";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "111C9DD1-A0BF-4270-90D5-F16B2F644E61";
+				PROVISIONING_PROFILE = "9F184BAD-0690-4E7B-A21A-6AD80465225A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9F184BAD-0690-4E7B-A21A-6AD80465225A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/../../three20 $(BUILT_PRODUCTS_DIR)/../three20 three20/Build/Products/three20 fbconnect-iphone/src";
