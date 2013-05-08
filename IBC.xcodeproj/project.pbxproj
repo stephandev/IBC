@@ -39,6 +39,10 @@
 		085D250B1698F400007FBD3B /* PNPushServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D24F61698F400007FBD3B /* PNPushServerConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		085D250C1698F400007FBD3B /* PNRequestProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D24F81698F400007FBD3B /* PNRequestProperty.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		085D250D1698F400007FBD3B /* PNSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D24FA1698F400007FBD3B /* PNSettings.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		086C7F47173A77CD0093A62E /* market.png in Resources */ = {isa = PBXBuildFile; fileRef = 086C7F46173A77CD0093A62E /* market.png */; };
+		086C7F50173A79860093A62E /* market@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 086C7F4F173A79860093A62E /* market@2x.png */; };
+		086C7F53173A7C7D0093A62E /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = 086C7F51173A7C7D0093A62E /* trophy.png */; };
+		086C7F54173A7C7D0093A62E /* trophy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 086C7F52173A7C7D0093A62E /* trophy@2x.png */; };
 		089E99FA173716CE0070AA73 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 089E99F9173716CE0070AA73 /* Default-568h@2x.png */; };
 		08B196B11655BA7900F39E38 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08B196A71655B7D900F39E38 /* iRate.bundle */; };
 		08B196B21655BA7F00F39E38 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B196A91655B7D900F39E38 /* iRate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -456,6 +460,10 @@
 		085D24F81698F400007FBD3B /* PNRequestProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNRequestProperty.m; sourceTree = "<group>"; };
 		085D24F91698F400007FBD3B /* PNSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNSettings.h; sourceTree = "<group>"; };
 		085D24FA1698F400007FBD3B /* PNSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNSettings.m; sourceTree = "<group>"; };
+		086C7F46173A77CD0093A62E /* market.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = market.png; sourceTree = "<group>"; };
+		086C7F4F173A79860093A62E /* market@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "market@2x.png"; sourceTree = "<group>"; };
+		086C7F51173A7C7D0093A62E /* trophy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy.png; sourceTree = "<group>"; };
+		086C7F52173A7C7D0093A62E /* trophy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trophy@2x.png"; sourceTree = "<group>"; };
 		089E99F9173716CE0070AA73 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		08B196A71655B7D900F39E38 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		08B196A81655B7D900F39E38 /* iRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
@@ -1598,6 +1606,10 @@
 		CB1434AE1058616500B5FF14 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				086C7F51173A7C7D0093A62E /* trophy.png */,
+				086C7F52173A7C7D0093A62E /* trophy@2x.png */,
+				086C7F4F173A79860093A62E /* market@2x.png */,
+				086C7F46173A77CD0093A62E /* market.png */,
 				089E99F9173716CE0070AA73 /* Default-568h@2x.png */,
 				5AF5E28313FAEE70009A5E8C /* privat.png */,
 				5AF5E28413FAEE70009A5E8C /* privat@2x.png */,
@@ -2005,6 +2017,10 @@
 				085B7E0F1737B5DE007D8D49 /* Default-LandscapeLeft@2x~iPad.png in Resources */,
 				085B7E101737B5DE007D8D49 /* Default-LandscapeRight@2x~iPad.png in Resources */,
 				085B7E121737BCB2007D8D49 /* Icon-72@2x.png in Resources */,
+				086C7F47173A77CD0093A62E /* market.png in Resources */,
+				086C7F50173A79860093A62E /* market@2x.png in Resources */,
+				086C7F53173A7C7D0093A62E /* trophy.png in Resources */,
+				086C7F54173A7C7D0093A62E /* trophy@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
