@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		081B0464173BB81B00FE6034 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 081B0466173BB81B00FE6034 /* MainWindow.xib */; };
 		081C73F11652D3FA00B9B670 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 081C73F01652D3FA00B9B670 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		081C73F31652D40500B9B670 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 081C73F21652D40400B9B670 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		085B7DFE1737A68E007D8D49 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 085B7DFD1737A68E007D8D49 /* Default-Landscape~ipad.png */; };
@@ -222,7 +223,6 @@
 		5EC2660F1369AB18006A10DE /* ATWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC2660E1369AB18006A10DE /* ATWebViewController.xib */; };
 		5EC839D2140D2CA20060F44E /* ATContactPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC839D1140D2CA20060F44E /* ATContactPicker.m */; settings = {COMPILER_FLAGS = ""; }; };
 		5EC839D5140D345D0060F44E /* ATContactPickerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC839D4140D345B0060F44E /* ATContactPickerList.m */; settings = {COMPILER_FLAGS = ""; }; };
-		5ED68E98136F379600AB9E4F /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ED68E99136F379600AB9E4F /* MainWindow.xib */; };
 		5ED68E9A136F37A500AB9E4F /* ForumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ED68E9B136F37A500AB9E4F /* ForumViewController.xib */; };
 		5ED68E9C136F37B100AB9E4F /* SubForumController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ED68E9D136F37B100AB9E4F /* SubForumController.xib */; };
 		5ED94648144753DD0061EA6C /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED94647144753DD0061EA6C /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -404,6 +404,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		081B0465173BB81B00FE6034 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		081B046E173BB82400FE6034 /* de */ = {isa = PBXFileReference; lastKnownFileType = file; name = de; path = de.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		081C73F01652D3FA00B9B670 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		081C73F21652D40400B9B670 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		0828FA6B1637FFC1006A97D7 /* Glass.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Glass.caf; sourceTree = "<group>"; };
@@ -776,7 +778,6 @@
 		5EC839D1140D2CA20060F44E /* ATContactPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATContactPicker.m; sourceTree = "<group>"; };
 		5EC839D3140D345A0060F44E /* ATContactPickerList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATContactPickerList.h; sourceTree = "<group>"; };
 		5EC839D4140D345B0060F44E /* ATContactPickerList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATContactPickerList.m; sourceTree = "<group>"; };
-		5ED68E99136F379600AB9E4F /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		5ED68E9B136F37A500AB9E4F /* ForumViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ForumViewController.xib; path = Classes/Tapatalk/ForumViewController.xib; sourceTree = "<group>"; };
 		5ED68E9D136F37B100AB9E4F /* SubForumController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SubForumController.xib; path = Classes/Tapatalk/SubForumController.xib; sourceTree = "<group>"; };
 		5ED94647144753DD0061EA6C /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
@@ -1031,7 +1032,7 @@
 				F6730BE3134A70B40045B876 /* GCImageViewer.xib */,
 				F6FB7DD5104EDE2F007F5A54 /* Fullscreen.xib */,
 				F634304A10362AA4004ACF93 /* DetailView.xib */,
-				5ED68E99136F379600AB9E4F /* MainWindow.xib */,
+				081B0466173BB81B00FE6034 /* MainWindow.xib */,
 				CB9E946D104490B700768B8B /* gelesen.db */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				22FB60DD104DC15600A0F65A /* Settings.bundle */,
@@ -1911,7 +1912,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				320B6C86F11D9990244A9731 /* Three20.bundle in Resources */,
-				5ED68E98136F379600AB9E4F /* MainWindow.xib in Resources */,
+				081B0464173BB81B00FE6034 /* MainWindow.xib in Resources */,
 				F634305410362AA4004ACF93 /* DetailView.xib in Resources */,
 				F634306510362AC6004ACF93 /* Default.png in Resources */,
 				F634306610362AC6004ACF93 /* icon.png in Resources */,
@@ -2187,6 +2188,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		081B0466173BB81B00FE6034 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				081B0465173BB81B00FE6034 /* en */,
+				081B046E173BB82400FE6034 /* de */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
 		5E80BADA1375762500F524B6 /* ATLocalizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
