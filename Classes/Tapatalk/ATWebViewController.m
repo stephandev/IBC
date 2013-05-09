@@ -116,7 +116,10 @@
     [items insertObject:reloadButton atIndex:ReloadButtonIndex];
     [self.toolbar setItems:items];
     self.url = self.webView.request.URL;
+    [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
+    
 }
+
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     NSLog(@"Error: %@", [error localizedDescription]);

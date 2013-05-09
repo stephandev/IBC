@@ -19,6 +19,7 @@
 @property (weak) IBOutlet UIToolbar *topBar;
 @property (weak) IBOutlet UIWebView *webView;
 @property (weak) IBOutlet UIToolbar *toolbar;
+@property (nonatomic, retain) UIScrollView *scrollView;
 @property (strong) NSURL *url;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil URL:(NSURL *)url;
