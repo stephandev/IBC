@@ -23,11 +23,22 @@
 
 
 #import "ATTabBarController.h"
+#import "ATWebViewController.h"
 
+@interface ATTabBarController () <UITabBarControllerDelegate>
+
+@end
 
 @implementation ATTabBarController
 
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.delegate = self;
+    }
+    return self;
+}
 
 
 - (void)didReceiveMemoryWarning
@@ -44,6 +55,35 @@
         return YES;
     }
     return [self.selectedViewController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+}
+
+#pragma mark - UITabBarControllerDelegate
+- (void)dismissWebView {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if ([viewController isKindOfClass:[ATWebViewController class]]) {
+        NSURL *url = nil;
+        if (viewController.tabBarItem.tag == 0) {
+            url = [NSURL URLWithString:@"http://m.bikemarkt.mtb-news.de"];
+        }
+        else if (viewController.tabBarItem.tag == 1) {
+            url = [NSURL URLWithString:@"http://winterpokal.mtb-news.de"];
+        }
+//        if viewController.tabBarItem.tag==0 
+        ATWebViewController *webViewController = [[ATWebViewController alloc] initWithNibName:nil bundle:nil URL:url];
+        
+        UINavigationController *navigationBarController = [[UINavigationController alloc] initWithRootViewController:webViewController];
+        
+        navigationBarController.navigationBar.tintColor = ATNavigationBarTintColor;
+        
+        webViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebView)];
+        navigationBarController.modalPresentationStyle = UIModalPresentationFullScreen;
+        [self presentModalViewController:navigationBarController animated:YES];
+        return NO;
+    }
+    return YES;
 }
 
 @end

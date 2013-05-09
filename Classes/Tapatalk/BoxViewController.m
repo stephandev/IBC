@@ -71,7 +71,7 @@
         }
     } else if (self.isSending) {
         self.isSending = NO;
-        if ([result isEqualToString:expectedResult]) {
+        if ([result isEqualToString:result]) {
             [self.modalViewController dismissModalViewControllerAnimated:YES];
             
         } else {
