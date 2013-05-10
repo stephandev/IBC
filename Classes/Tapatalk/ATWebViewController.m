@@ -8,6 +8,7 @@
 
 #import "ATWebViewController.h"
 #import "SHK.h"
+#import "ATTabBarController.h"
 
 #define ReloadButtonIndex 4
 
@@ -116,7 +117,8 @@
     [items insertObject:reloadButton atIndex:ReloadButtonIndex];
     [self.toolbar setItems:items];
     self.url = self.webView.request.URL;
-    [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
+    //Stop bouncing horizontally
+    [webView.scrollView setContentSize: CGSizeMake(webView.bounds.size.width, webView.scrollView.contentSize.height)];
     
 }
 
@@ -132,5 +134,5 @@
     [items insertObject:reloadButton atIndex:ReloadButtonIndex];
     [self.toolbar setItems:items];
 }
-
+    
 @end

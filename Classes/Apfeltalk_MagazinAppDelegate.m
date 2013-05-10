@@ -216,6 +216,36 @@
  }
  */
 
+//clearing caches
+
+-(void) clearCache
+{
+    for(int i=0; i< 100;i++)
+    {
+        NSLog(@"warning CLEAR CACHE--------");
+    }
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError * error;
+    NSArray * cacheFiles = [fileManager contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error];
+    
+    for(NSString * file in cacheFiles)
+    {
+        error=nil;
+        NSString * filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:file ];
+        NSLog(@"filePath to remove = %@",filePath);
+        
+        BOOL removed =[fileManager removeItemAtPath:filePath error:&error];
+        if(removed ==NO)
+        {
+            NSLog(@"removed ==NO");
+        }
+        if(error)
+        {
+            NSLog(@"%@", [error description]);
+        }
+    }
+    
+}
 
 - (void)dealloc {
     [tabBarController release];

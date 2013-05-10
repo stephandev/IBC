@@ -83,9 +83,9 @@
 - (void)handleError:(NSError *)error {
     [self handleErrorString:[error localizedDescription]];
 }
-
+//@autoreleasepool
 - (void)parse {
-    @autoreleasepool {
+     {
         XMLRPCResponseParser *parser = [[XMLRPCResponseParser alloc] initWithData:self.receivedData delegate:self];
         [parser parse];
         }

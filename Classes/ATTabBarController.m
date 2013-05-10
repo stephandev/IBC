@@ -24,6 +24,8 @@
 
 #import "ATTabBarController.h"
 #import "ATWebViewController.h"
+#import <Social/Social.h>
+
 
 @interface ATTabBarController () <UITabBarControllerDelegate>
 
@@ -40,7 +42,6 @@
     return self;
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -55,6 +56,25 @@
         return YES;
     }
     return [self.selectedViewController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+}
+
+#pragma mark - Capture Photo
+
+- (IBAction)TakePhoto {
+    picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
+    [self presentViewController:picker animated:YES completion:NULL];
+    }
+
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [imageView setImage:image];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControlerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - UITabBarControllerDelegate
@@ -78,7 +98,17 @@
         
         navigationBarController.navigationBar.tintColor = ATNavigationBarTintColor;
         
+        if (viewController.tabBarItem.tag == 0) {
+        
         webViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebView)];
+        webViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(TakePhoto)];
+            }
+        
+         else if (viewController.tabBarItem.tag == 1) {
+        
+        webViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebView)];
+             }
+             
         navigationBarController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentModalViewController:navigationBarController animated:YES];
         return NO;

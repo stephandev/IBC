@@ -24,9 +24,10 @@
 
 #import <UIKit/UIKit.h>
 
-
-@interface ATTabBarController : UITabBarController {
-    
+@interface ATTabBarController : UITabBarController <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+    UIImagePickerController *picker;
+    UIImage *image;
+    IBOutlet UIImageView *imageView;
 }
 
 @end

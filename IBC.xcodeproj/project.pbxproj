@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		081B0464173BB81B00FE6034 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 081B0466173BB81B00FE6034 /* MainWindow.xib */; };
 		081C73F11652D3FA00B9B670 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 081C73F01652D3FA00B9B670 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		081C73F31652D40500B9B670 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 081C73F21652D40400B9B670 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		085B7DFE1737A68E007D8D49 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 085B7DFD1737A68E007D8D49 /* Default-Landscape~ipad.png */; };
@@ -47,6 +46,7 @@
 		089E99FA173716CE0070AA73 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 089E99F9173716CE0070AA73 /* Default-568h@2x.png */; };
 		08B196B11655BA7900F39E38 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08B196A71655B7D900F39E38 /* iRate.bundle */; };
 		08B196B21655BA7F00F39E38 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B196A91655B7D900F39E38 /* iRate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08CA7B0E173CEFB7004B280E /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CA7B0C173CEFB7004B280E /* MainWindow.xib */; };
 		1D3623260D0F684500981E51 /* Apfeltalk_MagazinAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* Apfeltalk_MagazinAppDelegate.m */; settings = {COMPILER_FLAGS = " -fno-objc-arc"; }; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {COMPILER_FLAGS = ""; }; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -404,8 +404,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		081B0465173BB81B00FE6034 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		081B046E173BB82400FE6034 /* de */ = {isa = PBXFileReference; lastKnownFileType = file; name = de; path = de.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		081C73F01652D3FA00B9B670 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		081C73F21652D40400B9B670 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		0828FA6B1637FFC1006A97D7 /* Glass.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Glass.caf; sourceTree = "<group>"; };
@@ -470,6 +468,7 @@
 		08B196A71655B7D900F39E38 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		08B196A81655B7D900F39E38 /* iRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		08B196A91655B7D900F39E38 /* iRate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
+		08CA7B0D173CEFB7004B280E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* Apfeltalk_MagazinAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apfeltalk_MagazinAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* Apfeltalk_MagazinAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Apfeltalk_MagazinAppDelegate.m; sourceTree = "<group>"; };
@@ -1010,6 +1009,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				08CA7B0C173CEFB7004B280E /* MainWindow.xib */,
 				0828FA6B1637FFC1006A97D7 /* Glass.caf */,
 				320B6C86F11D9990244A9730 /* Three20.bundle */,
 				5E97FE3D1405AD5D00DC2906 /* BoxViewController.xib */,
@@ -1032,7 +1032,6 @@
 				F6730BE3134A70B40045B876 /* GCImageViewer.xib */,
 				F6FB7DD5104EDE2F007F5A54 /* Fullscreen.xib */,
 				F634304A10362AA4004ACF93 /* DetailView.xib */,
-				081B0466173BB81B00FE6034 /* MainWindow.xib */,
 				CB9E946D104490B700768B8B /* gelesen.db */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				22FB60DD104DC15600A0F65A /* Settings.bundle */,
@@ -1912,7 +1911,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				320B6C86F11D9990244A9731 /* Three20.bundle in Resources */,
-				081B0464173BB81B00FE6034 /* MainWindow.xib in Resources */,
 				F634305410362AA4004ACF93 /* DetailView.xib in Resources */,
 				F634306510362AC6004ACF93 /* Default.png in Resources */,
 				F634306610362AC6004ACF93 /* icon.png in Resources */,
@@ -2022,6 +2020,7 @@
 				086C7F50173A79860093A62E /* market@2x.png in Resources */,
 				086C7F53173A7C7D0093A62E /* trophy.png in Resources */,
 				086C7F54173A7C7D0093A62E /* trophy@2x.png in Resources */,
+				08CA7B0E173CEFB7004B280E /* MainWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2188,11 +2187,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		081B0466173BB81B00FE6034 /* MainWindow.xib */ = {
+		08CA7B0C173CEFB7004B280E /* MainWindow.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				081B0465173BB81B00FE6034 /* en */,
-				081B046E173BB82400FE6034 /* de */,
+				08CA7B0D173CEFB7004B280E /* en */,
 			);
 			name = MainWindow.xib;
 			sourceTree = "<group>";
@@ -2227,7 +2225,6 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = IBC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Stephan Koenig (CU3AUBYQNK)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stephan Koenig (CU3AUBYQNK)";
 				COPY_PHASE_STRIP = NO;
@@ -2278,7 +2275,6 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = IBC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Stephan Koenig (6ZYA59CD26)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stephan Koenig (6ZYA59CD26)";
 				COPY_PHASE_STRIP = YES;
@@ -2361,7 +2357,6 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = IBC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Stephan Koenig (6ZYA59CD26)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stephan Koenig (6ZYA59CD26)";
 				COPY_PHASE_STRIP = NO;
