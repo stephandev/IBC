@@ -106,7 +106,7 @@
 }
 
 - (void)imagePickerControlerDidCancel:(UIImagePickerController *)picker {
-    [self dismissModalViewControllerAnimated:NO];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - UITabBarControllerDelegate
