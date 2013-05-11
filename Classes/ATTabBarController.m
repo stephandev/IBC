@@ -25,6 +25,7 @@
 #import "ATTabBarController.h"
 #import "ATWebViewController.h"
 #import <Social/Social.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 
 @interface ATTabBarController () <UITabBarControllerDelegate>
@@ -64,17 +65,18 @@
     picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
-    [self presentViewController:picker animated:YES completion:NULL];
+    [self.modalViewController presentViewController:picker animated:YES completion:NULL];
     }
+
+#pragma mark - Save Photo
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [imageView setImage:image];
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissModalViewControllerAnimated:NO];
 }
 
 - (void)imagePickerControlerDidCancel:(UIImagePickerController *)picker {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissModalViewControllerAnimated:NO];
 }
 
 #pragma mark - UITabBarControllerDelegate
@@ -92,7 +94,7 @@
             url = [NSURL URLWithString:@"http://winterpokal.mtb-news.de"];
         }
 //        if viewController.tabBarItem.tag==0 
-        ATWebViewController *webViewController = [[ATWebViewController alloc] initWithNibName:nil bundle:nil URL:url];
+        ATWebViewController *webViewController = [[ATWebViewController alloc] initWithNibName:nil bundle:nil URL:url ];
         
         UINavigationController *navigationBarController = [[UINavigationController alloc] initWithRootViewController:webViewController];
         

@@ -43,6 +43,7 @@
 		086C7F50173A79860093A62E /* market@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 086C7F4F173A79860093A62E /* market@2x.png */; };
 		086C7F53173A7C7D0093A62E /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = 086C7F51173A7C7D0093A62E /* trophy.png */; };
 		086C7F54173A7C7D0093A62E /* trophy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 086C7F52173A7C7D0093A62E /* trophy@2x.png */; };
+		08737049173DA52600CC99F9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08737048173DA52600CC99F9 /* MobileCoreServices.framework */; };
 		089E99FA173716CE0070AA73 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 089E99F9173716CE0070AA73 /* Default-568h@2x.png */; };
 		08B196B11655BA7900F39E38 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08B196A71655B7D900F39E38 /* iRate.bundle */; };
 		08B196B21655BA7F00F39E38 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B196A91655B7D900F39E38 /* iRate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -464,6 +465,7 @@
 		086C7F4F173A79860093A62E /* market@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "market@2x.png"; sourceTree = "<group>"; };
 		086C7F51173A7C7D0093A62E /* trophy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy.png; sourceTree = "<group>"; };
 		086C7F52173A7C7D0093A62E /* trophy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trophy@2x.png"; sourceTree = "<group>"; };
+		08737048173DA52600CC99F9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		089E99F9173716CE0070AA73 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		08B196A71655B7D900F39E38 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		08B196A81655B7D900F39E38 /* iRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
@@ -829,6 +831,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08737049173DA52600CC99F9 /* MobileCoreServices.framework in Frameworks */,
 				5ED94648144753DD0061EA6C /* Twitter.framework in Frameworks */,
 				081C73F31652D40500B9B670 /* Social.framework in Frameworks */,
 				081C73F11652D3FA00B9B670 /* Accounts.framework in Frameworks */,
@@ -1049,6 +1052,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				08737048173DA52600CC99F9 /* MobileCoreServices.framework */,
 				081C73F21652D40400B9B670 /* Social.framework */,
 				081C73F01652D3FA00B9B670 /* Accounts.framework */,
 				3201088596B4756681693700 /* Three20UICommon.xcodeproj */,
