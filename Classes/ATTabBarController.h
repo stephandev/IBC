@@ -26,8 +26,10 @@
 
 @interface ATTabBarController : UITabBarController <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     UIImagePickerController *picker;
+    UIImage *imageToSave;
     UIImage *image;
     IBOutlet UIImageView *imageView;
+    BOOL newMedia;
 }
 
 @end

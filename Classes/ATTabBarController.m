@@ -70,9 +70,39 @@
 
 #pragma mark - Save Photo
 
-- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [self dismissModalViewControllerAnimated:NO];
+- (void) imagePickerController: (UIImagePickerController *) picker
+ didFinishPickingMediaWithInfo: (NSDictionary *) info {
+    
+    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+    UIImage *originalImage, *editedImage, *imageToSave;
+    
+    // Handle a still image capture
+    if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0)
+        == kCFCompareEqualTo) {
+        
+        editedImage = (UIImage *) [info objectForKey:
+                                   UIImagePickerControllerEditedImage];
+        originalImage = (UIImage *) [info objectForKey:
+                                     UIImagePickerControllerOriginalImage];
+        
+        if (editedImage) {
+            imageToSave = editedImage;
+        } else {
+            imageToSave = originalImage;
+        }
+        
+        // Save the new image (original or edited) to the Camera Roll
+        UIImageWriteToSavedPhotosAlbum (imageToSave, nil, nil , nil);
+        UIAlertView *alert;
+        alert= [[UIAlertView alloc]
+        initWithTitle:NSLocalizedStringFromTable(@"Saved", @"ATLocalizable", @"")
+        message:NSLocalizedStringFromTable(@"Your picture has been saved", @"ATLocalizable", @"")
+        delegate:self
+        cancelButtonTitle:@"OK"
+        otherButtonTitles:nil];
+       [alert show];
+    }
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)imagePickerControlerDidCancel:(UIImagePickerController *)picker {
