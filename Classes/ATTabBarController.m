@@ -125,8 +125,10 @@
         }
 //        if viewController.tabBarItem.tag==0 
         ATWebViewController *webViewController = [[ATWebViewController alloc] initWithNibName:nil bundle:nil URL:url ];
+        
+        //Check if the device is running iOS 6.x.x and if yes, then show the camera button
+        
         if ([[[UIDevice currentDevice] systemVersion] hasPrefix:@"6"]) {
-            // iOS 6.x
         
         UINavigationController *navigationBarController = [[UINavigationController alloc] initWithRootViewController:webViewController];
         
