@@ -102,7 +102,7 @@
         otherButtonTitles:nil];
        [alert show];
     }
-    [self dismissModalViewControllerAnimated:YES];
+    [self.modalViewController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)imagePickerControlerDidCancel:(UIImagePickerController *)picker {
@@ -125,6 +125,8 @@
         }
 //        if viewController.tabBarItem.tag==0 
         ATWebViewController *webViewController = [[ATWebViewController alloc] initWithNibName:nil bundle:nil URL:url ];
+        if ([[[UIDevice currentDevice] systemVersion] hasPrefix:@"6"]) {
+            // iOS 6.x
         
         UINavigationController *navigationBarController = [[UINavigationController alloc] initWithRootViewController:webViewController];
         
@@ -144,6 +146,29 @@
         navigationBarController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentModalViewController:navigationBarController animated:YES];
         return NO;
+            }
+        else
+            
+            { UINavigationController *navigationBarController = [[UINavigationController alloc] initWithRootViewController:webViewController];
+            
+            navigationBarController.navigationBar.tintColor = ATNavigationBarTintColor;
+            
+            if (viewController.tabBarItem.tag == 0) {
+                
+                webViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebView)];
+            }
+            
+            else if (viewController.tabBarItem.tag == 1) {
+                
+                webViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebView)];
+            }
+            
+            navigationBarController.modalPresentationStyle = UIModalPresentationFullScreen;
+            [self presentModalViewController:navigationBarController animated:YES];
+            return NO;
+        }
+            
+        
     }
     return YES;
 }
