@@ -212,6 +212,29 @@
                 [tweetSheet setInitialText:[NSString stringWithFormat:story.title]];
                 [tweetSheet addURL:[NSURL URLWithString:story.link]];
                 [self presentModalViewController:tweetSheet animated:YES];
+                tweetSheet.completionHandler = ^(TWTweetComposeViewControllerResult result) {
+                    NSString *output;
+                    switch(result) {
+                            //  This means the user cancelled without sending the Tweet
+                        case TWTweetComposeViewControllerResultCancelled:
+                            output = NSLocalizedStringFromTable(@"As it seems you didn't want to tweet", @"ATLocalizable", @"");
+                            break;
+                            //  This means the user hit 'Send'
+                        case TWTweetComposeViewControllerResultDone:
+                            output = NSLocalizedStringFromTable(@"You succesfully tweeted this article", @"ATLocalizable", @"");
+                            break;
+                    }//check if everythink worked properly. Give out a message on the state.
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Twitter" message:output delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                    [alert show];
+                    
+                    
+                    //  dismiss the Tweet Sheet
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self dismissViewControllerAnimated:YES completion:^{
+                            NSLog(@"Tweet Sheet has been dismissed.");
+                        }];
+                    });
+                };
             }
         }
     }
