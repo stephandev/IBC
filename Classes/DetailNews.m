@@ -203,6 +203,21 @@
             [mySLComposerSheet setInitialText:[NSString stringWithFormat:story.title,mySLComposerSheet.serviceType]]; //the message you want to post
             [mySLComposerSheet addURL:[NSURL URLWithString:story.link]];
             //for more instance methodes, go here:https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Reference/SLComposeViewController_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40012205
+            [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
+                NSString *output;
+                switch (result) {
+                    case SLComposeViewControllerResultCancelled:
+                        output = NSLocalizedStringFromTable(@"As it seems you didn't want to post to Facebook", @"ATLocalizable", @"");
+                        break;
+                    case SLComposeViewControllerResultDone:
+                        output = NSLocalizedStringFromTable(@"You succesfully posted to Facebook", @"ATLocalizable", @"");
+                        break;
+                    default:
+                        break;
+                } //check if everythink worked properly. Give out a message on the state.
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook" message:output delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                [alert show];
+            }];
             [self presentViewController:mySLComposerSheet animated:YES completion:nil];
         }
     }
