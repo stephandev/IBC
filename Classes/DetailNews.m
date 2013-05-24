@@ -163,7 +163,7 @@
         // Mail
         SHKItem *item = [SHKItem text:storyContent];
         item.title = story.title;
-        item.text = @"Hier ist ein Link der dich interessieren könnte:";
+        item.text = NSLocalizedStringFromTable(@"This link could be of interest to you:", @"ATLocalizable", @"");
         item.URL = [NSURL URLWithString:story.link];
         
         [SHKMail shareItem:item];
@@ -180,6 +180,29 @@
             [mySLComposerSheet addURL:[NSURL URLWithString:story.link]];
             //for more instance methodes, go here:https://developer.apple.com/library/ios/#documentation/NetworkingInternet/Reference/SLComposeViewController_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40012205
             [self presentViewController:mySLComposerSheet animated:YES completion:nil];
+            mySLComposerSheet.completionHandler = ^(SLComposeViewControllerResult result) {
+                NSString *output;
+                switch(result) {
+                        //  This means the user cancelled without sending the Tweet
+                    case SLComposeViewControllerResultCancelled:
+                        output = NSLocalizedStringFromTable(@"As it seems you didn't want to tweet", @"ATLocalizable", @"");
+                        break;
+                        //  This means the user hit 'Send'
+                    case SLComposeViewControllerResultDone:
+                        output = NSLocalizedStringFromTable(@"You succesfully tweeted this article", @"ATLocalizable", @"");
+                        break;
+                }//check if everythink worked properly. Give out a message on the state.
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Twitter" message:output delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+                [alert show];
+
+                
+                //  dismiss the Tweet Sheet
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        NSLog(@"Tweet Sheet has been dismissed.");
+                    }];
+                });
+            };
             
         } else {
             
