@@ -161,6 +161,12 @@
                 
                 webViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebView)];
                 webViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(TakePhoto)];
+                
+                //This is the alternative method for delaying the Camerabutton
+                
+                //UIBarButtonItem *theItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(TakePhoto)];
+                
+                //[webViewController.navigationItem performSelector:@selector(setLeftBarButtonItem:) withObject:theItem afterDelay:10.0];
             }
             
             else if (viewController.tabBarItem.tag == 1) {

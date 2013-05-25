@@ -110,12 +110,14 @@
     
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
-    HUD.dimBackground = YES;
+    HUD.dimBackground = NO;
+    HUD.graceTime = 0.0f;
     HUD.labelText = NSLocalizedStringFromTable(@"Loading", @"ATLocalizable", @"");
     HUD.delegate = self;
-    HUD.mode = MBProgressHUDModeAnnularDeterminate;
-    [HUD show:YES];
-    [HUD hide:YES afterDelay:6];
+    HUD.mode = MBProgressHUDModeIndeterminate;
+    HUD.animationType = MBProgressHUDAnimationFade;
+    //[HUD show:YES];
+    [HUD hide:YES afterDelay:15];
     [HUD showWhileExecuting:@selector(doSomeFunkyStuff) onTarget:self withObject:nil animated:YES];
 
     [self.toolbar setItems:items];
