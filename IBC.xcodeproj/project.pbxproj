@@ -39,6 +39,7 @@
 		085D250B1698F400007FBD3B /* PNPushServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D24F61698F400007FBD3B /* PNPushServerConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		085D250C1698F400007FBD3B /* PNRequestProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D24F81698F400007FBD3B /* PNRequestProperty.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		085D250D1698F400007FBD3B /* PNSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 085D24FA1698F400007FBD3B /* PNSettings.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0867E69E175038A40097F12F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0867E69C175038A30097F12F /* MBProgressHUD.m */; };
 		086C7F47173A77CD0093A62E /* market.png in Resources */ = {isa = PBXBuildFile; fileRef = 086C7F46173A77CD0093A62E /* market.png */; };
 		086C7F50173A79860093A62E /* market@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 086C7F4F173A79860093A62E /* market@2x.png */; };
 		086C7F53173A7C7D0093A62E /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = 086C7F51173A7C7D0093A62E /* trophy.png */; };
@@ -461,6 +462,8 @@
 		085D24F81698F400007FBD3B /* PNRequestProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNRequestProperty.m; sourceTree = "<group>"; };
 		085D24F91698F400007FBD3B /* PNSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNSettings.h; sourceTree = "<group>"; };
 		085D24FA1698F400007FBD3B /* PNSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNSettings.m; sourceTree = "<group>"; };
+		0867E69C175038A30097F12F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		0867E69D175038A40097F12F /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		086C7F46173A77CD0093A62E /* market.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = market.png; sourceTree = "<group>"; };
 		086C7F4F173A79860093A62E /* market@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "market@2x.png"; sourceTree = "<group>"; };
 		086C7F51173A7C7D0093A62E /* trophy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy.png; sourceTree = "<group>"; };
@@ -1714,6 +1717,8 @@
 		F6730BBC134A70790045B876 /* Helper View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0867E69C175038A30097F12F /* MBProgressHUD.m */,
+				0867E69D175038A40097F12F /* MBProgressHUD.h */,
 				5EC2660B1369AAE0006A10DE /* ATWebViewController.h */,
 				5EC2660C1369AAE1006A10DE /* ATWebViewController.m */,
 				F6730BE1134A70B40045B876 /* GCImageViewer.h */,
@@ -2147,6 +2152,7 @@
 				085D250B1698F400007FBD3B /* PNPushServerConnection.m in Sources */,
 				085D250C1698F400007FBD3B /* PNRequestProperty.m in Sources */,
 				085D250D1698F400007FBD3B /* PNSettings.m in Sources */,
+				0867E69E175038A40097F12F /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

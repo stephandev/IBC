@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class MBProgressHUD;
 
 
 @interface ATWebViewController : UIViewController <UIWebViewDelegate> {
+    MBProgressHUD *HUD;
     IBOutlet UIWebView *__weak webView;
     IBOutlet UIToolbar *__weak topBar;
     IBOutlet UIToolbar *__weak toolbar;

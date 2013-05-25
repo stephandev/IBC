@@ -144,6 +144,14 @@
 			<key>DoNotLocalize</key>
 			<string>YES</string>
 			<key>FooterText</key>
+			<string>Als Activity Indicator kommt MBProgressHUD von Matej Bukovinski zum Einsatz und steht unter der MIT Softwarelizenz. </string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<string>YES</string>
+			<key>FooterText</key>
 			<string>Für RegexKit gilt zusätzlich folgende Bestimmung:</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>

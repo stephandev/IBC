@@ -9,6 +9,7 @@
 #import "ATWebViewController.h"
 #import "SHK.h"
 #import "ATTabBarController.h"
+#import "MBProgressHUD.h"
 
 #define ReloadButtonIndex 4
 
@@ -103,8 +104,30 @@
                                                                                  target:self.webView 
                                                                                  action:@selector(stopLoading)];
     [items insertObject:reloadButton atIndex:ReloadButtonIndex];
+    
+    //Show the activity Indicator
+    
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    HUD.dimBackground = YES;
+    HUD.labelText = NSLocalizedStringFromTable(@"Loading", @"ATLocalizable", @"");
+    HUD.delegate = self;
+    HUD.mode = MBProgressHUDModeAnnularDeterminate;
+    [HUD show:YES];
+    [HUD hide:YES afterDelay:6];
+    [HUD showWhileExecuting:@selector(doSomeFunkyStuff) onTarget:self withObject:nil animated:YES];
 
     [self.toolbar setItems:items];
+}
+
+- (void)doSomeFunkyStuff {
+    float progress = 0.0;
+    while (progress < 1.0) {
+        progress += 0.01;
+        HUD.progress = progress;
+        usleep(50000);
+    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView {
@@ -115,8 +138,15 @@
                                                                                  target:self.webView 
                                                                                  action:@selector(reload)];
     [items insertObject:reloadButton atIndex:ReloadButtonIndex];
+    
     [self.toolbar setItems:items];
     self.url = self.webView.request.URL;
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [HUD removeFromSuperview];
+    HUD.delegate = nil;
+    HUD = nil;
+    
     //Stop bouncing horizontally
     [webView.scrollView setContentSize: CGSizeMake(webView.bounds.size.width, webView.scrollView.contentSize.height)];
     
@@ -133,6 +163,12 @@
                                                                                  action:@selector(reload)];
     [items insertObject:reloadButton atIndex:ReloadButtonIndex];
     [self.toolbar setItems:items];
+}
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    HUD = nil;
 }
     
 @end
