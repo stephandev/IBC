@@ -128,9 +128,6 @@
 //        if viewController.tabBarItem.tag==0 
         webViewController = [[ATWebViewController alloc] initWithNibName:nil bundle:nil URL:url];
         
-        // Button hinzufügen und danach direkt DEAKTIVIEREN
-        webViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(TakePhoto)];
-        webViewController.navigationItem.leftBarButtonItem.enabled = FALSE;
         
         //Check if the device is running iOS 6.x.x and if yes, then show the camera button
         
@@ -166,7 +163,11 @@
             if (viewController.tabBarItem.tag == 0) {
                 
                 webViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebView)];
-            }
+                
+                // Button hinzufügen und danach direkt DEAKTIVIEREN umd das Laden der WebView abzuwarten
+                webViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(TakePhoto)];
+                webViewController.navigationItem.leftBarButtonItem.enabled = FALSE;
+                }
             
             else if (viewController.tabBarItem.tag == 1) {
                 
