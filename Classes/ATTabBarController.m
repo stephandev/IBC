@@ -23,7 +23,6 @@
 
 
 #import "ATTabBarController.h"
-#import "ATWebViewController.h"
 #import <Social/Social.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
@@ -39,6 +38,9 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         self.delegate = self;
+        
+        // Setup Notification
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewIsReadyLoading:) name:@"webViewIsReadyLoading" object:nil];
     }
     return self;
 }
@@ -124,7 +126,11 @@
             url = [NSURL URLWithString:@"http://winterpokal.mtb-news.de"];
         }
 //        if viewController.tabBarItem.tag==0 
-        ATWebViewController *webViewController = [[ATWebViewController alloc] initWithNibName:nil bundle:nil URL:url ];
+        webViewController = [[ATWebViewController alloc] initWithNibName:nil bundle:nil URL:url];
+        
+        // Button hinzufügen und danach direkt DEAKTIVIEREN
+        webViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(TakePhoto)];
+        webViewController.navigationItem.leftBarButtonItem.enabled = FALSE;
         
         //Check if the device is running iOS 6.x.x and if yes, then show the camera button
         
@@ -160,13 +166,6 @@
             if (viewController.tabBarItem.tag == 0) {
                 
                 webViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebView)];
-                webViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(TakePhoto)];
-                
-                //This is the alternative method for delaying the Camerabutton
-                
-                //UIBarButtonItem *theItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(TakePhoto)];
-                
-                //[webViewController.navigationItem performSelector:@selector(setLeftBarButtonItem:) withObject:theItem afterDelay:10.0];
             }
             
             else if (viewController.tabBarItem.tag == 1) {
@@ -182,6 +181,12 @@
         
     }
     return YES;
+}
+
+- (void)webViewIsReadyLoading:(id)sender
+{
+    // Button nun aktivieren ;)
+    webViewController.navigationItem.leftBarButtonItem.enabled = TRUE;
 }
 
 @end

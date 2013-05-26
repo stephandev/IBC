@@ -71,7 +71,9 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
+                   
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIBarButtonItem *doneButton = [[UIBarButtonItem  alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancel)];
         [self.topBar setItems:[NSArray arrayWithObject:doneButton] animated:YES];
@@ -152,6 +154,11 @@
     //Stop bouncing horizontally
     [webView.scrollView setContentSize: CGSizeMake(webView.bounds.size.width, webView.scrollView.contentSize.height)];
     
+    // Webview ist fertig, jetzt benachrichtigen!
+    if (webView.loading == YES)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"webViewIsReadyLoading" object:self userInfo:nil];
+    }
 }
 
 
