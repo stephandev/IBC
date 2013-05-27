@@ -323,7 +323,7 @@ const int SAVED_MESSAGES_SECTION_INDEX = 1;
 							 delegate:self
               cancelButtonTitle:NSLocalizedStringFromTable(@"Cancel", @"ATLocalizable", @"")
 							 destructiveButtonTitle:nil
-							 otherButtonTitles:NSLocalizedStringFromTable(@"Mark all news as read", @"ATLocalizable", @""), NSLocalizedStringFromTable(@"Delete all saved news", @"ATLocalizable", @""), NSLocalizedStringFromTable(@"Uservideos", @"ATLocalizable", @""), NSLocalizedStringFromTable(@"Userphotos", @"ATLocalizable", @""), nil];
+							 otherButtonTitles:NSLocalizedStringFromTable(@"Mark all news as read", @"ATLocalizable", @""), NSLocalizedStringFromTable(@"Delete all saved news", @"ATLocalizable", @""), nil];
 	
     [myMenu showFromTabBar:[[appDelegate tabBarController] tabBar]];
 }
@@ -343,22 +343,6 @@ const int SAVED_MESSAGES_SECTION_INDEX = 1;
 		savedStories = [[NSMutableArray alloc] init];
 		[self saveStories];
 		[newsTable reloadData];
-	}
-    
-    if (buttonIdx == 2) {
-        {
-            NSURL *url = [ [ NSURL alloc ] initWithString: @"http://videos.mtb-news.de" ];
-            
-            [[UIApplication sharedApplication] openURL:url];
-        }
-    }
-    
-    if (buttonIdx == 3) {
-        {
-            NSURL *url = [ [ NSURL alloc ] initWithString: @"http://m.fotos.mtb-news.de" ];
-            
-            [[UIApplication sharedApplication] openURL:url];
-        }
     }
     
 	if (actionSheet == myMenu) {
