@@ -11,7 +11,7 @@
 
 
 @implementation Post
-@synthesize postID, title, content, author, authorID, postDate, userIsOnline;
+@synthesize postID, title, content, author, authorID, postDate, userIsOnline, imageUrl, images;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
@@ -31,7 +31,30 @@
         NSString *dateFormat = @"yyyyMMdd'T'HH:mm:ssZZZ";
         [dateFormatter setDateFormat:dateFormat];
         self.postDate = [dateFormatter dateFromString:dateString];
+        
+        //NSLog(@"%@", content);
+        imageUrl = [[NSMutableArray alloc] init];
+        images = [[NSMutableArray alloc] init];
+        
+        if([[NSUserDefaults standardUserDefaults] boolForKey:@"disableImageView"] == FALSE) {
+            NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"tif", @"jpg", @"JPG", @"jpeg", @"gif", @"png",@"bmp", @"BMPf", @"ico", @"cur", @"xbm", nil];
+            for(int x = 0; x<=extensions.count-1; x++)
+            {
+                NSString *regEx = [NSString stringWithFormat:@"http://(.*)\\.%@", [extensions objectAtIndex:x]];
+            
+            
+                [content enumerateStringsMatchedByRegex:regEx options:RKLNoOptions inRange:NSMakeRange(0UL, [content length]) error:NULL enumerationOptions:RKLRegexEnumerationCapturedStringsNotRequired usingBlock:^(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop)
+                {
+                
+                    NSString *url = [content substringWithRange:(NSRange){capturedRanges[0].location, capturedRanges[0].length}];
+                    [imageUrl addObject:url];
+
+                    NSLog(@"Range: %@", url);
+                }];
+            }
+        }
     }
+
     return self;
 }
 

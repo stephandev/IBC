@@ -321,10 +321,14 @@ const CGFloat kDefaultRowHeight = 44.0;
         self.topic.closed = [[dictionary valueForKey:@"is_closed"] boolValue];
         self.topic.subscribed = [[dictionary valueForKey:@"is_subscribed"] boolValue];
         self.topic.userCanPost = [[dictionary valueForKey:@"can_reply"] boolValue];
-        for (NSDictionary *dict in array) {
+        
+        for (NSDictionary *dict in array)
+        {
             Post *post = [[Post alloc] initWithDictionary:dict];
+
             [self.posts addObject:post];
         }
+        
         [self dismissActivityIndicator];
         [self.tableView reloadData];
     } else {
@@ -335,12 +339,13 @@ const CGFloat kDefaultRowHeight = 44.0;
 #pragma mark -
 #pragma mark ContentCellDelegate & SubjectCellDelegate
 
-- (BOOL)contentCell:(ContentCell *)cell shouldLoadRequest:(NSURLRequest *)aRequest {
+- (BOOL)contentCell:(ContentCell *)cell shouldLoadRequest:(NSURLRequest *)aRequest
+{
     // This methode will open a GalleryView or a webView! 
     NSString *extension = [[[aRequest URL] absoluteString] pathExtension];
     
     BOOL isImage = NO;
-    NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"tif", @"jpg", @"jpeg", @"gif", @"png",@"bmp", @"BMPf", @"ico", @"cur", @"xbm", nil];
+    NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"tif", @"jpg", @"jpeg", @"JPG", @"gif", @"png",@"bmp", @"BMPf", @"ico", @"cur", @"xbm", nil];
     
     for (NSString *e in extensions) {
         if ([extension isEqualToString:e]) {
@@ -364,7 +369,6 @@ const CGFloat kDefaultRowHeight = 44.0;
     } else {
         [self.navigationController pushViewController:webViewController animated:YES];
     }
-    
     return NO;
 }
 
@@ -518,6 +522,10 @@ const CGFloat kDefaultRowHeight = 44.0;
         }
     }
     
+    if(indexPath.row > 1) {
+        return 100;
+    }
+    
     /*if ([self.posts count] == 0) {
         return kDefaultRowHeight;
     }
@@ -572,6 +580,18 @@ const CGFloat kDefaultRowHeight = 44.0;
     if ([self.posts count] == 0) {
         return [super tableView:tableView numberOfRowsInSection:section];
     }
+    else if(section != [[self posts] count])
+    {
+        NSInteger x = [[[self.posts objectAtIndex:section] imageUrl] count];
+        if(x != 0)
+        {
+            NSInteger rows = 2 + [[[self.posts objectAtIndex:section] imageUrl] count];
+            return rows;
+        } else if([[[self.posts objectAtIndex:section] images] count] != 0) {
+            NSInteger rows = 2 + [[[self.posts objectAtIndex:section] images] count];
+            return rows;
+        }
+    }
     return 2;
 }
 
@@ -585,6 +605,64 @@ const CGFloat kDefaultRowHeight = 44.0;
     }
     return nil;
 }
+
+- (void)loadImageInBackground:(NSArray *)objects
+{
+    // N.B. an instance of my 'Menu' class has been created, called 'menuItem'
+    
+    if([objects count] > 0)
+    {
+        NSURL *imgURL     = [NSURL URLWithString:[objects objectAtIndex:0]];
+        NSData *imgData   = [NSData dataWithContentsOfURL:imgURL];
+        UIImage *img    =  [[UIImage alloc] initWithData:imgData];
+        
+        if(img != (UIImage *)nil) {
+            NSArray *obj = [[NSArray alloc] initWithObjects:img, [objects objectAtIndex:1], [objects objectAtIndex:2], [objects objectAtIndex:3], nil];
+            [self performSelectorOnMainThread:@selector(assignImageToImageView:) withObject:obj waitUntilDone:YES];
+        } else {
+            //NSIndexPath *indexPath = [objects objectAtIndex:3];
+            //[(NSMutableArray *)[objects objectAtIndex:4] removeObject:[objects objectAtIndex:0]];
+        }
+    }
+}
+
+- (void)assignImageToImageView:(NSArray *)obj
+{
+    if([obj count] > 0)
+    {
+        UIImageView *imageView = (UIImageView *)[obj objectAtIndex:1];
+	
+        if (imageView != nil)
+        {
+            UIImageView *iview	= (UIImageView *)[imageView viewWithTag:0];
+        
+            if (iview != nil)
+            {
+                UIImage *image = (UIImage *)[obj objectAtIndex:0];
+                
+                // image kleiner machen
+                int x = 130;
+                int y = 90;
+                
+                UIGraphicsBeginImageContext(CGSizeMake(x, y));
+                [image drawInRect:CGRectMake(0,0, CGSizeMake(x, y).width, CGSizeMake(x, y).height)];
+                UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+                
+                [iview setImage:newImage];
+                
+                // Speichern
+                [(NSMutableArray *)[obj objectAtIndex:2] addObject:image];
+                /*
+                [self.tableView beginUpdates];
+                [self.tableView insertRowsAtIndexPaths:@[(NSIndexPath *)[obj objectAtIndex:3]] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.tableView endUpdates];
+                 */
+            }
+        }
+    }
+}
+
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -665,7 +743,7 @@ const CGFloat kDefaultRowHeight = 44.0;
                     return [super tableView:tableView cellForRowAtIndexPath:indexPath]; // loadingCell
                 
                 if (answerCell == nil) {
-                    self.answerCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AnswerCellIdentifier  tableViewWidth:CGRectGetWidth(self.tableView.frame)]; 
+                    self.answerCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AnswerCellIdentifier tableViewWidth:CGRectGetWidth(self.tableView.frame)]; 
                 }
                 answerCell.textView.scrollEnabled = YES;
                 answerCell.textView.editable = YES;
@@ -708,17 +786,65 @@ const CGFloat kDefaultRowHeight = 44.0;
             }
             
             ContentCell *contentCell = (ContentCell *)[tableView dequeueReusableCellWithIdentifier:ContentCellIdentifier];
-            if (contentCell == nil) {
-                contentCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContentCellIdentifier  tableViewWidth:CGRectGetWidth(self.tableView.frame)];
+            if (contentCell == nil)
+            {
+                contentCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContentCellIdentifier tableViewWidth:CGRectGetWidth(self.tableView.frame)];
                 contentCell.textView.scrollEnabled = NO;
                 contentCell.delegate = self;
             }
+            
             contentCell.textView.text = p.content;
+            
             return contentCell;
             break;
-        } default:{
+        }
+        
+        default:{
             break;
         }
+    }
+    
+    if(indexPath.row > 1)
+    {
+        static NSString *CellIdentifier = @"Cell";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
+
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((cell.width / 2)-65, 5, 130, 90)];
+        imageView.image = [UIImage imageNamed:@"loading"];
+        imageView.layer.borderColor = [UIColor blackColor].CGColor;
+        imageView.layer.borderWidth = 1.0f;
+        imageView.tag = 0;
+        
+        // auf tap reagieren
+        //UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTaped:)];
+        //singleTap.numberOfTapsRequired = 1;
+        //singleTap.numberOfTouchesRequired = 1;
+        
+        //[imageView addGestureRecognizer:singleTap];
+        //[imageView setUserInteractionEnabled:YES];
+        
+        // als SUbview deklarieren
+        [cell addSubview:imageView];
+        
+        int index = indexPath.row-2;
+        
+        // Loading image in Background, wenn noch keine Bilder geladen sind
+        if([[p images] count] > 0 && index < [[p images] count] && index >= 0) {
+            NSLog(@"IMG Count: %d -> Row Count: %d", [[p images] count], index);
+            [imageView setImage:[[p images] objectAtIndex:index]];
+        } else {
+            if([[p imageUrl] count] > 0) {
+                NSArray *newArray = [[NSArray alloc] initWithObjects:[[p imageUrl] objectAtIndex:indexPath.row-2], imageView, [p images], indexPath, [p imageUrl], nil];
+                [NSThread detachNewThreadSelector:@selector(loadImageInBackground:) toTarget:self withObject:newArray];
+            }
+        }
+
+         return cell;
     }
 
 	return nil;

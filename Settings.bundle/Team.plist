@@ -8,7 +8,7 @@
 			<key>DoNotLocalize</key>
 			<string>YES</string>
 			<key>FooterText</key>
-			<string>Version 2.1.0</string>
+			<string>Version 2.0.0</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -64,7 +64,23 @@
 			<key>DoNotLocalize</key>
 			<true/>
 			<key>FooterText</key>
-			<string>Stephan König (Thaddel), Manuel Burghard, Patrick Schwarz (Nero91)</string>
+			<string>Stephan König (Thaddel), Manuel Burghard, Nero91</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Programmierung der neuen Funktionen für Version 2.0.0</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DoNotLocalize</key>
+			<true/>
+			<key>FooterText</key>
+			<string>Nero91</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
@@ -80,7 +96,7 @@
 			<key>DoNotLocalize</key>
 			<true/>
 			<key>FooterText</key>
-			<string>Manuel Burghard</string>
+			<string>Manuel Burghard, Nero91 (Version 2.0.0)</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

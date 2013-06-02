@@ -45,6 +45,16 @@
 			<false/>
 		</dict>
 		<dict>
+			<key>DefaultValue</key>
+			<false/>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>disableImageView</string>
+			<key>Key</key>
+			<string>disableImageView</string>
+		</dict>
+		<dict>
 			<key>Title</key>
 			<string>Group_VibrateOnReload</string>
 			<key>Type</key>

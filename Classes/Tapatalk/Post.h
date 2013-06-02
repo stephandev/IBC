@@ -25,6 +25,8 @@
 @property (copy) NSString *content;
 @property (copy) NSString *author;
 @property (strong) NSDate *postDate;
+@property (strong) NSMutableArray *imageUrl;
+@property (strong) NSMutableArray *images;
 @property (assign) BOOL userIsOnline;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
