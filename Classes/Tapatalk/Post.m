@@ -37,7 +37,7 @@
         images = [[NSMutableArray alloc] init];
         
         if([[NSUserDefaults standardUserDefaults] boolForKey:@"disableImageView"] == FALSE) {
-            NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"tif", @"jpg", @"JPG", @"jpeg", @"gif", @"png",@"bmp", @"BMPf", @"ico", @"cur", @"xbm", nil];
+            NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"tif", @"jpg", @"JPG", @"jpeg", @"gif", @"png",@"bmp", @"BMP", @"ico", @"cur", @"xbm", @"PNG", @"JPEG", @"GIF", @"ICO", @"XBM", @"CUR", @"TIF", @"TIFF", nil];
             for(int x = 0; x<=extensions.count-1; x++)
             {
                 NSString *regEx = [NSString stringWithFormat:@"http://(.*)\\.%@", [extensions objectAtIndex:x]];

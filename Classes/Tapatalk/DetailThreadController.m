@@ -619,9 +619,6 @@ const CGFloat kDefaultRowHeight = 44.0;
         if(img != (UIImage *)nil) {
             NSArray *obj = [[NSArray alloc] initWithObjects:img, [objects objectAtIndex:1], [objects objectAtIndex:2], [objects objectAtIndex:3], nil];
             [self performSelectorOnMainThread:@selector(assignImageToImageView:) withObject:obj waitUntilDone:YES];
-        } else {
-            //NSIndexPath *indexPath = [objects objectAtIndex:3];
-            //[(NSMutableArray *)[objects objectAtIndex:4] removeObject:[objects objectAtIndex:0]];
         }
     }
 }
@@ -640,24 +637,33 @@ const CGFloat kDefaultRowHeight = 44.0;
             {
                 UIImage *image = (UIImage *)[obj objectAtIndex:0];
                 
-                // image kleiner machen
-                int x = 130;
-                int y = 90;
+                NSLog(@"W: %f -> H: %f G: %f", image.size.width, image.size.height, (image.size.width / image.size.height));
                 
-                UIGraphicsBeginImageContext(CGSizeMake(x, y));
-                [image drawInRect:CGRectMake(0,0, CGSizeMake(x, y).width, CGSizeMake(x, y).height)];
+                float newWidth = image.size.width;
+                float newHeight = image.size.height;
+                
+                while(newHeight > 200) {
+                    
+                    if(newHeight < 300 && newHeight > 200) {
+                        newWidth = newWidth / 1.05;
+                        newHeight = newHeight / 1.05;
+                    } else if(newHeight > 300) {
+                        newWidth = newWidth / 1.5;
+                        newHeight = newHeight / 1.5;
+                    }
+                }
+                
+                UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+                [image drawInRect:CGRectMake(0,0, CGSizeMake(newWidth, newHeight).width, CGSizeMake(newWidth, newHeight).height)];
                 UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
                 UIGraphicsEndImageContext();
+                
+                [iview setFrame:CGRectMake((CGRectGetWidth(self.tableView.frame) / 2) - (newWidth / 4), (100 / 2) - (newHeight / 4), newWidth / 2, newHeight / 2)];
                 
                 [iview setImage:newImage];
                 
                 // Speichern
-                [(NSMutableArray *)[obj objectAtIndex:2] addObject:image];
-                /*
-                [self.tableView beginUpdates];
-                [self.tableView insertRowsAtIndexPaths:@[(NSIndexPath *)[obj objectAtIndex:3]] withRowAnimation:UITableViewRowAnimationAutomatic];
-                [self.tableView endUpdates];
-                 */
+                [(NSMutableArray *)[obj objectAtIndex:2] addObject:newImage];
             }
         }
     }
@@ -808,34 +814,39 @@ const CGFloat kDefaultRowHeight = 44.0;
     {
         static NSString *CellIdentifier = @"Cell";
         
+        UIImageView *imageView = nil;
+        
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            imageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.tableView.frame) / 2)-65, 5, 130, 90)];
+            imageView.image = [UIImage imageNamed:@"loading"];
+            imageView.layer.borderColor = [UIColor blackColor].CGColor;
+            imageView.layer.borderWidth = 1.0f;
+            imageView.tag = 0;
+            
+            // als SUbview deklarieren
+            [cell addSubview:imageView];
+        } else {
+            for (UIImageView *subImageView in cell.subviews) {
+                if ([subImageView isKindOfClass:[UIImageView class]]) {
+                    imageView = subImageView;
+                    imageView.image = [UIImage imageNamed:@"loading"];
+                }
+            }
         }
-        
-
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((cell.width / 2)-65, 5, 130, 90)];
-        imageView.image = [UIImage imageNamed:@"loading"];
-        imageView.layer.borderColor = [UIColor blackColor].CGColor;
-        imageView.layer.borderWidth = 1.0f;
-        imageView.tag = 0;
-        
-        // auf tap reagieren
-        //UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTaped:)];
-        //singleTap.numberOfTapsRequired = 1;
-        //singleTap.numberOfTouchesRequired = 1;
-        
-        //[imageView addGestureRecognizer:singleTap];
-        //[imageView setUserInteractionEnabled:YES];
-        
-        // als SUbview deklarieren
-        [cell addSubview:imageView];
         
         int index = indexPath.row-2;
         
         // Loading image in Background, wenn noch keine Bilder geladen sind
         if([[p images] count] > 0 && index < [[p images] count] && index >= 0) {
-            NSLog(@"IMG Count: %d -> Row Count: %d", [[p images] count], index);
+            UIImage *image = [[p images] objectAtIndex:index];
+
+            
+            [imageView setFrame:CGRectMake((CGRectGetWidth(self.tableView.frame) / 2) - (image.size.width / 4), (cell.height / 2) - (image.size.height / 4), image.size.width / 2, image.size.height / 2)];
             [imageView setImage:[[p images] objectAtIndex:index]];
         } else {
             if([[p imageUrl] count] > 0) {
@@ -843,7 +854,6 @@ const CGFloat kDefaultRowHeight = 44.0;
                 [NSThread detachNewThreadSelector:@selector(loadImageInBackground:) toTarget:self withObject:newArray];
             }
         }
-
          return cell;
     }
 
@@ -857,6 +867,15 @@ const CGFloat kDefaultRowHeight = 44.0;
         }
         if (indexPath.row == 1) {
             [self reply];
+        }
+    }
+    
+    if(indexPath.row > 1) {
+        GCImageViewer *imageViewer = [[GCImageViewer alloc] initWithURL:[NSURL URLWithString:[[[self.posts objectAtIndex:indexPath.section] imageUrl] objectAtIndex:indexPath.row-2]]];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            [self presentModalViewController:imageViewer animated:YES];
+        } else {
+            [self.navigationController pushViewController:imageViewer animated:YES];
         }
     }
     
