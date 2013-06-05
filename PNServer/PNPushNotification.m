@@ -52,15 +52,18 @@
 
 -(void) setPushToken:(NSData *)token
 {
-    NSUInteger length = [token length];
-    NSMutableString *stringToken = [NSMutableString stringWithCapacity:2 * length];
-    unsigned char const *theBytes = [token bytes];
+    /*NSUInteger length = [token length];
+     NSMutableString *stringToken = [NSMutableString stringWithCapacity:2 * length];
+     unsigned char const *theBytes = [token bytes];
+     
+     for(NSUInteger i = 0; i < length; ++i) {
+     [stringToken appendFormat:@"%x", theBytes[i]];
+     }
+     NSLog(@"Token %@",stringToken);*/
     
-    for(NSUInteger i = 0; i < length; ++i) {
-        [stringToken appendFormat:@"%x", theBytes[i]];
-    }
+    NSString* stringToken = [[token description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    stringToken = [stringToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSLog(@"Token %@",stringToken);
-
     if(enablePush)
     {
         [pushConnection setPushToken:stringToken];
