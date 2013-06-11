@@ -139,7 +139,6 @@
     [self setApplicationDefaults];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
 	[self.window makeKeyAndVisible];
-    sleep(3);
     
     
     
