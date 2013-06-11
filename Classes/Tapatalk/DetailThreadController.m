@@ -345,7 +345,7 @@ const CGFloat kDefaultRowHeight = 44.0;
     NSString *extension = [[[aRequest URL] absoluteString] pathExtension];
     
     BOOL isImage = NO;
-    NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"tif", @"jpg", @"jpeg", @"JPG", @"gif", @"png",@"bmp", @"BMPf", @"ico", @"cur", @"xbm", nil];
+    NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"TIFF", @"tif", @"TIF", @"jpg", @"JPG", @"jpeg", @"JPEG", @"gif", @"GIF", @"png", @"PNG", @"bmp", @"BMP", @"ico", @"ICO", @"cur", @"CUR", @"xbm", @"XBM", nil];
     
     for (NSString *e in extensions) {
         if ([extension isEqualToString:e]) {
