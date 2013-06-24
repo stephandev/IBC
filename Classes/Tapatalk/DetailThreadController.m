@@ -606,10 +606,10 @@ const CGFloat kDefaultRowHeight = 44.0;
     return nil;
 }
 
+#pragma mark - Image Loading and Caching etc....
+
 - (void)loadImageInBackground:(NSArray *)objects
 {
-    // N.B. an instance of my 'Menu' class has been created, called 'menuItem'
-    
     if([objects count] > 0)
     {
         NSURL *imgURL     = [NSURL URLWithString:[objects objectAtIndex:0]];
@@ -617,17 +617,83 @@ const CGFloat kDefaultRowHeight = 44.0;
         UIImage *img    =  [[UIImage alloc] initWithData:imgData];
         
         if(img != (UIImage *)nil) {
-            NSArray *obj = [[NSArray alloc] initWithObjects:img, [objects objectAtIndex:1], [objects objectAtIndex:2], [objects objectAtIndex:3], nil];
-            [self performSelectorOnMainThread:@selector(assignImageToImageView:) withObject:obj waitUntilDone:YES];
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:img, [objects objectAtIndex:1], [objects objectAtIndex:2], [objects objectAtIndex:3], imgURL, nil]
+                                                                            forKeys:[NSArray arrayWithObjects:@"img", @"imageView", @"imageArray", @"indexPath", @"URL", nil]];
+            
+            [self performSelectorOnMainThread:@selector(assignImageToImageView:) withObject:dic waitUntilDone:YES];
         }
     }
 }
 
-- (void)assignImageToImageView:(NSArray *)obj
+-(NSString *)reverseString:(NSString*)theString
+{
+    NSMutableString *reversedStr;
+    int len = [theString length];
+    
+    reversedStr = [NSMutableString stringWithCapacity:len];
+    
+    while (len > 0) {
+        [reversedStr appendString:
+         [NSString stringWithFormat:@"%C", [theString characterAtIndex:--len]]];
+    }
+    return reversedStr;
+}
+
+- (NSString *)getFileNameFromURL:(NSString *)url
+{
+    BOOL end = FALSE;
+    int x = [url length]-1;
+    NSString *newName = @"";
+    while(end != TRUE) {
+        if([url characterAtIndex:x] == '/' || [url characterAtIndex:x] == '\\' ) {
+            end = TRUE;
+        } else {
+            newName = [newName stringByAppendingString:[NSString stringWithFormat:@"%c", [url characterAtIndex:x]]];
+        }
+        x--;
+    }
+    
+    return newName;
+}
+
+- (UIImage *)getCachedImage:(NSString *)ImageURLString
+{
+    NSString *pathWithName = [NSTemporaryDirectory() stringByAppendingString:[self reverseString:[self getFileNameFromURL:ImageURLString]]];
+    
+    UIImage *image;
+    
+    // Check for a cached version
+    if([[NSFileManager defaultManager] fileExistsAtPath:pathWithName])
+    {
+        image = [UIImage imageWithContentsOfFile:pathWithName]; // this is the cached image
+        
+        return image;
+    }
+    else {
+        return nil;
+    }
+}
+
+- (void)cacheImage:(NSString *)url image:(UIImage *)image
+{
+    NSString *pathWithName = [NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), [self reverseString:[self getFileNameFromURL:url]]];
+    
+    // Is it PNG or JPG/JPEG?
+    // Running the image representation function writes the data from the image to a file
+    if([url rangeOfString: @".png" options: NSCaseInsensitiveSearch].location != NSNotFound)
+    {
+        [UIImagePNGRepresentation(image) writeToFile:pathWithName atomically: YES];
+    }else if([url rangeOfString: @".jpg" options: NSCaseInsensitiveSearch].location != NSNotFound || [url rangeOfString: @".jpeg" options: NSCaseInsensitiveSearch].location != NSNotFound)
+    {
+        [UIImageJPEGRepresentation(image, 100) writeToFile:pathWithName atomically:YES];
+    }
+}
+
+- (void)assignImageToImageView:(NSDictionary *)obj
 {
     if([obj count] > 0)
     {
-        UIImageView *imageView = (UIImageView *)[obj objectAtIndex:1];
+        UIImageView *imageView = (UIImageView *)[obj valueForKey:@"imageView"];
 	
         if (imageView != nil)
         {
@@ -635,9 +701,7 @@ const CGFloat kDefaultRowHeight = 44.0;
         
             if (iview != nil)
             {
-                UIImage *image = (UIImage *)[obj objectAtIndex:0];
-                
-                NSLog(@"W: %f -> H: %f G: %f", image.size.width, image.size.height, (image.size.width / image.size.height));
+                UIImage *image = (UIImage *)[obj valueForKey:@"img"];
                 
                 float newWidth = image.size.width;
                 float newHeight = image.size.height;
@@ -663,12 +727,18 @@ const CGFloat kDefaultRowHeight = 44.0;
                 [iview setImage:newImage];
                 
                 // Speichern
-                [(NSMutableArray *)[obj objectAtIndex:2] addObject:newImage];
+                if([obj count] > 4) {
+                  [self cacheImage:[[obj valueForKey:@"URL"] absoluteString] image:newImage];
+                }
+                
+                // Speichern
+                [(NSMutableArray *)[obj valueForKey:@"imageArray"] addObject:newImage];
             }
         }
     }
 }
 
+#pragma mark - END image Loading - Caching
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -841,12 +911,18 @@ const CGFloat kDefaultRowHeight = 44.0;
         
         int index = indexPath.row-2;
         
+        // Pürfen ob bereits ein Bild gespeichert wurde im TMP ordner!
+        UIImage *imageCached = [self getCachedImage:[[p imageUrl] objectAtIndex:indexPath.row-2]];
+        
+        if(imageCached != nil) {
+            [[p images] addObject:imageCached];
+        }
+        
         // Loading image in Background, wenn noch keine Bilder geladen sind
         if([[p images] count] > 0 && index < [[p images] count] && index >= 0) {
             UIImage *image = [[p images] objectAtIndex:index];
 
-            
-            [imageView setFrame:CGRectMake((CGRectGetWidth(self.tableView.frame) / 2) - (image.size.width / 4), (cell.height / 2) - (image.size.height / 4), image.size.width / 2, image.size.height / 2)];
+            [imageView setFrame:CGRectMake((CGRectGetWidth(self.tableView.frame) / 2) - (image.size.width / 4), 50 - (image.size.height / 4), image.size.width / 2, image.size.height / 2)];
             [imageView setImage:[[p images] objectAtIndex:index]];
         } else {
             if([[p imageUrl] count] > 0) {
@@ -854,7 +930,7 @@ const CGFloat kDefaultRowHeight = 44.0;
                 [NSThread detachNewThreadSelector:@selector(loadImageInBackground:) toTarget:self withObject:newArray];
             }
         }
-         return cell;
+        return cell;
     }
 
 	return nil;
