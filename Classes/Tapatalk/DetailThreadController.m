@@ -591,6 +591,13 @@ const CGFloat kDefaultRowHeight = 44.0;
             NSInteger rows = 2 + [[[self.posts objectAtIndex:section] images] count];
             return rows;
         }
+        /*
+        NSInteger x = [[[self.posts objectAtIndex:section] images] count];
+        if(x != 0) {
+            NSInteger rows = 2 + [[[self.posts objectAtIndex:section] imageUrl] count];
+            return rows;
+        }
+         */
     }
     return 2;
 }
@@ -893,13 +900,14 @@ const CGFloat kDefaultRowHeight = 44.0;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             imageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.tableView.frame) / 2)-65, 5, 130, 90)];
-            imageView.image = [UIImage imageNamed:@"loading"];
+            //imageView.image = [UIImage imageNamed:@"loading"];
             imageView.layer.borderColor = [UIColor blackColor].CGColor;
             imageView.layer.borderWidth = 1.0f;
             imageView.tag = 0;
             
             // als SUbview deklarieren
             [cell addSubview:imageView];
+            
         } else {
             for (UIImageView *subImageView in cell.subviews) {
                 if ([subImageView isKindOfClass:[UIImageView class]]) {

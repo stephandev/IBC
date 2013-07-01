@@ -36,26 +36,72 @@
         imageUrl = [[NSMutableArray alloc] init];
         images = [[NSMutableArray alloc] init];
         
-        if([[NSUserDefaults standardUserDefaults] boolForKey:@"disableImageView"] == FALSE) {
-            NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"tif", @"jpg", @"JPG", @"jpeg", @"gif", @"png",@"bmp", @"BMP", @"ico", @"cur", @"xbm", @"PNG", @"JPEG", @"GIF", @"ICO", @"XBM", @"CUR", @"TIF", @"TIFF", nil];
-            for(int x = 0; x<=extensions.count-1; x++)
-            {
-                NSString *regEx = [NSString stringWithFormat:@"http://(.*)\\.%@", [extensions objectAtIndex:x]];
-            
-            
-                [content enumerateStringsMatchedByRegex:regEx options:RKLNoOptions inRange:NSMakeRange(0UL, [content length]) error:NULL enumerationOptions:RKLRegexEnumerationCapturedStringsNotRequired usingBlock:^(NSInteger captureCount, NSString * const capturedStrings[captureCount], const NSRange capturedRanges[captureCount], volatile BOOL * const stop)
-                {
-                
-                    NSString *url = [content substringWithRange:(NSRange){capturedRanges[0].location, capturedRanges[0].length}];
-                    [imageUrl addObject:url];
-
-                    NSLog(@"Range: %@", url);
-                }];
-            }
-        }
+        [self searchAndFindUrl];
     }
 
     return self;
+}
+
+- (void)searchAndFindUrl
+{
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"disableImageView"] == FALSE)
+    {
+        NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"tif", @"jpg", @"JPG", @"jpeg", @"gif", @"png",@"bmp", @"BMP", @"ico", @"cur", @"xbm", @"PNG", @"JPEG", @"GIF", @"ICO", @"XBM", @"CUR", @"TIF", @"TIFF", nil];
+        
+        // **** BUGY **** //
+        /*
+        NSError *error = NULL;
+        NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink|NSTextCheckingTypePhoneNumber error:&error];
+        __block NSUInteger count = 0;
+        [detector enumerateMatchesInString:content options:0 range:NSMakeRange(0, [content length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+            if ([match resultType] == NSTextCheckingTypeLink) {
+                
+                NSURL *FoundURL = [match URL];
+                NSString *extension = [[FoundURL absoluteString] pathExtension];
+                
+                for (NSString *e in extensions) {
+                    if ([extension isEqualToString:e]) {
+                        NSString *url = [FoundURL absoluteString];
+                        [imageUrl addObject:url];
+                        
+                        // Remove this URL!
+                        content = [content stringByReplacingOccurrencesOfString:url withString:@"Bild siehe anhang!"];
+                        
+                        break;
+                    }
+                }
+                NSLog(@"%@", [FoundURL absoluteString]);
+            }
+            if (++count >= 100) *stop = YES;
+        }];
+         */
+        
+        // Work!
+        NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil]; 
+        NSArray *matches = [linkDetector matchesInString:content options:0 range:NSMakeRange(0, [content length])];
+        
+        for (NSTextCheckingResult *match in matches)
+        {
+            NSURL *url = [match URL];
+            if ([[url scheme] isEqual:@"http"]) {
+                NSURL *FoundURL = [match URL];
+                NSString *extension = [[FoundURL absoluteString] pathExtension];
+                
+                for (NSString *e in extensions) {
+                    if ([extension isEqualToString:e]) {
+                        NSString *url = [FoundURL absoluteString];
+                        [imageUrl addObject:url];
+                        
+                        // Remove this URL!
+                        content = [content stringByReplacingOccurrencesOfString:url withString:@""];
+                        //content = [content stringByReplacingOccurrencesOfString:url withString:@"Bild siehe Anhang!"];
+                        break;
+                    }
+                }
+                NSLog(@"%@", [FoundURL absoluteString]);
+            }
+        }
+    }
 }
 
 - (void)dealloc {
