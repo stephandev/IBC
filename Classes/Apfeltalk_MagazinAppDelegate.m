@@ -25,8 +25,6 @@
 #import "RootViewController.h"
 #import "DetailViewController.h"
 #import "DetailNews.h"
-#import "DetailGallery.h"
-#import "DetailLiveticker.h"
 #import "User.h"
 #import "NewsController.h"
 #import "iRate.h"
@@ -127,13 +125,6 @@
     }
 }
 
-/*- (void)applicationDidFinishLaunching:(UIApplication *)application {
- [self setApplicationDefaults];
- // Add the tab bar controller's current view as a subview of the window
- [window addSubview:tabBarController.view];
- [self login];
- }*/
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window.frame = [[UIScreen mainScreen] bounds];
     [self setApplicationDefaults];
@@ -204,17 +195,6 @@
     [self deleteCookies];
     [[User sharedUser] setLoggedIn:NO];
 }
-/*
- // Optional UITabBarControllerDelegate method
- - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
- }
- */
-
-/*
- // Optional UITabBarControllerDelegate method
- - (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed {
- }
- */
 
 //clearing caches
 

@@ -56,10 +56,6 @@ const CGFloat kDefaultRowHeight = 44.0;
     self.navigationItem.backBarButtonItem.enabled = NO;
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [self.tableView setScrollEnabled:NO];
-    /*CGPoint center = self.tableView.center;
-     center.y += self.tableView.contentOffset.y;
-     center = [UIApplication sharedApplication].keyWindow.center;
-     center.x += self.view.frame.origin.x;*/
     if (isAnswering) {
         [[SHKActivityIndicator currentIndicator] displayActivity:ATLocalizedString(@"Sending...", nil)];
     } else if (isSubscribing) {
@@ -325,7 +321,6 @@ const CGFloat kDefaultRowHeight = 44.0;
         for (NSDictionary *dict in array)
         {
             Post *post = [[Post alloc] initWithDictionary:dict];
-
             [self.posts addObject:post];
         }
         
@@ -526,34 +521,6 @@ const CGFloat kDefaultRowHeight = 44.0;
         return 100;
     }
     
-    /*if ([self.posts count] == 0) {
-        return kDefaultRowHeight;
-    }
-    
-    if (indexPath.section == [self.posts count] +1) return kDefaultRowHeight;
-    if ([self.posts count] != 0 && indexPath.row == 0) {
-        if (indexPath.section == [self.posts count]) return 100.0;
-        return 30.0;
-    } else if (indexPath.row == 1) {
-        if (indexPath.section == [self.posts count]) return kDefaultRowHeight;
-        NSString *content = [(Post *)[self.posts objectAtIndex:indexPath.section] content];
-        
-        ContentCell *contentCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        contentCell.frame = CGRectMake(0, 0, self.tableView.size.width, 10);
-        contentCell.textView.text = content;
-        CGFloat contentCellHeight = contentCell.textView.contentSize.height;
-        [contentCell release];
-        
-        CGFloat margin = [self groupedCellMarginWithTableWidth:CGRectGetWidth(self.tableView.frame)];
-        CGFloat width = CGRectGetWidth(self.tableView.frame) - 2.0 * margin - 16.0;
-        CGSize maxSize = CGSizeMake(width, CGFLOAT_MAX);
-        CGFloat fontSize = [[NSUserDefaults standardUserDefaults] floatForKey:@"fontSize"];
-        CGSize size = [content sizeWithFont:[UIFont fontWithName:@"Helvetica" size:fontSize] constrainedToSize:maxSize lineBreakMode:UILineBreakModeWordWrap];
-        CGFloat height = size.height + 16.0;
-        
-        return height;
-    }
-    */
     return kDefaultRowHeight;
 }
 
@@ -587,17 +554,7 @@ const CGFloat kDefaultRowHeight = 44.0;
         {
             NSInteger rows = 2 + [[[self.posts objectAtIndex:section] imageUrl] count];
             return rows;
-        } else if([[[self.posts objectAtIndex:section] images] count] != 0) {
-            NSInteger rows = 2 + [[[self.posts objectAtIndex:section] images] count];
-            return rows;
         }
-        /*
-        NSInteger x = [[[self.posts objectAtIndex:section] images] count];
-        if(x != 0) {
-            NSInteger rows = 2 + [[[self.posts objectAtIndex:section] imageUrl] count];
-            return rows;
-        }
-         */
     }
     return 2;
 }
@@ -613,138 +570,6 @@ const CGFloat kDefaultRowHeight = 44.0;
     return nil;
 }
 
-#pragma mark - Image Loading and Caching etc....
-
-- (void)loadImageInBackground:(NSArray *)objects
-{
-    if([objects count] > 0)
-    {
-        NSURL *imgURL     = [NSURL URLWithString:[objects objectAtIndex:0]];
-        NSData *imgData   = [NSData dataWithContentsOfURL:imgURL];
-        UIImage *img    =  [[UIImage alloc] initWithData:imgData];
-        
-        if(img != (UIImage *)nil) {
-            NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithObjects:[NSArray arrayWithObjects:img, [objects objectAtIndex:1], [objects objectAtIndex:2], [objects objectAtIndex:3], imgURL, nil]
-                                                                            forKeys:[NSArray arrayWithObjects:@"img", @"imageView", @"imageArray", @"indexPath", @"URL", nil]];
-            
-            [self performSelectorOnMainThread:@selector(assignImageToImageView:) withObject:dic waitUntilDone:YES];
-        }
-    }
-}
-
--(NSString *)reverseString:(NSString*)theString
-{
-    NSMutableString *reversedStr;
-    int len = [theString length];
-    
-    reversedStr = [NSMutableString stringWithCapacity:len];
-    
-    while (len > 0) {
-        [reversedStr appendString:
-         [NSString stringWithFormat:@"%C", [theString characterAtIndex:--len]]];
-    }
-    return reversedStr;
-}
-
-- (NSString *)getFileNameFromURL:(NSString *)url
-{
-    BOOL end = FALSE;
-    int x = [url length]-1;
-    NSString *newName = @"";
-    while(end != TRUE) {
-        if([url characterAtIndex:x] == '/' || [url characterAtIndex:x] == '\\' ) {
-            end = TRUE;
-        } else {
-            newName = [newName stringByAppendingString:[NSString stringWithFormat:@"%c", [url characterAtIndex:x]]];
-        }
-        x--;
-    }
-    
-    return newName;
-}
-
-- (UIImage *)getCachedImage:(NSString *)ImageURLString
-{
-    NSString *pathWithName = [NSTemporaryDirectory() stringByAppendingString:[self reverseString:[self getFileNameFromURL:ImageURLString]]];
-    
-    UIImage *image;
-    
-    // Check for a cached version
-    if([[NSFileManager defaultManager] fileExistsAtPath:pathWithName])
-    {
-        image = [UIImage imageWithContentsOfFile:pathWithName]; // this is the cached image
-        
-        return image;
-    }
-    else {
-        return nil;
-    }
-}
-
-- (void)cacheImage:(NSString *)url image:(UIImage *)image
-{
-    NSString *pathWithName = [NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), [self reverseString:[self getFileNameFromURL:url]]];
-    
-    // Is it PNG or JPG/JPEG?
-    // Running the image representation function writes the data from the image to a file
-    if([url rangeOfString: @".png" options: NSCaseInsensitiveSearch].location != NSNotFound)
-    {
-        [UIImagePNGRepresentation(image) writeToFile:pathWithName atomically: YES];
-    }else if([url rangeOfString: @".jpg" options: NSCaseInsensitiveSearch].location != NSNotFound || [url rangeOfString: @".jpeg" options: NSCaseInsensitiveSearch].location != NSNotFound)
-    {
-        [UIImageJPEGRepresentation(image, 100) writeToFile:pathWithName atomically:YES];
-    }
-}
-
-- (void)assignImageToImageView:(NSDictionary *)obj
-{
-    if([obj count] > 0)
-    {
-        UIImageView *imageView = (UIImageView *)[obj valueForKey:@"imageView"];
-	
-        if (imageView != nil)
-        {
-            UIImageView *iview	= (UIImageView *)[imageView viewWithTag:0];
-        
-            if (iview != nil)
-            {
-                UIImage *image = (UIImage *)[obj valueForKey:@"img"];
-                
-                float newWidth = image.size.width;
-                float newHeight = image.size.height;
-                
-                while(newHeight > 200) {
-                    
-                    if(newHeight < 300 && newHeight > 200) {
-                        newWidth = newWidth / 1.05;
-                        newHeight = newHeight / 1.05;
-                    } else if(newHeight > 300) {
-                        newWidth = newWidth / 1.5;
-                        newHeight = newHeight / 1.5;
-                    }
-                }
-                
-                UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
-                [image drawInRect:CGRectMake(0,0, CGSizeMake(newWidth, newHeight).width, CGSizeMake(newWidth, newHeight).height)];
-                UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-                
-                [iview setFrame:CGRectMake((CGRectGetWidth(self.tableView.frame) / 2) - (newWidth / 4), (100 / 2) - (newHeight / 4), newWidth / 2, newHeight / 2)];
-                
-                [iview setImage:newImage];
-                
-                // Speichern
-                if([obj count] > 4) {
-                  [self cacheImage:[[obj valueForKey:@"URL"] absoluteString] image:newImage];
-                }
-                
-                // Speichern
-                [(NSMutableArray *)[obj valueForKey:@"imageArray"] addObject:newImage];
-            }
-        }
-    }
-}
-
 #pragma mark - END image Loading - Caching
 
 // Customize the appearance of table view cells.
@@ -758,66 +583,6 @@ const CGFloat kDefaultRowHeight = 44.0;
     if ([self.posts count] != 0 && indexPath.section < [self.posts count]) {
         p = (Post *)[self.posts objectAtIndex:indexPath.section];
     }
-    /*
-	if (indexPath.row == 0) {
-		if (indexPath.section == [self.posts count] && [self.posts count] == 0) { // For the loading cell
-			return [super tableView:tableView cellForRowAtIndexPath:indexPath];
-		}
-        
-        if (indexPath.section == [self.posts count] && [self.posts count] != 0) {
-            if (answerCell == nil) {
-                self.answerCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AnswerCellIdentifier  tableViewWidth:CGRectGetWidth(self.tableView.frame)]; 
-            }
-            answerCell.textView.scrollEnabled = YES;
-            answerCell.textView.editable = YES;
-            answerCell.delegate = self;
-            return answerCell;
-        }
-		
-		UITableViewCell *authorCell = [tableView dequeueReusableCellWithIdentifier:AuthorCellIdentifier];
-		if (authorCell == nil) {
-			authorCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:AuthorCellIdentifier] autorelease];
-            UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
-            [authorCell addGestureRecognizer:longPressGestureRecognizer];
-            [longPressGestureRecognizer release];
-		}
-        
-        NSDateFormatter *outFormatter = [[NSDateFormatter alloc] init];
-        [outFormatter setDateFormat:@"dd.MM.yyyy HH:mm"];
-        authorCell.textLabel.text = p.author;
-        authorCell.detailTextLabel.textColor = authorCell.textLabel.textColor;
-        authorCell.detailTextLabel.text = [outFormatter stringFromDate:p.postDate];
-        authorCell.detailTextLabel.font = [UIFont systemFontOfSize:14.0];
-        authorCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (p.userIsOnline) {
-            authorCell.imageView.image = [UIImage imageNamed:@"online.png"];
-        } else {
-            authorCell.imageView.image = [UIImage imageNamed:@"offline.png"];
-        }
-        [outFormatter release];
-		return authorCell;
-	} else if (indexPath.row == 1) {
-        if (indexPath.section == [self.posts count] && [self.posts count] != 0) {
-            UITableViewCell *actionsCell = [tableView dequeueReusableCellWithIdentifier:ActionsCellIdentifier];
-            if (actionsCell == nil) {
-                actionsCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ActionsCellIdentifier] autorelease];
-            }
-            actionsCell.textLabel.text = NSLocalizedStringFromTable(@"Answer", @"ATLocalizable", @"");
-            actionsCell.textLabel.textAlignment = UITextAlignmentCenter;
-            actionsCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-            return actionsCell;
-        }
-        
-		ContentCell *contentCell = (ContentCell *)[tableView dequeueReusableCellWithIdentifier:ContentCellIdentifier];
-		if (contentCell == nil) {
-			contentCell = [[[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContentCellIdentifier  tableViewWidth:CGRectGetWidth(self.tableView.frame)] autorelease];
-		}
-        contentCell.textView.text = p.content;
-        contentCell.textView.scrollEnabled = NO;
-        
-        contentCell.delegate = self;
-		return contentCell;
-	}*/ 
     
     switch (indexPath.row) {
         case 0: {
@@ -887,6 +652,7 @@ const CGFloat kDefaultRowHeight = 44.0;
         }
     }
     
+    // Bilder Row
     if(indexPath.row > 1)
     {
         static NSString *CellIdentifier = @"Cell";
@@ -894,7 +660,8 @@ const CGFloat kDefaultRowHeight = 44.0;
         UIImageView *imageView = nil;
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
+        if (cell == nil)
+        {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -908,9 +675,13 @@ const CGFloat kDefaultRowHeight = 44.0;
             // als SUbview deklarieren
             [cell addSubview:imageView];
             
-        } else {
-            for (UIImageView *subImageView in cell.subviews) {
-                if ([subImageView isKindOfClass:[UIImageView class]]) {
+        }
+        else
+        {
+            for (UIImageView *subImageView in cell.subviews)
+            {
+                if ([subImageView isKindOfClass:[UIImageView class]])
+                {
                     imageView = subImageView;
                     imageView.image = [UIImage imageNamed:@"loading"];
                 }
@@ -919,23 +690,20 @@ const CGFloat kDefaultRowHeight = 44.0;
         
         int index = indexPath.row-2;
         
-        // Pürfen ob bereits ein Bild gespeichert wurde im TMP ordner!
-        UIImage *imageCached = [self getCachedImage:[[p imageUrl] objectAtIndex:indexPath.row-2]];
-        
-        if(imageCached != nil) {
-            [[p images] addObject:imageCached];
-        }
-        
-        // Loading image in Background, wenn noch keine Bilder geladen sind
-        if([[p images] count] > 0 && index < [[p images] count] && index >= 0) {
-            UIImage *image = [[p images] objectAtIndex:index];
+        ImageModell *imageModelController = [[ImageModell alloc] init];
+        imageModelController.tableView = self.tableView;
 
-            [imageView setFrame:CGRectMake((CGRectGetWidth(self.tableView.frame) / 2) - (image.size.width / 4), 50 - (image.size.height / 4), image.size.width / 2, image.size.height / 2)];
-            [imageView setImage:[[p images] objectAtIndex:index]];
-        } else {
-            if([[p imageUrl] count] > 0) {
-                NSArray *newArray = [[NSArray alloc] initWithObjects:[[p imageUrl] objectAtIndex:indexPath.row-2], imageView, [p images], indexPath, [p imageUrl], nil];
-                [NSThread detachNewThreadSelector:@selector(loadImageInBackground:) toTarget:self withObject:newArray];
+        // Pürfen ob bereits ein Bild gespeichert wurde im TMP ordner!
+        UIImage *imageCached = [imageModelController getCachedImage:[[p imageUrl] objectAtIndex:index]];
+        if(imageCached != nil)
+        {
+            [imageView setImage:imageCached];
+        }
+        else
+        {
+            if([[p imageUrl] count] > 0)
+            {
+                [imageModelController loadImageInBackground:[[p imageUrl] objectAtIndex:indexPath.row-2] forImageView:imageView];
             }
         }
         return cell;

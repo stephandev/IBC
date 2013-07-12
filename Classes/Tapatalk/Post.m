@@ -11,7 +11,7 @@
 
 
 @implementation Post
-@synthesize postID, title, content, author, authorID, postDate, userIsOnline, imageUrl, images;
+@synthesize postID, title, content, author, authorID, postDate, userIsOnline, imageUrl;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
@@ -32,9 +32,7 @@
         [dateFormatter setDateFormat:dateFormat];
         self.postDate = [dateFormatter dateFromString:dateString];
         
-        //NSLog(@"%@", content);
         imageUrl = [[NSMutableArray alloc] init];
-        images = [[NSMutableArray alloc] init];
         
         [self searchAndFindUrl];
     }
@@ -47,34 +45,6 @@
     if([[NSUserDefaults standardUserDefaults] boolForKey:@"disableImageView"] == FALSE)
     {
         NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"tif", @"jpg", @"JPG", @"jpeg", @"gif", @"png",@"bmp", @"BMP", @"ico", @"cur", @"xbm", @"PNG", @"JPEG", @"GIF", @"ICO", @"XBM", @"CUR", @"TIF", @"TIFF", nil];
-        
-        // **** BUGY **** //
-        /*
-        NSError *error = NULL;
-        NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink|NSTextCheckingTypePhoneNumber error:&error];
-        __block NSUInteger count = 0;
-        [detector enumerateMatchesInString:content options:0 range:NSMakeRange(0, [content length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
-            if ([match resultType] == NSTextCheckingTypeLink) {
-                
-                NSURL *FoundURL = [match URL];
-                NSString *extension = [[FoundURL absoluteString] pathExtension];
-                
-                for (NSString *e in extensions) {
-                    if ([extension isEqualToString:e]) {
-                        NSString *url = [FoundURL absoluteString];
-                        [imageUrl addObject:url];
-                        
-                        // Remove this URL!
-                        content = [content stringByReplacingOccurrencesOfString:url withString:@"Bild siehe anhang!"];
-                        
-                        break;
-                    }
-                }
-                NSLog(@"%@", [FoundURL absoluteString]);
-            }
-            if (++count >= 100) *stop = YES;
-        }];
-         */
         
         // Work!
         NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil]; 
@@ -94,11 +64,10 @@
                         
                         // Remove this URL!
                         content = [content stringByReplacingOccurrencesOfString:url withString:@""];
-                        //content = [content stringByReplacingOccurrencesOfString:url withString:@"Bild siehe Anhang!"];
+                        
                         break;
                     }
                 }
-                NSLog(@"%@", [FoundURL absoluteString]);
             }
         }
     }

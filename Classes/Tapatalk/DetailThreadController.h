@@ -13,6 +13,7 @@
 #import "ContentCell.h"
 #import "GCImageViewer.h"
 #import "ATActivityIndicator.h"
+#import "ImageModell.h"
 
 @class ATTableViewController;
 
