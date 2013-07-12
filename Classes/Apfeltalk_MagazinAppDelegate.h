@@ -22,7 +22,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LivetickerNavigationController.h"
 #import "PNNotificationDelegate.h"
 
 @class PNPushNotification;
@@ -31,8 +30,6 @@
     UIWindow *window;
     UITabBarController *tabBarController;
     IBOutlet UINavigationController *newsController;
-    IBOutlet UINavigationController *galleryController;
-    IBOutlet LivetickerNavigationController *livetickerController;
     PNPushNotification* pushNotifications;
 }
 
