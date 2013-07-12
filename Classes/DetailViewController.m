@@ -204,10 +204,5 @@
     return (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [webview loadHTMLString:[self htmlString] baseURL:nil];
-}
-
 
 @end
