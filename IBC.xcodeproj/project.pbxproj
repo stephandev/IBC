@@ -514,8 +514,6 @@
 		4C42FF4D10533731002CC1E8 /* ATXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATXMLParser.h; sourceTree = "<group>"; };
 		4C42FF4E10533731002CC1E8 /* ATXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATXMLParser.m; sourceTree = "<group>"; };
 		4C64415E106548620007715D /* TickerThumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TickerThumbnail.png; sourceTree = "<group>"; };
-		4C93ABB9105470020070A190 /* DetailLiveticker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailLiveticker.h; sourceTree = "<group>"; };
-		4C93ABBA105470020070A190 /* DetailLiveticker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailLiveticker.m; sourceTree = "<group>"; };
 		4CD36BE21058344700DD09FB /* Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Down.png; sourceTree = "<group>"; };
 		4CD36BE61058345800DD09FB /* Up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Up.png; sourceTree = "<group>"; };
 		4CDD01A013C644A800E0DCAD /* ATActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATActivityIndicatorView.h; sourceTree = "<group>"; };
@@ -822,8 +820,6 @@
 		F6730BE6134A70F40045B876 /* TDHUDProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDHUDProgressBar.h; sourceTree = "<group>"; };
 		F6730BE7134A70F40045B876 /* TDHUDProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDHUDProgressBar.m; sourceTree = "<group>"; };
 		F6730BE9134A71E30045B876 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		F6B4FC71103697960080D615 /* DetailGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailGallery.h; sourceTree = "<group>"; };
-		F6B4FC72103697960080D615 /* DetailGallery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailGallery.m; sourceTree = "<group>"; };
 		F6DC30BF1039781600A734AF /* gallery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gallery.png; sourceTree = "<group>"; };
 		F6DC30C01039781600A734AF /* magazin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = magazin.png; sourceTree = "<group>"; };
 		F6FB7DD3104EDE2F007F5A54 /* Fullscreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fullscreen.h; sourceTree = "<group>"; };
@@ -1695,10 +1691,6 @@
 				F6FB7DD4104EDE2F007F5A54 /* Fullscreen.m */,
 				CB15C89A1049950900360BDC /* DetailNews.h */,
 				CB15C89B1049950900360BDC /* DetailNews.m */,
-				F6B4FC71103697960080D615 /* DetailGallery.h */,
-				F6B4FC72103697960080D615 /* DetailGallery.m */,
-				4C93ABB9105470020070A190 /* DetailLiveticker.h */,
-				4C93ABBA105470020070A190 /* DetailLiveticker.m */,
 			);
 			name = "Detail View Controllers";
 			sourceTree = "<group>";
