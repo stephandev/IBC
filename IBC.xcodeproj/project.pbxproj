@@ -50,6 +50,8 @@
 		08B196B11655BA7900F39E38 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08B196A71655B7D900F39E38 /* iRate.bundle */; };
 		08B196B21655BA7F00F39E38 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B196A91655B7D900F39E38 /* iRate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		08CA7B0E173CEFB7004B280E /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08CA7B0C173CEFB7004B280E /* MainWindow.xib */; };
+		08D651EE1792BAF50048E082 /* TestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D651ED1792BAF50048E082 /* TestCell.m */; };
+		08D651F81792BB0C0048E082 /* ContentCellWithImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D651F71792BB0C0048E082 /* ContentCellWithImages.m */; };
 		08FCF6DE175A4531006C9F6F /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 08FCF6DC175A4531006C9F6F /* loading.png */; };
 		08FCF6DF175A4531006C9F6F /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08FCF6DD175A4531006C9F6F /* loading@2x.png */; };
 		1D3623260D0F684500981E51 /* Apfeltalk_MagazinAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* Apfeltalk_MagazinAppDelegate.m */; settings = {COMPILER_FLAGS = " -fno-objc-arc"; }; };
@@ -480,6 +482,10 @@
 		08B196A91655B7D900F39E38 /* iRate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
 		08CA7B0D173CEFB7004B280E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		08CAEC9B17526D4800E3B725 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		08D651EC1792BAF50048E082 /* TestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCell.h; sourceTree = "<group>"; };
+		08D651ED1792BAF50048E082 /* TestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCell.m; sourceTree = "<group>"; };
+		08D651F61792BB0C0048E082 /* ContentCellWithImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentCellWithImages.h; sourceTree = "<group>"; };
+		08D651F71792BB0C0048E082 /* ContentCellWithImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentCellWithImages.m; sourceTree = "<group>"; };
 		08FCF6DC175A4531006C9F6F /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
 		08FCF6DD175A4531006C9F6F /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading@2x.png"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1549,6 +1555,10 @@
 		5EC265B5136999D3006A10DE /* Tapatalk */ = {
 			isa = PBXGroup;
 			children = (
+				08D651F61792BB0C0048E082 /* ContentCellWithImages.h */,
+				08D651F71792BB0C0048E082 /* ContentCellWithImages.m */,
+				08D651EC1792BAF50048E082 /* TestCell.h */,
+				08D651ED1792BAF50048E082 /* TestCell.m */,
 				08022A771790309300563F08 /* ImageModell.h */,
 				08022A781790309300563F08 /* ImageModell.m */,
 				5EC265D5136999D3006A10DE /* SynthesizeSingleton.h */,
@@ -2148,6 +2158,8 @@
 				085D250D1698F400007FBD3B /* PNSettings.m in Sources */,
 				0867E69E175038A40097F12F /* MBProgressHUD.m in Sources */,
 				08022A791790309300563F08 /* ImageModell.m in Sources */,
+				08D651EE1792BAF50048E082 /* TestCell.m in Sources */,
+				08D651F81792BB0C0048E082 /* ContentCellWithImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

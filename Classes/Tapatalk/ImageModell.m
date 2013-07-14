@@ -9,61 +9,43 @@
 #import "ImageModell.h"
 
 @implementation ImageModell
+@synthesize tableView;
 
 // Ermittelt den Filename anand der URL
 - (NSString *)getFileNameFromURL:(NSString *)url
 {
-    BOOL end = FALSE;
-    int x = [url length]-1;
-    NSString *newName = @"";
-    
-    while(end != TRUE) {
-        if([url characterAtIndex:x] == '/' || [url characterAtIndex:x] == '\\' ) {
-            end = TRUE;
-        } else {
-            newName = [newName stringByAppendingString:[NSString stringWithFormat:@"%c", [url characterAtIndex:x]]];
-        }
-        x--;
-    }
-    
-    return newName;
-}
-
-// Wenn ein String verdreht ist, drehen wir ihn einfach um!
--(NSString *)reverseString:(NSString*)theString
-{
-    NSMutableString *reversedStr;
-    int len = [theString length];
-    
-    reversedStr = [NSMutableString stringWithCapacity:len];
-    
-    while (len > 0) {
-        [reversedStr appendString:
-         [NSString stringWithFormat:@"%C", [theString characterAtIndex:--len]]];
-    }
-    return reversedStr;
+    NSString* theFileName = [url lastPathComponent];
+    return theFileName;
 }
 
 // Cacht das image ub deb TMP ordner
 - (void)cacheImage:(NSString *)url image:(UIImage *)image
 {
-    NSString *pathWithName = [NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), [self reverseString:[self getFileNameFromURL:url]]];
+    NSString *pathWithName = [NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), [self getFileNameFromURL:url]];
     
     // Is it PNG or JPG/JPEG?
     // Running the image representation function writes the data from the image to a file
-    if([url rangeOfString: @".png" options: NSCaseInsensitiveSearch].location != NSNotFound)
+    if([url rangeOfString: @".png" options: NSCaseInsensitiveSearch].location != NSNotFound ||
+       [url rangeOfString: @".PNG" options: NSCaseInsensitiveSearch].location != NSNotFound )
     {
         [UIImagePNGRepresentation(image) writeToFile:pathWithName atomically: YES];
-    }else if([url rangeOfString: @".jpg" options: NSCaseInsensitiveSearch].location != NSNotFound || [url rangeOfString: @".jpeg" options: NSCaseInsensitiveSearch].location != NSNotFound)
+    }else if([url rangeOfString: @".jpg" options: NSCaseInsensitiveSearch].location != NSNotFound ||
+             [url rangeOfString: @".jpeg" options: NSCaseInsensitiveSearch].location != NSNotFound ||
+             [url rangeOfString: @".JPEG" options: NSCaseInsensitiveSearch].location != NSNotFound ||
+             [url rangeOfString: @".JPG" options: NSCaseInsensitiveSearch].location != NSNotFound  )
     {
         [UIImageJPEGRepresentation(image, 100) writeToFile:pathWithName atomically:YES];
     }
+    
+    // Bilder fertig geladen
+    //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[self getFileNameFromURL:url] forKey:@"imageName"];
+    //[[NSNotificationCenter defaultCenter] postNotificationName:@"imageIsReadyLoading" object:nil userInfo:userInfo];
 }
 
 // lädt das gecached Image
 - (UIImage *)getCachedImage:(NSString *)ImageURLString
 {
-    NSString *pathWithName = [NSTemporaryDirectory() stringByAppendingString:[self reverseString:[self getFileNameFromURL:ImageURLString]]];
+    NSString *pathWithName = [NSTemporaryDirectory() stringByAppendingString:[self getFileNameFromURL:ImageURLString]];
     
     // Check for a cached version
     if([[NSFileManager defaultManager] fileExistsAtPath:pathWithName])
@@ -78,13 +60,17 @@
 
 - (void)loadImageInBackground:(NSString *)url forImageView:(UIImageView *)imageView
 {
-    if(!imageView && !self.tableView) {
-        return;
-    }
-    
     // Start Background Therad
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL), ^(void)
     {
+        UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activityView.frame = CGRectMake(100, 75, 50, 50);
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [imageView addSubview:activityView];
+            [activityView startAnimating];
+        }];
+        
         NSURL *imgURL     = [NSURL URLWithString:url];
         NSData *imgData   = [NSData dataWithContentsOfURL:imgURL];
         UIImage *img    =  [[UIImage alloc] initWithData:imgData];
@@ -98,8 +84,8 @@
             while(newHeight > 200)
             {
                 if(newHeight < 300 && newHeight > 200) {
-                    newWidth = newWidth / 1.05;
-                    newHeight = newHeight / 1.05;
+                    newWidth = newWidth / 1.02;
+                    newHeight = newHeight / 1.02;
                 } else if(newHeight > 300) {
                     newWidth = newWidth / 1.5;
                     newHeight = newHeight / 1.5;
@@ -111,14 +97,21 @@
             UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             
+            NSLog(@"H: %f W: %f", newImage.size.height, newImage.size.width);
+            
             // Image Cachen
             [self cacheImage:url image:img];
             
             // In den Maintherad wechseln
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [imageView setFrame:CGRectMake((CGRectGetWidth(self.tableView.frame) / 2) - (newWidth / 4), (100 / 2) - (newHeight / 4), newWidth / 2, newHeight / 2)];
-                [imageView setImage:newImage];
-            }];
+            if(imageView) {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [activityView stopAnimating];
+                    [activityView removeFromSuperview];
+                    
+                    //[imageView setImage:newImage];
+                    [self.delegate imageDidFinishLoading:newImage imageView:imageView];
+                }];
+            }
         }
     });
 }

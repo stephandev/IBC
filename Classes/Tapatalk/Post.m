@@ -8,6 +8,7 @@
 
 #import "Post.h"
 #import "ContentTranslator.h"
+#import "ImageModell.h"
 
 
 @implementation Post
@@ -42,8 +43,6 @@
 
 - (void)searchAndFindUrl
 {
-    if([[NSUserDefaults standardUserDefaults] boolForKey:@"disableImageView"] == FALSE)
-    {
         NSArray *extensions = [NSArray arrayWithObjects:@"tiff", @"tif", @"jpg", @"JPG", @"jpeg", @"gif", @"png",@"bmp", @"BMP", @"ico", @"cur", @"xbm", @"PNG", @"JPEG", @"GIF", @"ICO", @"XBM", @"CUR", @"TIF", @"TIFF", nil];
         
         // Work!
@@ -62,15 +61,14 @@
                         NSString *url = [FoundURL absoluteString];
                         [imageUrl addObject:url];
                         
-                        // Remove this URL!
-                        content = [content stringByReplacingOccurrencesOfString:url withString:@""];
+                        // Set Cuter Infos
+                        content = [content stringByReplacingOccurrencesOfString:url withString:[NSString stringWithFormat:@"[CUT]%@[CUT]", url]];
                         
                         break;
                     }
                 }
             }
         }
-    }
 }
 
 - (void)dealloc {

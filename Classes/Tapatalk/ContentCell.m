@@ -32,7 +32,7 @@ green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @implementation ContentCell
-@synthesize textView, delegate;
+@synthesize delegate, textView;
 
 - (CGFloat)groupedCellMarginWithTableWidth:(CGFloat)tableViewWidth
 {
@@ -57,15 +57,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier tableViewWidth:(CGFloat)tableViewWidth {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-        /*CGFloat margin = [self groupedCellMarginWithTableWidth:tableViewWidth];
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) { 
-            self.textView = [[[ATTextView alloc] initWithFrame:CGRectMake(0.0,0.0, tableViewWidth-2*10.0, self.frame.size.height-7.0)] autorelease];
-        } else {
-            self.textView = [[[ATTextView alloc] initWithFrame:CGRectMake(0.0,0.0, tableViewWidth-2*margin, self.frame.size.height-7.0)] autorelease];
-        }*/
-        self.textView = [[[ATTextView alloc] init] autorelease];
+    if (self)
+    {
+        self.textView = [[[ATTextView alloc] init] autorelease];;
+            
         self.textView.scrollEnabled = NO;
         self.textView.layer.masksToBounds = YES;
         self.textView.layer.cornerRadius = 10.0;
@@ -76,12 +71,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         self.textView.delegate = self;
         self.textView.textColor = UIColorFromRGB(0x000000);
         self.textView.backgroundColor = self.contentView.backgroundColor;
-        
+            
         UIFont *font = self.textView.font;
         self.textView.font = [font fontWithSize:[[NSUserDefaults standardUserDefaults] floatForKey:@"fontSize"]];
-        
+            
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+            
         [self.contentView addSubview:self.textView];
     }
     return self;
@@ -100,7 +95,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGFloat width = CGRectGetWidth(self.frame);
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) { 
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         self.textView.frame = CGRectMake(0.0,0.0, width - 2.0 * 10.0, self.frame.size.height - 7.0);
     } else {
         CGFloat margin = [self groupedCellMarginWithTableWidth:width];

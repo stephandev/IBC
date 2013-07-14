@@ -25,8 +25,9 @@
     id <ContentCellDelegate> delegate;
 }
 
-@property (retain) ATTextView *textView;
 @property (assign) id <ContentCellDelegate> delegate;
+@property (strong) ATTextView *textView;
+
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier tableViewWidth:(CGFloat)tableViewWidth;
 

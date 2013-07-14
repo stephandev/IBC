@@ -8,15 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol ImageModellDelegate;
+
 @interface ImageModell : NSObject
 
+    @property (nonatomic, strong) id <ImageModellDelegate> delegate;
     @property (nonatomic, strong) UITableView *tableView;
 
     - (void)loadImageInBackground:(NSString *)url forImageView:(UIImageView *)imageView;
 
     - (NSString *)getFileNameFromURL:(NSString *)url;
-    - (NSString *)reverseString:(NSString*)theString;
     - (void)cacheImage:(NSString *)url image:(UIImage *)image;
     - (UIImage *)getCachedImage:(NSString *)ImageURLString;
 
+@end
+
+@protocol ImageModellDelegate
+- (void)imageDidFinishLoading:(UIImage*)image imageView:(UIImageView *)imageView;
 @end

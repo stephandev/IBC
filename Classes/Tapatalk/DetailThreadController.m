@@ -12,6 +12,8 @@
 #import "PrivateMessagesViewController.h"
 #import "Apfeltalk_MagazinAppDelegate.h"
 
+#import "ContentCellWithImages.h"
+
 @interface DetailThreadController()
 
 - (NSInteger)numberOfSites;
@@ -56,6 +58,10 @@ const CGFloat kDefaultRowHeight = 44.0;
     self.navigationItem.backBarButtonItem.enabled = NO;
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [self.tableView setScrollEnabled:NO];
+    /*CGPoint center = self.tableView.center;
+     center.y += self.tableView.contentOffset.y;
+     center = [UIApplication sharedApplication].keyWindow.center;
+     center.x += self.view.frame.origin.x;*/
     if (isAnswering) {
         [[SHKActivityIndicator currentIndicator] displayActivity:ATLocalizedString(@"Sending...", nil)];
     } else if (isSubscribing) {
@@ -489,6 +495,26 @@ const CGFloat kDefaultRowHeight = 44.0;
     [super viewWillDisappear:animated];
 }
 
+- (BOOL)validateUrlString:(NSString*)urlString
+{
+    if (!urlString) {
+        return NO;
+    }
+    
+    NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+    
+    NSRange urlStringRange = NSMakeRange(0, [urlString length]);
+    NSMatchingOptions matchingOptions = 0;
+    
+    if (1 != [linkDetector numberOfMatchesInString:urlString options:matchingOptions range:urlStringRange]) {
+        return NO;
+    }
+    
+    NSTextCheckingResult *checkingResult = [linkDetector firstMatchInString:urlString options:matchingOptions range:urlStringRange];
+    
+    return checkingResult.resultType == NSTextCheckingTypeLink && NSEqualRanges(checkingResult.range, urlStringRange);
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
         case 0: {
@@ -502,25 +528,62 @@ const CGFloat kDefaultRowHeight = 44.0;
         } case 1: {
             if (indexPath.section == self.posts.count)
                 return kDefaultRowHeight;
-            NSString *content = [(Post *)[self.posts objectAtIndex:indexPath.section] content];
-            CGFloat margin = [self groupedCellMarginWithTableWidth:CGRectGetWidth(self.tableView.frame)];
-            CGFloat width = CGRectGetWidth(self.tableView.frame) - 2.0 * margin - 16.0;
-            CGSize maxSize = CGSizeMake(width, CGFLOAT_MAX);
-            CGFloat fontSize = [[NSUserDefaults standardUserDefaults] floatForKey:@"fontSize"];
-            CGSize size = [content sizeWithFont:[UIFont fontWithName:@"Helvetica" size:fontSize] constrainedToSize:maxSize lineBreakMode:UILineBreakModeWordWrap];
-            CGFloat height = size.height + 16.0;
             
-            return height;
+            NSArray *finalString = [[(Post *)[self.posts objectAtIndex:indexPath.section] content] componentsSeparatedByString:@"[CUT]"];
+            CGFloat height;
+            
+            for(NSString *content in finalString)
+            {
+                if(![self validateUrlString:content])
+                {
+                    CGFloat margin = [self groupedCellMarginWithTableWidth:CGRectGetWidth(self.tableView.frame)];
+                    CGFloat width = CGRectGetWidth(self.tableView.frame) - 2.0 * margin - 16.0;
+                    CGSize maxSize = CGSizeMake(width, CGFLOAT_MAX);
+                    CGFloat fontSize = [[NSUserDefaults standardUserDefaults] floatForKey:@"fontSize"];
+                    CGSize size2 = [content sizeWithFont:[UIFont fontWithName:@"Helvetica" size:fontSize] constrainedToSize:maxSize lineBreakMode:UILineBreakModeWordWrap];
+                    height += size2.height;
+                } else {
+                    height += 200;
+                }
+            
+                height = height + 16;
+            }
+            
+            return height + 16;
             break;
         } default: {
             break;
         }
     }
     
-    if(indexPath.row > 1) {
-        return 100;
+    /*if ([self.posts count] == 0) {
+        return kDefaultRowHeight;
     }
     
+    if (indexPath.section == [self.posts count] +1) return kDefaultRowHeight;
+    if ([self.posts count] != 0 && indexPath.row == 0) {
+        if (indexPath.section == [self.posts count]) return 100.0;
+        return 30.0;
+    } else if (indexPath.row == 1) {
+        if (indexPath.section == [self.posts count]) return kDefaultRowHeight;
+        NSString *content = [(Post *)[self.posts objectAtIndex:indexPath.section] content];
+        
+        ContentCell *contentCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        contentCell.frame = CGRectMake(0, 0, self.tableView.size.width, 10);
+        contentCell.textView.text = content;
+        CGFloat contentCellHeight = contentCell.textView.contentSize.height;
+        [contentCell release];
+        
+        CGFloat margin = [self groupedCellMarginWithTableWidth:CGRectGetWidth(self.tableView.frame)];
+        CGFloat width = CGRectGetWidth(self.tableView.frame) - 2.0 * margin - 16.0;
+        CGSize maxSize = CGSizeMake(width, CGFLOAT_MAX);
+        CGFloat fontSize = [[NSUserDefaults standardUserDefaults] floatForKey:@"fontSize"];
+        CGSize size = [content sizeWithFont:[UIFont fontWithName:@"Helvetica" size:fontSize] constrainedToSize:maxSize lineBreakMode:UILineBreakModeWordWrap];
+        CGFloat height = size.height + 16.0;
+        
+        return height;
+    }
+    */
     return kDefaultRowHeight;
 }
 
@@ -546,15 +609,6 @@ const CGFloat kDefaultRowHeight = 44.0;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([self.posts count] == 0) {
         return [super tableView:tableView numberOfRowsInSection:section];
-    }
-    else if(section != [[self posts] count])
-    {
-        NSInteger x = [[[self.posts objectAtIndex:section] imageUrl] count];
-        if(x != 0)
-        {
-            NSInteger rows = 2 + [[[self.posts objectAtIndex:section] imageUrl] count];
-            return rows;
-        }
     }
     return 2;
 }
@@ -583,6 +637,66 @@ const CGFloat kDefaultRowHeight = 44.0;
     if ([self.posts count] != 0 && indexPath.section < [self.posts count]) {
         p = (Post *)[self.posts objectAtIndex:indexPath.section];
     }
+    /*
+	if (indexPath.row == 0) {
+		if (indexPath.section == [self.posts count] && [self.posts count] == 0) { // For the loading cell
+			return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+		}
+        
+        if (indexPath.section == [self.posts count] && [self.posts count] != 0) {
+            if (answerCell == nil) {
+                self.answerCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AnswerCellIdentifier  tableViewWidth:CGRectGetWidth(self.tableView.frame)]; 
+            }
+            answerCell.textView.scrollEnabled = YES;
+            answerCell.textView.editable = YES;
+            answerCell.delegate = self;
+            return answerCell;
+        }
+		
+		UITableViewCell *authorCell = [tableView dequeueReusableCellWithIdentifier:AuthorCellIdentifier];
+		if (authorCell == nil) {
+			authorCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:AuthorCellIdentifier] autorelease];
+            UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showMenu:)];
+            [authorCell addGestureRecognizer:longPressGestureRecognizer];
+            [longPressGestureRecognizer release];
+		}
+        
+        NSDateFormatter *outFormatter = [[NSDateFormatter alloc] init];
+        [outFormatter setDateFormat:@"dd.MM.yyyy HH:mm"];
+        authorCell.textLabel.text = p.author;
+        authorCell.detailTextLabel.textColor = authorCell.textLabel.textColor;
+        authorCell.detailTextLabel.text = [outFormatter stringFromDate:p.postDate];
+        authorCell.detailTextLabel.font = [UIFont systemFontOfSize:14.0];
+        authorCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (p.userIsOnline) {
+            authorCell.imageView.image = [UIImage imageNamed:@"online.png"];
+        } else {
+            authorCell.imageView.image = [UIImage imageNamed:@"offline.png"];
+        }
+        [outFormatter release];
+		return authorCell;
+	} else if (indexPath.row == 1) {
+        if (indexPath.section == [self.posts count] && [self.posts count] != 0) {
+            UITableViewCell *actionsCell = [tableView dequeueReusableCellWithIdentifier:ActionsCellIdentifier];
+            if (actionsCell == nil) {
+                actionsCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ActionsCellIdentifier] autorelease];
+            }
+            actionsCell.textLabel.text = NSLocalizedStringFromTable(@"Answer", @"ATLocalizable", @"");
+            actionsCell.textLabel.textAlignment = UITextAlignmentCenter;
+            actionsCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+            return actionsCell;
+        }
+        
+		ContentCell *contentCell = (ContentCell *)[tableView dequeueReusableCellWithIdentifier:ContentCellIdentifier];
+		if (contentCell == nil) {
+			contentCell = [[[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContentCellIdentifier  tableViewWidth:CGRectGetWidth(self.tableView.frame)] autorelease];
+		}
+        contentCell.textView.text = p.content;
+        contentCell.textView.scrollEnabled = NO;
+        
+        contentCell.delegate = self;
+		return contentCell;
+	}*/ 
     
     switch (indexPath.row) {
         case 0: {
@@ -621,9 +735,11 @@ const CGFloat kDefaultRowHeight = 44.0;
             return authorCell;
             
             break;
-        } case 1: {
+        }
+
+        case 1: {
             if (indexPath.section == self.posts.count) {
-                UITableViewCell *actionsCell = [tableView dequeueReusableCellWithIdentifier:ActionsCellIdentifier];
+                    UITableViewCell *actionsCell = [tableView dequeueReusableCellWithIdentifier:ActionsCellIdentifier];
                 if (actionsCell == nil) {
                     actionsCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ActionsCellIdentifier];
                 }
@@ -632,83 +748,15 @@ const CGFloat kDefaultRowHeight = 44.0;
                 actionsCell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 return actionsCell;
             }
-            
-            ContentCell *contentCell = (ContentCell *)[tableView dequeueReusableCellWithIdentifier:ContentCellIdentifier];
-            if (contentCell == nil)
-            {
-                contentCell = [[ContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContentCellIdentifier tableViewWidth:CGRectGetWidth(self.tableView.frame)];
-                contentCell.textView.scrollEnabled = NO;
-                contentCell.delegate = self;
-            }
-            
-            contentCell.textView.text = p.content;
-            
-            return contentCell;
-            break;
-        }
         
-        default:{
+            ContentCellWithImages *contentCell  = [[ContentCellWithImages alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContentCellIdentifier tableViewWidth:CGRectGetWidth(self.tableView.frame) contents:p.content];
+            return contentCell;
+        }break;
+            
+        default:
             break;
-        }
     }
     
-    // Bilder Row
-    if(indexPath.row > 1)
-    {
-        static NSString *CellIdentifier = @"Cell";
-        
-        UIImageView *imageView = nil;
-        
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil)
-        {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            imageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.tableView.frame) / 2)-65, 5, 130, 90)];
-            //imageView.image = [UIImage imageNamed:@"loading"];
-            imageView.layer.borderColor = [UIColor blackColor].CGColor;
-            imageView.layer.borderWidth = 1.0f;
-            imageView.tag = 0;
-            
-            // als SUbview deklarieren
-            [cell addSubview:imageView];
-            
-        }
-        else
-        {
-            for (UIImageView *subImageView in cell.subviews)
-            {
-                if ([subImageView isKindOfClass:[UIImageView class]])
-                {
-                    imageView = subImageView;
-                    imageView.image = [UIImage imageNamed:@"loading"];
-                }
-            }
-        }
-        
-        int index = indexPath.row-2;
-        
-        ImageModell *imageModelController = [[ImageModell alloc] init];
-        imageModelController.tableView = self.tableView;
-
-        // Pürfen ob bereits ein Bild gespeichert wurde im TMP ordner!
-        UIImage *imageCached = [imageModelController getCachedImage:[[p imageUrl] objectAtIndex:index]];
-        if(imageCached != nil)
-        {
-            [imageView setImage:imageCached];
-        }
-        else
-        {
-            if([[p imageUrl] count] > 0)
-            {
-                [imageModelController loadImageInBackground:[[p imageUrl] objectAtIndex:indexPath.row-2] forImageView:imageView];
-            }
-        }
-        return cell;
-    }
-
 	return nil;
 }
 
