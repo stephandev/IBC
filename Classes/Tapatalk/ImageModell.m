@@ -36,10 +36,6 @@
     {
         [UIImageJPEGRepresentation(image, 100) writeToFile:pathWithName atomically:YES];
     }
-    
-    // Bilder fertig geladen
-    //NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[self getFileNameFromURL:url] forKey:@"imageName"];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"imageIsReadyLoading" object:nil userInfo:userInfo];
 }
 
 // lädt das gecached Image
@@ -48,14 +44,42 @@
     NSString *pathWithName = [NSTemporaryDirectory() stringByAppendingString:[self getFileNameFromURL:ImageURLString]];
     
     // Check for a cached version
-    if([[NSFileManager defaultManager] fileExistsAtPath:pathWithName])
-    {
+    if([[NSFileManager defaultManager] fileExistsAtPath:pathWithName]) {
         return [UIImage imageWithContentsOfFile:pathWithName]; // this is the cached image
-    }
-    else
-    {
+    } else {
         return nil;
     }
+}
+
+- (UIImage*)imageWithImage:(UIImage*)sourceImage scaledToWidth:(float)i_width
+{
+    float oldWidth = sourceImage.size.width;
+    float scaleFactor = i_width / oldWidth;
+    
+    float newHeight = sourceImage.size.height * scaleFactor;
+    float newWidth = oldWidth * scaleFactor;
+    
+    UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+    [sourceImage drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+- (UIImage*)imageWithImage:(UIImage*)sourceImage scaledToHight:(float)i_height
+{
+    float oldHight = sourceImage.size.height;
+    float scaleFactor = i_height / oldHight;
+    
+    float newWidth = sourceImage.size.width * scaleFactor;
+    float newHeight = oldHight * scaleFactor;
+    
+    UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+    [sourceImage drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
 }
 
 - (void)loadImageInBackground:(NSString *)url forImageView:(UIImageView *)imageView
@@ -78,29 +102,15 @@
         if(img != (UIImage *)nil)
         {
             // Bild größe noch im Background runterrechnen
-            float newWidth = img.size.width;
-            float newHeight = img.size.height;
+            UIImage* newImage = [self imageWithImage:img scaledToHight:400];
             
-            while(newHeight > 200)
-            {
-                if(newHeight < 300 && newHeight > 200) {
-                    newWidth = newWidth / 1.02;
-                    newHeight = newHeight / 1.02;
-                } else if(newHeight > 300) {
-                    newWidth = newWidth / 1.5;
-                    newHeight = newHeight / 1.5;
-                }
+            // wenn größer als 620 die breite ist muss diese runtergrechnet werden!
+            if(newImage.size.width > 620) {
+                newImage = [self imageWithImage:img scaledToWidth:310];
             }
             
-            UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
-            [img drawInRect:CGRectMake(0,0, CGSizeMake(newWidth, newHeight).width, CGSizeMake(newWidth, newHeight).height)];
-            UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            
-            NSLog(@"H: %f W: %f", newImage.size.height, newImage.size.width);
-            
             // Image Cachen
-            [self cacheImage:url image:img];
+            [self cacheImage:url image:newImage];
             
             // In den Maintherad wechseln
             if(imageView) {

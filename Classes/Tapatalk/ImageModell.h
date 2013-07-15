@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define MAX_IMAGEHEIGT 400 //px
+
 @protocol ImageModellDelegate;
 
 @interface ImageModell : NSObject

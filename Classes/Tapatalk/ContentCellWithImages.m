@@ -103,6 +103,9 @@
                     [imageModelController loadImageInBackground:[finalString objectAtIndex:x] forImageView:imageView];
                 }
                 
+                //imageView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
+                //imageView.contentMode = UIViewContentModeScaleAspectFit;
+                
                 imageView.layer.borderColor = [UIColor blackColor].CGColor;
                 imageView.layer.borderWidth = 1;
                 
@@ -115,20 +118,16 @@
 
 - (void)imageDidFinishLoading:(UIImage *)image imageView:(UIImageView *)imageView
 {
-    //CGSize boundsSize = self.bounds.size;
-    //CGRect frameToCenter = [imageView frame];
+    CGFloat width = CGRectGetWidth(self.frame);
     
-    //NSLog(@"Image Was Loading!");
-    
-    //[imageView setFrame:CGRectMake((boundsSize.width - frameToCenter.size.width) / 3, imageView.frame.origin.y, image.size.width, image.size.height)];
     [imageView setImage:image];
+    [imageView setFrame:CGRectMake((width - ([imageView image].size.width / 2) - 20) / 2, imageView.frame.origin.y, [imageView image].size.width / 2, [imageView image].size.height / 2)];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 
@@ -142,21 +141,15 @@
     
     for (id view in [self.contentView subviews])
     {
-        if ([view isKindOfClass:[UITextView class]])
-        {
+        if ([view isKindOfClass:[UITextView class]]) {
             [(UITextView *)view setFrame:CGRectMake(0.0, aktuelleHoehe, width - 2.0 * margin, [(UITextView *)view contentSize].height)];
             aktuelleHoehe += [(UITextView *)view frame].size.height;
-        }
-        else if([view isKindOfClass:[UIImageView class]])
-        {
-            CGSize boundsSize = self.bounds.size;
-            CGRect frameToCenter = [(UIImageView *)view frame];
-            
-            //if([(UIImageView *)view image] != (UIImage *)nil) {
-                //[(UIImageView *)view setFrame:CGRectMake((boundsSize.width - frameToCenter.size.width) / 3, aktuelleHoehe, [(UIImageView *)view image].size.width, [(UIImageView *)view image].size.height)];
-            //} else {
-                [(UIImageView *)view setFrame:CGRectMake((boundsSize.width - frameToCenter.size.width) / 3, aktuelleHoehe, 250, 200)];
-            //}
+        } else if([view isKindOfClass:[UIImageView class]]) {
+            if([(UIImageView *)view image] != (UIImage *)nil) {
+                [(UIImageView *)view setFrame:CGRectMake((width - ([(UIImageView *)view image].size.width / 2) - 20) / 2, aktuelleHoehe, [(UIImageView *)view image].size.width / 2, [(UIImageView *)view image].size.height / 2)];
+            } else {
+                [(UIImageView *)view setFrame:CGRectMake((width - 250 - 20) / 2, aktuelleHoehe, 250, 200)];
+            }
             aktuelleHoehe += [(UIImageView *)view frame].size.height;
         }
     }
